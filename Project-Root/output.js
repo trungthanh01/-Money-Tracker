@@ -5,7 +5,7 @@
 // và gắn các sự kiện để người dùng có thể tương tác.
 
 import { jarsConfig, state } from './data.js';
-import { handleTransactionSubmit, loadStateFromLocalStorage } from './process.js';
+import { saveStateToLocalStorage, loadStateFromLocalStorage } from './process.js';
 
 // === Biến toàn cục DOM ===
 const totalBalanceEl = document.getElementById('total-balance');        // Hiển thị tổng số dư
@@ -85,7 +85,7 @@ export function hideModal(modalId) {
     document.getElementById(modalId).classList.replace('flex', 'hidden');
 }
 
-// === Hàm định dạng số thành tiền tệ VND ===
+
 function formatCurrency(amount) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
 }
