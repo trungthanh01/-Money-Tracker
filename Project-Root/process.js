@@ -7,6 +7,7 @@
 
 // Nhập dữ liệu cấu hình và state
 import { jarsConfig, state, updateState } from './data.js';
+import { renderOutput, hideModal } from './output.js';
 
 // Export các hàm để các module khác có thể dùng
 export function handleTransactionSubmit(e) {
@@ -43,7 +44,7 @@ export function handleTransactionSubmit(e) {
     saveStateToLocalStorage();
     renderOutput();
     hideModal('transaction-modal');
-    transactionForm.reset();
+    document.getElementById('transaction-form').reset();
 }
 
 export function calculateTotalBalance() {
