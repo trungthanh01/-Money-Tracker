@@ -1,97 +1,98 @@
-# 🧾 README - Ứng Dụng Quản Lý Tài Chính Cá Nhân - 5 Hũ
-
-## 📌 Giới thiệu
-
-"5 Hũ Tài Chính" là một ứng dụng web giúp người dùng quản lý tài chính cá nhân bằng cách phân bổ thu nhập và chi tiêu theo 5 mục tiêu cụ thể: Chi tiêu, Khẩn cấp, Tiết kiệm, Đầu tư, và Học tập. Ứng dụng hoạt động hoàn toàn offline (LocalStorage) và có tích hợp biểu đồ, ví đầu tư crypto, và trí tuệ nhân tạo.
+# 📁 Cấu Trúc File & README - App Quản Lý Tài Chính 5 Hũ
 
 ---
 
-## 🚀 Tính năng chính
+## 🧾 Giới thiệu
 
-### 1. Dashboard (Bảng tin tổng hợp)
-
-* Hiển thị tổng số dư
-* Biểu đồ Doughnut trực quan theo tỷ lệ các hũ
-* Danh sách các hũ: truy cập xem lịch sử giao dịch
-
-### 2. Modal thêm giao dịch
-
-* Tạo giao dịch: chọn loại (Thu nhập/Chi tiêu), chọn hũ
-* Tự động cập nhật số dư và lịch sử
-
-### 3. Đầu tư (Investment)
-
-* Nhập địa chỉ ví Ethereum + API Key (Etherscan)
-* Hiển thị số dư và giá trị quy đổi VNĐ
-* Ghi lại giao dịch đầu tư thủ công
-
-### 4. Gợi ý học tập (Education)
-
-* Nhập ngành nghề bạn quan tâm
-* Gọi AI (Gemini/OpenAI) gợi ý sách, khóa học, roadmap
-* Hiển thị đẹp với HTML từ markdown AI trả về
-
----
-ChatGPT Image Jul 25, 2025, 06_22_45 PM.png
-
-## 🧠 Kiến trúc hệ thống (System Thinking)
-
-| Module           | Chức năng                                                                |
-| ---------------- | ------------------------------------------------------------------------ |
-| UI (Tailwind)    | Thiết kế hiện đại, responsive, dễ tùy chỉnh giao diện                    |
-| State Management | Quản lý toàn bộ dữ liệu ứng dụng (jars, transactions, ví, tổng số dư...) |
-| LocalStorage     | Lưu trữ trạng thái vĩnh viễn không cần backend                           |
-| Chart.js         | Biểu đồ Doughnut hiển thị tỷ lệ các hũ tài chính                         |
-| Etherscan API    | Lấy số dư ETH và quy đổi giá trị                                         |
-| Gemini AI API    | Gợi ý lộ trình học dựa trên ngành nghề người dùng nhập                   |
+Dự án ứng dụng web giúp người dùng quản lý tài chính cá nhân bằng cách phân chia thu nhập vào 5 hũ: **Chi tiêu, Khẩn cấp, Tiết kiệm, Đầu tư, Học tập**. Toàn bộ ứng dụng được chia thành các module riêng biệt theo mô hình **IPO (Input – Process – Output)**, giúp dễ bảo trì và mở rộng.
 
 ---
 
-## 🧩 Công nghệ sử dụng
-
-* HTML5, CSS3
-* JavaScript thuần (ES6+)
-* TailwindCSS
-* Chart.js
-* LocalStorage
-* Etherscan API
-* Gemini (Google AI Model)
-
----
-
-## 📂 Cấu trúc file
+## 🧩 Cấu trúc thư mục
 
 ```
 📁 project-root/
-├── index.html       # Giao diện chính
-├── style.css        # Tùy biến bổ sung cho giao diện
-├── script.js        # Logic chính và xử lý state
-└── README.md        # Mô tả dự án (file hiện tại)
+├── index.html            # Giao diện chính (HTML)
+├── main.js               # File tổng, nơi import toàn bộ module
+├── data.js               # Chứa cấu hình & biến state (dữ liệu)
+├── input.js              # Lấy biến DOM & dữ liệu đầu vào
+├── process.js            # Xử lý logic: giao dịch, localStorage
+├── output.js             # Vẽ giao diện, gắn sự kiện, biểu đồ
+└── README.md             # Hướng dẫn & mô tả hệ thống
 ```
 
 ---
 
-## ✅ Tiến độ (MVP)
+## 📘 Giải thích chức năng từng file
 
-* [x] Giao diện Dashboard
-* [x] Thêm giao dịch & modal popup
-* [x] Vẽ biểu đồ phân bổ
-* [x] Tích hợp ví Ethereum
-* [x] Gợi ý học tập bằng AI
-
----
-
-## 📌 Tác giả
-
-* Người thiết kế hệ thống: **Quinnie - System Thinker & Designer**
-* Ngôn ngữ: 🇻🇳 Tiếng Việt
+| Tên file     | Vai trò                                                                |
+| ------------ | ---------------------------------------------------------------------- |
+| `index.html` | Giao diện người dùng (UI), gọi `main.js` để khởi chạy toàn bộ logic    |
+| `main.js`    | File trung tâm, import toàn bộ các module `input`, `process`, `output` |
+| `data.js`    | Dữ liệu cấu hình (5 hũ), biến `state`, và hàm cập nhật `state`         |
+| `input.js`   | Gán các biến DOM (`getElementById`) và chuẩn bị dữ liệu đầu vào        |
+| `process.js` | Chứa các hàm xử lý logic như `handleTransactionSubmit`, `saveState`... |
+| `output.js`  | Vẽ lại giao diện, hiển thị biểu đồ, xử lý sự kiện click, submit,...    |
 
 ---
 
-## 📎 Giấy phép
+## 🔄 Mô hình hoạt động (IPO)
 
-MIT License
+1. **Input** (`input.js`):
+
+   * Lấy dữ liệu từ người dùng (form: số tiền, mô tả, loại giao dịch...)
+   * Lưu vào biến `state`
+
+2. **Process** (`process.js`):
+
+   * Xử lý nghiệp vụ: cộng/trừ số dư, kiểm tra hợp lệ, cập nhật localStorage
+
+3. **Output** (`output.js`):
+
+   * Hiển thị dữ liệu ra HTML
+   * Cập nhật số dư, biểu đồ, danh sách các hũ
 
 ---
 
-> Mọi phản hồi và đóng góp hoan nghênh qua email hoặc GitHub Discussions 💬
+## ✅ Hướng dẫn sử dụng
+
+1. Clone project về máy:
+
+```bash
+  git clone <repo>
+```
+
+2. Mở thư mục project trong VS Code:
+
+```bash
+  code .
+```
+
+3. Chạy bằng Live Server hoặc mở `index.html` trực tiếp bằng trình duyệt.
+
+---
+
+## 📦 Kỹ thuật sử dụng
+
+* HTML5 / Tailwind CSS
+* JavaScript ES Modules
+* Chart.js (vẽ biểu đồ Doughnut)
+* LocalStorage API
+
+---
+
+## ✨ Ưu điểm kiến trúc
+
+* Dễ mở rộng
+* Code sạch, phân chia rõ ràng
+* Theo tư duy hệ thống và chuẩn module hóa hiện đại
+
+---
+
+## 👩‍💻 Tác giả
+
+* Marcus (System Thinker & Web Designer)
+
+---
+
+> Hệ thống được thiết kế để scale tốt, bảo trì dễ, phù hợp team làm việc hoặc mở rộng thành SPA hoặc PWA sau này.
