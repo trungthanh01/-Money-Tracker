@@ -5,7 +5,7 @@
 // và gắn các sự kiện để người dùng có thể tương tác.
 
 import { jarsConfig, state } from './data.js';
-import { handleTransactionSubmit, loadStateFromLocalStorage } from './process.js';
+import { saveStateToLocalStorage, loadStateFromLocalStorage } from './process.js';
 
 // Biến toàn cục DOM
 const totalBalanceEl = document.getElementById('total-balance');
@@ -73,6 +73,43 @@ export function showModal(modalId) {
 
 export function hideModal(modalId) {
     document.getElementById(modalId).classList.replace('flex', 'hidden');
+}
+
+function handleTransactionSubmit(e) {
+    e.preventDefault();
+
+    const type = document.getElementById('transaction-type').value;
+    const amount = parseFloat(document.getElementById('transaction-amount').value);
+    const description = document.getElementById('transaction-description').value;
+    const jarId = document.getElementById('transaction-jar').value;
+
+    if (isNaN(amount) || amount <= 0 || !description || !jarId) {
+        console.error('Dữ liệu giao dịch không hợp lệ');
+        return;
+    }
+
+    const currentBalance = state.jars[jarId]?.balance || 0;
+    if (type === 'expense' && currentBalance < amount) {
+        console.error(`Số dư trong hũ "${jarsConfig[jarId].name}" không đủ.`);
+        return;
+    }
+
+    state.jars[jarId].balance += (type === 'income' ? amount : -amount);
+
+    const newTransaction = {
+        id: Date.now().toString(),
+        type,
+        amount,
+        description,
+        jarId,
+        createdAt: new Date().toISOString(),
+    };
+    state.transactions.unshift(newTransaction);
+
+    saveStateToLocalStorage();
+    renderOutput();
+    hideModal('transaction-modal');
+    document.getElementById('transaction-form').reset();
 }
 
 function formatCurrency(amount) {
