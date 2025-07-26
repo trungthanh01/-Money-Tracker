@@ -32,7 +32,6 @@
 * Hiển thị đẹp với HTML từ markdown AI trả về
 
 ---
-ChatGPT Image Jul 25, 2025, 06_22_45 PM.png
 
 ## 🧠 Kiến trúc hệ thống (System Thinking)
 
