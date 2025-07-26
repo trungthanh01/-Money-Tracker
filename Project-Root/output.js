@@ -67,11 +67,11 @@ function renderChart() {
     }
 }
 
-function showModal(modalId) {
+export function showModal(modalId) {
     document.getElementById(modalId).classList.replace('hidden', 'flex');
 }
 
-function hideModal(modalId) {
+export function hideModal(modalId) {
     document.getElementById(modalId).classList.replace('flex', 'hidden');
 }
 
