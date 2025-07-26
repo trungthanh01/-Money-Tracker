@@ -80,20 +80,40 @@ function formatCurrency(amount) {
 }
 
 function setupEventListeners() {
-    document.getElementById('add-income-btn').addEventListener('click', () => {
-        document.getElementById('transaction-modal-title').textContent = 'Thêm Thu Nhập';
-        document.getElementById('transaction-type').value = 'income';
+    document.getElementById('add-income-btn').addEventListener
+        ('click', () => {
+        document.getElementById('transaction-modal-title').textContent 
+            = 'Thêm Thu Nhập';
+        document.getElementById('transaction-type').value 
+            = 'income';
         showModal('transaction-modal');
     });
 
-    document.getElementById('add-expense-btn').addEventListener('click', () => {
-        document.getElementById('transaction-modal-title').textContent = 'Thêm Chi Tiêu';
-        document.getElementById('transaction-type').value = 'expense';
+    document.getElementById('add-expense-btn').addEventListener
+        ('click', () => {
+        document.getElementById('transaction-modal-title').textContent 
+            = 'Thêm Chi Tiêu';
+        document.getElementById('transaction-type').value 
+            = 'expense';
         showModal('transaction-modal');
     });
 
     transactionForm.addEventListener('submit', handleTransactionSubmit);
-    document.getElementById('cancel-transaction-btn').addEventListener('click', () => hideModal('transaction-modal'));
+    document.getElementById('cancel-transaction-btn').addEventListener
+        ('click', () => hideModal('transaction-modal')
+    );
+    //sau khi nhất nút lưu thì input value sẽ được update vào jar
+    // Cập nhật giá trị input khi lưu giao dịch
+
+   
+    document.getElementById('save-transaction-btn')?.addEventListener
+        ('click', () => {
+            transactionForm.requestSubmit();
+            handleTransactionSubmit(e);
+            renderOutput();
+            hideModal('transaction-modal');
+    });
+
 
     const jarSelect = document.getElementById('transaction-jar');
     jarSelect.innerHTML = Object.keys(jarsConfig)
