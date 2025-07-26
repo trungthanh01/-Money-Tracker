@@ -106,13 +106,11 @@ function setupEventListeners() {
     // Cập nhật giá trị input khi lưu giao dịch
 
    
-    document.getElementById('save-transaction-btn')?.addEventListener
-        ('click', () => {
+    document.getElementById('save-transaction-btn')?.addEventListener(
+        'click', () => {
             transactionForm.requestSubmit();
-            handleTransactionSubmit(e);
-            renderOutput();
-            hideModal('transaction-modal');
-    });
+        }
+    );
 
 
     const jarSelect = document.getElementById('transaction-jar');
