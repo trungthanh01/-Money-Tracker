@@ -92,11 +92,11 @@ function formatCurrency(amount) {
 
 // === Hàm gắn sự kiện cho các nút bấm ===
 function setupEventListeners() {
-    // Khi bấm Thêm Thu Nhập → mở modal
+    
     document.getElementById('add-income-btn').addEventListener('click', () => {
         document.getElementById('transaction-modal-title').textContent = 'Thêm Thu Nhập';
         document.getElementById('transaction-type').value = 'income';
-        showModal('transaction-modal');
+        showModal('transaction-modal'); 
     });
 
     // Khi bấm Thêm Chi Tiêu → mở modal
