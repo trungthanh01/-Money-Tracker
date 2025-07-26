@@ -31,8 +31,8 @@ Dự án ứng dụng web giúp người dùng quản lý tài chính cá nhân 
 | `main.js`    | File trung tâm, import toàn bộ các module `input`, `process`, `output` |
 | `data.js`    | Dữ liệu cấu hình (5 hũ), biến `state`, và hàm cập nhật `state`         |
 | `input.js`   | Gán các biến DOM (`getElementById`) và chuẩn bị dữ liệu đầu vào        |
-| `process.js` | Chứa các hàm xử lý logic như `handleTransactionSubmit`, `saveState`... |
-| `output.js`  | Vẽ lại giao diện, hiển thị biểu đồ, xử lý sự kiện click, submit,...    |
+| `process.js` | Chứa các hàm xử lý logic, lưu/đọc LocalStorage... |
+| `output.js`  | Vẽ giao diện, xử lý sự kiện (như `handleTransactionSubmit`), biểu đồ... |
 
 ---
 
