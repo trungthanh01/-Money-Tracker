@@ -1,11 +1,8 @@
-Debug thêm chi tiêu để khi click vào thì total balance giảm
+===/Xây dựng phần đầu tư/===
 
+phần này là quản trị danh mục đầu tư của user
+bao gồm biểu đồ tài sản đã tích lũy
+thông tin giao dịch mua bán
+loại tiền mã hóa
+xây dựng nó 100% giống của coin gecko
 
-
-🌗 Dark mode chuyển đổi bằng toggle
-
-📱 Mobile-first: tối ưu hiển thị trên điện thoại
-
-💹 Biểu đồ động theo tuần/tháng (vẽ thêm tab hoặc filter cho Chart.js)
-
-💼 Chuyển đổi đơn vị: VND <=> USD <=> % phân bổ
