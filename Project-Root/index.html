@@ -53,6 +53,7 @@
                         <div class="flex gap-2 mt-4 sm:mt-0">
                             <button id="add-income-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-5 rounded-lg transition-colors">Thêm Thu Nhập</button>
                             <button id="add-expense-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-5 rounded-lg transition-colors">Thêm Chi Tiêu</button>
+                            <button id="add-salary-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-5 rounded-lg transition-colors">Nhập Lương</button>
                         </div>
                     </div>
                     <div class="bg-white shadow-md rounded-xl p-6">
@@ -76,7 +77,7 @@
                 <input type="hidden" id="transaction-type">
                 <div class="mb-4">
                     <label for="transaction-amount" class="block text-gray-700 font-medium mb-2">Số tiền</label>
-                    <input type="number" id="transaction-amount" class="w-full p-3 border rounded-lg" placeholder="0" required>
+                    <input type="text" id="transaction-amount" class="w-full p-3 border rounded-lg" placeholder="0" required>
                 </div>
                 <div class="mb-4">
                     <label for="transaction-description" class="block text-gray-700 font-medium mb-2">Mô tả</label>
@@ -94,6 +95,23 @@
         </div>
     </div>
     <div id="jar-detail-modal" class="fixed inset-0 z-50 items-center justify-center hidden"></div>
+
+    <!-- Modal chỉnh sửa tổng lương -->
+    <div id="edit-salary-modal" class="fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md z-10 m-4 relative flex flex-col">
+            <button class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-2xl font-bold" onclick="hideEditSalaryModal()">&times;</button>
+            <h2 class="text-2xl font-bold mb-4">Chỉnh sửa tổng lương</h2>
+            <div class="mb-4">
+                <label for="edit-salary-amount" class="block text-gray-700 font-medium mb-2">Tổng lương mới</label>
+                <input type="text" id="edit-salary-amount" class="w-full p-3 border rounded-lg" placeholder="0" autocomplete="off" required>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button type="button" id="cancel-edit-salary-btn" class="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 font-semibold">Hủy</button>
+                <button type="button" id="save-edit-salary-btn" class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 font-semibold">Lưu</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Chỉ cần gọi một file script chính, nó sẽ tự import các file khác -->
     <script type="module" src="./main.js"></script>

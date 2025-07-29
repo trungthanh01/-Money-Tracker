@@ -11,54 +11,95 @@ import { renderOutput, hideModal } from './output.js';
 
 // Export các hàm để các module khác có thể dùng
 // Hàm xử lý khi người dùng nhấn nút Lưu giao dịch
+// Tính tổng lương còn lại (tổng lương - income - expense)
+export function calculateSalaryLeft() {
+    const totalSalary = calculateTotalSalary();
+    const totalIncome = state.transactions.filter(tx => tx.type === 'income').reduce((sum, tx) => sum + tx.amount, 0);
+    const totalExpense = state.transactions.filter(tx => tx.type === 'expense').reduce((sum, tx) => sum + tx.amount, 0);
+    return totalSalary - totalIncome - totalExpense;
+}
+window.calculateSalaryLeft = calculateSalaryLeft;
+
+// Hàm chỉnh sửa tổng lương
+export function editTotalSalary(newSalary) {
+    // Xóa toàn bộ transaction type income/expense
+    state.transactions = state.transactions.filter(tx => tx.type !== 'income' && tx.type !== 'expense');
+    // Xóa số dư các hũ
+    Object.keys(state.jars).forEach(id => { state.jars[id].balance = 0; });
+    // Cập nhật transaction salary (chỉ giữ 1 transaction salary mới nhất)
+    state.transactions = state.transactions.filter(tx => tx.type !== 'salary');
+    state.transactions.unshift({
+        id: Date.now().toString(),
+        type: 'salary',
+        amount: newSalary,
+        description: 'Lương tháng',
+        jarId: '',
+        createdAt: new Date().toISOString()
+    });
+    calculateTotalBalance();
+    saveStateToLocalStorage();
+    renderOutput();
+}
+window.editTotalSalary = editTotalSalary;
+
+// Sửa handleTransactionSubmit để trừ vào tổng lương còn lại khi income/expense
 export function handleTransactionSubmit(e) {
-    e.preventDefault(); // Ngăn hành vi mặc định của form (reload trang)
-
-    // Lấy thông tin từ các trường trong modal
-    const type = document.getElementById('transaction-type').value;           // 'income' hoặc 'expense'
-    const amount = parseFloat(document.getElementById('transaction-amount').value);  // Chuyển số tiền từ chuỗi sang float
-    const description = document.getElementById('transaction-description').value;    // Nội dung mô tả giao dịch
-    const jarId = document.getElementById('transaction-jar').value;           // ID của hũ mà người dùng chọn
-
+    e.preventDefault();
+    const type = document.getElementById('transaction-type').value;
+    let amount = document.getElementById('transaction-amount').value;
+    amount = parseFloat(amount.replace(/[^\d]/g, ''));
+    const description = document.getElementById('transaction-description').value;
+    const jarId = document.getElementById('transaction-jar').value;
+    if (type === 'salary') {
+        if (isNaN(amount) || amount <= 0 || !description) {
+            console.error("Dữ liệu lương không hợp lệ");
+            return;
+        }
+        const newTransaction = {
+            id: Date.now().toString(),
+            type,
+            amount,
+            description,
+            jarId: '',
+            createdAt: new Date().toISOString()
+        };
+        state.transactions = state.transactions.filter(tx => tx.type !== 'salary');
+        state.transactions.unshift(newTransaction);
+        saveStateToLocalStorage();
+        renderOutput();
+        hideModal('transaction-modal');
+        document.getElementById('transaction-form').reset();
+        return;
+    }
     // Kiểm tra hợp lệ: phải có số tiền > 0, có mô tả và đã chọn hũ
     if (isNaN(amount) || amount <= 0 || !description || !jarId) {
         console.error("Dữ liệu giao dịch không hợp lệ");
         return;
     }
-
     // Kiểm tra số dư nếu là chi tiêu: không cho phép vượt quá số dư hiện có
     const currentBalance = state.jars[jarId]?.balance || 0;
     if (type === 'expense' && currentBalance < amount) {
         console.error(`Số dư trong hũ "${jarsConfig[jarId].name}" không đủ.`);
         return;
     }
-
-    // Cập nhật số dư của hũ: cộng nếu là thu nhập, trừ nếu là chi tiêu
+    // Đảm bảo hũ đã tồn tại
+    if (!state.jars[jarId]) state.jars[jarId] = { balance: 0 };
     state.jars[jarId].balance += (type === 'income' ? amount : -amount);
-
     // Tạo object giao dịch mới
     const newTransaction = {
-        id: Date.now().toString(),             // ID duy nhất theo timestamp
-        type,                                  // Loại giao dịch ('income' hoặc 'expense')
-        amount,                                // Số tiền
-        description,                           // Nội dung mô tả
-        jarId,                                 // Hũ liên quan
-        createdAt: new Date().toISOString()    // Thời gian tạo giao dịch
+        id: Date.now().toString(),
+        type,
+        amount,
+        description,
+        jarId,
+        createdAt: new Date().toISOString()
     };
-
     // Thêm giao dịch mới vào đầu danh sách
     state.transactions.unshift(newTransaction);
-    calculateTotalBalance(); // Cập nhật tổng số dư
-    // Lưu toàn bộ state vào Local Storage
+    calculateTotalBalance();
     saveStateToLocalStorage();
-
-    // Vẽ lại toàn bộ giao diện (Dashboard, Biểu đồ...)
     renderOutput();
-
-    // Ẩn modal sau khi lưu xong
     hideModal('transaction-modal');
-
-    // Reset lại toàn bộ form
     document.getElementById('transaction-form').reset();
 }
 
@@ -68,6 +109,12 @@ export function calculateTotalBalance() {
     // Lặp qua toàn bộ các hũ, cộng dồn số dư
     state.totalBalance = Object.values(state.jars).reduce((sum, jar) => sum + (jar.balance || 0), 0);
 }
+
+// Tính tổng lương đã nhập
+export function calculateTotalSalary() {
+    return state.transactions.filter(tx => tx.type === 'salary').reduce((sum, tx) => sum + tx.amount, 0);
+}
+window.calculateTotalSalary = calculateTotalSalary;
 
 // Ghi toàn bộ trạng thái hiện tại vào LocalStorage
 export function saveStateToLocalStorage() {
@@ -79,13 +126,58 @@ export function saveStateToLocalStorage() {
 export function loadStateFromLocalStorage() {
     const savedData = localStorage.getItem('financeAppData');
     if (savedData) {
-        // Nếu có dữ liệu, khôi phục lại toàn bộ state
         updateState(JSON.parse(savedData));
+        // Đảm bảo tất cả các hũ đều có trong state.jars
+        Object.keys(jarsConfig).forEach(id => {
+            if (!state.jars[id]) state.jars[id] = { balance: 0 };
+        });
     } else {
-        // Nếu chưa có gì, khởi tạo số dư = 0 cho tất cả các hũ
         Object.keys(jarsConfig).forEach(id => {
             state.jars[id] = { balance: 0 };
         });
     }
 }
+
+// Thêm sau renderChart()
+function renderTransactionList() {
+    const container = document.getElementById('transaction-list');
+    if (!container) return;
+    container.innerHTML = '';
+    state.transactions.forEach(tx => {
+        const div = document.createElement('div');
+        div.className = 'transaction-item flex justify-between items-center p-2 border-b';
+        div.innerHTML = `
+            <div>
+                <span class="font-bold">${jarsConfig[tx.jarId]?.name || tx.jarId}</span>:
+                <span>${tx.type === 'income' ? '+' : '-'}${formatCurrency(tx.amount)}</span>
+                <span class="text-xs text-gray-500">(${tx.description})</span>
+            </div>
+            <button class="delete-transaction-btn text-red-500" data-id="${tx.id}">Xóa</button>
+        `;
+        container.appendChild(div);
+    });
+    // Gắn event xóa
+    container.querySelectorAll('.delete-transaction-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.target.dataset.id;
+            window.deleteTransaction(id);
+        });
+    });
+}
+
+export function deleteTransaction(id) {
+    const txIndex = state.transactions.findIndex(tx => tx.id === id);
+    if (txIndex === -1) return;
+    const tx = state.transactions[txIndex];
+    // Hoàn lại số dư cho hũ
+    if (state.jars[tx.jarId]) {
+        state.jars[tx.jarId].balance += (tx.type === 'income' ? -tx.amount : tx.amount);
+    }
+    state.transactions.splice(txIndex, 1);
+    calculateTotalBalance();
+    saveStateToLocalStorage();
+    renderOutput();
+}
+
+window.deleteTransaction = deleteTransaction;
 
