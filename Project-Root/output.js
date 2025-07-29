@@ -5,7 +5,7 @@
 // và gắn các sự kiện để người dùng có thể tương tác.
 
 import { jarsConfig, state } from './data.js';
-import { saveStateToLocalStorage, loadStateFromLocalStorage } from './process.js';
+import { handleTransactionSubmit, loadStateFromLocalStorage } from './process.js';
 
 // === Biến toàn cục DOM ===
 const totalBalanceEl = document.getElementById('total-balance');        // Hiển thị tổng số dư
@@ -46,6 +46,7 @@ function renderDashboard() {
     });
 }
 
+
 // === Hàm vẽ biểu đồ Chart Doughnut ===
 function renderChart() {
     const ctx = document.getElementById('jars-chart').getContext('2d');
@@ -53,7 +54,6 @@ function renderChart() {
     const labels = Object.values(jarsConfig).map(j => j.name);                  // Tên hũ
     const data = Object.keys(jarsConfig).map(id => state.jars[id]?.balance || 0); // Dữ liệu số dư
     const colors = ['#3b82f6', '#ef4444', '#22c55e', '#8b5cf6', '#eab308'];     // Màu biểu đồ
-
     if (jarsChart) {
         // Nếu đã có biểu đồ → cập nhật
         jarsChart.data.labels = labels;
@@ -74,7 +74,7 @@ function renderChart() {
         });
     }
 }
-
+ // In ra để kiểm tra dữ liệu biểu đồ
 // === Hàm hiển thị modal ===
 export function showModal(modalId) {
     document.getElementById(modalId).classList.replace('hidden', 'flex');
@@ -85,18 +85,18 @@ export function hideModal(modalId) {
     document.getElementById(modalId).classList.replace('flex', 'hidden');
 }
 
-
+// === Hàm định dạng số thành tiền tệ VND ===
 function formatCurrency(amount) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
 }
 
 // === Hàm gắn sự kiện cho các nút bấm ===
 function setupEventListeners() {
-    
+    // Khi bấm Thêm Thu Nhập → mở modal
     document.getElementById('add-income-btn').addEventListener('click', () => {
         document.getElementById('transaction-modal-title').textContent = 'Thêm Thu Nhập';
         document.getElementById('transaction-type').value = 'income';
-        showModal('transaction-modal'); 
+        showModal('transaction-modal');
     });
 
     // Khi bấm Thêm Chi Tiêu → mở modal

@@ -1,3 +1,7 @@
+Debug thêm chi tiêu để khi click vào thì total balance giảm
+
+
+
 🌗 Dark mode chuyển đổi bằng toggle
 
 📱 Mobile-first: tối ưu hiển thị trên điện thoại
