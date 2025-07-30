@@ -4,13 +4,13 @@
 // Phần này chịu trách nhiệm "vẽ" dữ liệu từ 'state' lên màn hình HTML
 // và gắn các sự kiện để người dùng có thể tương tác.
 
-import { jarsConfig, state } from './data.js';
+import { jarsConfig, state, coinsList } from './data.js';
 import { handleTransactionSubmit, loadStateFromLocalStorage } from './process.js';
 
 // === Biến toàn cục DOM ===
-const totalBalanceEl = document.getElementById('total-balance');        // Hiển thị tổng số dư
-const jarsContainer = document.getElementById('jars-container');        // Khu vực hiển thị danh sách các hũ
-const transactionForm = document.getElementById('transaction-form');    // Form giao dịch
+let totalBalanceEl = null;        // Hiển thị tổng số dư
+let jarsContainer = null;        // Khu vực hiển thị danh sách các hũ
+let transactionForm = null;    // Form giao dịch
 let jarsChart = null; // Biến lưu biểu đồ Chart.js
 
 // === Hàm chính để hiển thị toàn bộ UI ===
@@ -21,6 +21,15 @@ export function renderOutput() {
 
 // === Vẽ phần dashboard gồm thông tin từng hũ ===
 function renderDashboard() {
+    // Lấy elements khi cần thiết
+    totalBalanceEl = document.getElementById('total-balance');
+    jarsContainer = document.getElementById('jars-container');
+    
+    if (!totalBalanceEl || !jarsContainer) {
+        console.error('Required elements not found for dashboard');
+        return;
+    }
+    
     // Hiển thị tổng số dư = tổng lương - tổng chi tiêu
     let totalSalary = 0;
     if (typeof window.calculateTotalSalary === 'function') {
@@ -154,20 +163,32 @@ function formatCurrency(amount) {
 }
 
 // === Hàm gắn sự kiện cho các nút bấm ===
-function setupEventListeners() {
+export function setupEventListeners() {
+    // Lấy elements khi cần thiết
+    transactionForm = document.getElementById('transaction-form');
     // Khi bấm Thêm Thu Nhập → mở modal
-    document.getElementById('add-income-btn').addEventListener('click', () => {
-        document.getElementById('transaction-modal-title').textContent = 'Thêm Thu Nhập';
-        document.getElementById('transaction-type').value = 'income';
-        showModal('transaction-modal');
-    });
+    const addIncomeBtn = document.getElementById('add-income-btn');
+    if (addIncomeBtn) {
+        addIncomeBtn.addEventListener('click', () => {
+            document.getElementById('transaction-modal-title').textContent = 'Thêm Thu Nhập';
+            document.getElementById('transaction-type').value = 'income';
+            document.getElementById('transaction-jar').parentElement.style.display = '';
+            showModal('transaction-modal');
+            showSalaryLeftInTransactionModal();
+        });
+    }
 
     // Khi bấm Thêm Chi Tiêu → mở modal
-    document.getElementById('add-expense-btn').addEventListener('click', () => {
-        document.getElementById('transaction-modal-title').textContent = 'Thêm Chi Tiêu';
-        document.getElementById('transaction-type').value = 'expense';
-        showModal('transaction-modal');
-    });
+    const addExpenseBtn = document.getElementById('add-expense-btn');
+    if (addExpenseBtn) {
+        addExpenseBtn.addEventListener('click', () => {
+            document.getElementById('transaction-modal-title').textContent = 'Thêm Chi Tiêu';
+            document.getElementById('transaction-type').value = 'expense';
+            document.getElementById('transaction-jar').parentElement.style.display = '';
+            showModal('transaction-modal');
+            showSalaryLeftInTransactionModal();
+        });
+    }
 
     // Thêm nút nhập lương
     const addSalaryBtn = document.getElementById('add-salary-btn');
@@ -181,56 +202,43 @@ function setupEventListeners() {
             showModal('transaction-modal');
         });
     }
-    // Khi mở modal giao dịch bình thường, hiện lại dropdown chọn hũ
-    document.getElementById('add-income-btn').addEventListener('click', () => {
-        document.getElementById('transaction-jar').parentElement.style.display = '';
-    });
-    document.getElementById('add-expense-btn').addEventListener('click', () => {
-        document.getElementById('transaction-jar').parentElement.style.display = '';
-    });
+
     // Khi đóng modal giao dịch, hiện lại dropdown chọn hũ
-    document.getElementById('cancel-transaction-btn').addEventListener('click', () => {
-        document.getElementById('transaction-jar').parentElement.style.display = '';
-    });
+    const cancelTransactionBtn = document.getElementById('cancel-transaction-btn');
+    if (cancelTransactionBtn) {
+        cancelTransactionBtn.addEventListener('click', () => {
+            hideModal('transaction-modal');
+            document.getElementById('transaction-jar').parentElement.style.display = '';
+        });
+    }
 
     // Khi nhấn nút submit form (Lưu giao dịch)
-    transactionForm.addEventListener('submit', handleTransactionSubmit);
-
-    // Khi bấm Hủy → ẩn modal
-    document.getElementById('cancel-transaction-btn').addEventListener('click', () => hideModal('transaction-modal'));
+    if (transactionForm) {
+        transactionForm.addEventListener('submit', handleTransactionSubmit);
+    }
 
     // Khi bấm nút Lưu (nếu không phải type="submit") → gửi form thủ công
-    document.getElementById('save-transaction-btn')?.addEventListener('click', () => {
-        transactionForm.requestSubmit(); // Triggers 'submit' event
-    });
+    const saveTransactionBtn = document.getElementById('save-transaction-btn');
+    if (saveTransactionBtn) {
+        saveTransactionBtn.addEventListener('click', () => {
+            transactionForm.requestSubmit(); // Triggers 'submit' event
+        });
+    }
 
     // Lặp qua cấu hình jars để gán dropdown lựa chọn hũ
     const jarSelect = document.getElementById('transaction-jar');
-    jarSelect.innerHTML = Object.keys(jarsConfig)
-        .map(id => `<option value="${id}">${jarsConfig[id].name}</option>`)
-        .join('');
+    if (jarSelect) {
+        jarSelect.innerHTML = Object.keys(jarsConfig)
+            .map(id => `<option value="${id}">${jarsConfig[id].name}</option>`)
+            .join('');
+    }
 
     // Format input số tiền
     setupMoneyInputFormatting();
-    // Khi mở modal giao dịch, hiển thị tổng lương còn lại
-    document.getElementById('add-income-btn').addEventListener('click', () => {
-        document.getElementById('transaction-jar').parentElement.style.display = '';
-        showSalaryLeftInTransactionModal();
-    });
-    document.getElementById('add-expense-btn').addEventListener('click', () => {
-        document.getElementById('transaction-jar').parentElement.style.display = '';
-        showSalaryLeftInTransactionModal();
-    });
-    // Khi mở modal nhập lương, ẩn salary left
-    // (đã xử lý ở trên với addSalaryBtn)
 }
 
 // === Khi trang vừa tải xong: load data và gắn sự kiện ===
 document.addEventListener('DOMContentLoaded', () => {
-    loadStateFromLocalStorage();  // Lấy dữ liệu đã lưu
-    renderOutput();               // Vẽ giao diện
-    setupEventListeners();        // Gắn sự kiện cho các nút
-
     // Logic cho modal chỉnh sửa tổng lương
     const saveEditSalaryBtn = document.getElementById('save-edit-salary-btn');
     const cancelEditSalaryBtn = document.getElementById('cancel-edit-salary-btn');
@@ -329,3 +337,644 @@ function showSalaryLeftInTransactionModal() {
     }
     salaryLeftEl.textContent = 'Tổng lương còn lại: ' + formatCurrency(salaryLeft);
 }
+
+// =================================================================
+// PHẦN RENDER ĐẦU TƯ
+// =================================================================
+
+// Render trang đầu tư
+export function renderInvestmentView() {
+    const investmentView = document.getElementById('investment-view');
+    if (!investmentView) {
+        console.error('investment-view element not found');
+        return;
+    }
+
+    // Đảm bảo state.investmentPortfolio tồn tại
+    if (!state.investmentPortfolio) {
+        state.investmentPortfolio = {
+            transactions: [],
+            holdings: {},
+            totalValue: 0,
+            totalPnL: 0,
+            currency: 'USD'
+        };
+        
+        // Thêm dữ liệu mẫu để test (chỉ thêm nếu chưa có)
+        if (state.investmentPortfolio.transactions.length === 0) {
+            state.investmentPortfolio.transactions.push({
+                id: 'sample-1',
+                coinId: 'bitcoin',
+                type: 'buy',
+                totalSpend: 1000,
+                quantity: 0.025,
+                pricePerCoin: 40000,
+                currency: 'USD',
+                dateTime: new Date().toISOString(),
+                createdAt: new Date().toISOString()
+            });
+        }
+    }
+
+    // Cập nhật dữ liệu portfolio
+    if (typeof window.updatePortfolioHoldings === 'function') {
+        window.updatePortfolioHoldings();
+    }
+    if (typeof window.calculatePortfolioValue === 'function') {
+        window.calculatePortfolioValue();
+    }
+
+    const portfolio = state.investmentPortfolio;
+    const holdings = portfolio.holdings;
+    const holdingsArray = Object.keys(holdings).map(coinId => ({
+        coinId,
+        ...holdings[coinId],
+        coin: coinsList.find(c => c.id === coinId)
+    })).filter(item => item.coin);
+
+    investmentView.innerHTML = `
+        <div class="space-y-6">
+            <h2 class="text-2xl font-bold text-gray-900">Investment Portfolio</h2>
+            
+            <!-- Portfolio Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <h3 class="text-gray-500 text-sm font-medium">Current Balance</h3>
+                    <p class="text-2xl font-bold text-gray-900">$${portfolio.totalValue.toFixed(2)}</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <h3 class="text-gray-500 text-sm font-medium">Total Profit/Loss</h3>
+                    <p class="text-2xl font-bold ${portfolio.totalPnL >= 0 ? 'text-green-600' : 'text-red-600'}">
+                        ${portfolio.totalPnL >= 0 ? '+' : ''}$${portfolio.totalPnL.toFixed(2)}
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <button id="add-investment-btn" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                        Add Transaction
+                    </button>
+                </div>
+            </div>
+
+            <!-- Portfolio Table -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="px-6 py-4 border-b">
+                    <h3 class="text-lg font-semibold">My Portfolio</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Token</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holding</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PnL</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            ${holdingsArray.length === 0 ? `
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                        No holdings yet. Add your first transaction!
+                                    </td>
+                                </tr>
+                            ` : holdingsArray.map(item => `
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img class="h-8 w-8 rounded-full" src="${item.coin.image}" alt="${item.coin.name}">
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">${item.coin.symbol}</div>
+                                                <div class="text-sm text-gray-500">${item.coin.name}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">$${item.currentPrice?.toFixed(2) || '0.00'}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">${item.totalQuantity.toFixed(6)}</div>
+                                        <div class="text-sm text-gray-500">$${item.currentValue?.toFixed(2) || '0.00'}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm ${item.pnl >= 0 ? 'text-green-600' : 'text-red-600'}">
+                                            ${item.pnl >= 0 ? '+' : ''}$${item.pnl?.toFixed(2) || '0.00'}
+                                        </div>
+                                        <div class="text-sm ${item.pnlPercentage >= 0 ? 'text-green-600' : 'text-red-600'}">
+                                            ${item.pnlPercentage >= 0 ? '+' : ''}${item.pnlPercentage?.toFixed(2) || '0.00'}%
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <div class="flex space-x-2">
+                                            <button onclick="showAddTransactionModal('${item.coinId}')" class="text-indigo-600 hover:text-indigo-900 font-bold">+</button>
+                                            <button onclick="showTransactionHistory('${item.coinId}')" class="text-gray-600 hover:text-gray-900">:</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Render biểu đồ holdings
+    renderHoldingsChart(holdingsArray);
+    
+    // Gắn event listener cho nút Add Transaction
+    const addBtn = document.getElementById('add-investment-btn');
+    if (addBtn) {
+        addBtn.addEventListener('click', () => showAddTransactionModal());
+    }
+}
+
+// Render biểu đồ phân bổ holdings
+function renderHoldingsChart(holdingsArray) {
+    const ctx = document.getElementById('holdings-chart');
+    if (!ctx) return;
+
+    if (holdingsArray.length === 0) {
+        ctx.style.display = 'none';
+        return;
+    }
+
+    ctx.style.display = 'block';
+    
+    const labels = holdingsArray.map(item => item.coin.symbol);
+    const data = holdingsArray.map(item => item.currentValue || 0);
+    const colors = ['#3b82f6', '#ef4444', '#22c55e', '#8b5cf6', '#eab308', '#06b6d4', '#f97316', '#8b5a2b', '#ec4899', '#10b981'];
+
+    if (window.holdingsChart) {
+        window.holdingsChart.destroy();
+    }
+
+    window.holdingsChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: colors,
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Hiển thị modal thêm giao dịch
+export function showAddTransactionModal(coinId = null) {
+    const modal = document.getElementById('investment-transaction-modal');
+    if (!modal) {
+        createInvestmentTransactionModal();
+    }
+    
+    const modalInstance = document.getElementById('investment-transaction-modal');
+    const coinSelect = document.getElementById('investment-coin-select');
+    const typeSelect = document.getElementById('investment-type-select');
+    
+    if (coinId && coinSelect) {
+        coinSelect.value = coinId;
+    }
+    
+    if (typeSelect) {
+        typeSelect.value = 'buy';
+    }
+    
+    modalInstance.classList.replace('hidden', 'flex');
+}
+
+// Tạo modal giao dịch đầu tư
+function createInvestmentTransactionModal() {
+    const modalHTML = `
+        <div id="investment-transaction-modal" class="fixed inset-0 z-50 items-center justify-center hidden">
+            <div class="modal-backdrop fixed inset-0"></div>
+            <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md z-10 m-4">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Add Transaction</h2>
+                    <button onclick="hideInvestmentTransactionModal()" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
+                </div>
+                <form id="investment-transaction-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Type</label>
+                        <select id="investment-type-select" class="w-full p-3 border rounded-lg bg-white" required>
+                            <option value="buy">Buy</option>
+                            <option value="sell">Sell</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Select Coin</label>
+                        <select id="investment-coin-select" class="w-full p-3 border rounded-lg bg-white" required>
+                            <option value="">Select a coin</option>
+                            ${coinsList.map(coin => `
+                                <option value="${coin.id}">${coin.symbol} - ${coin.name}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Total Spend</label>
+                        <div class="flex">
+                            <input type="text" id="investment-total-spend" class="flex-1 p-3 border rounded-l-lg" placeholder="0" required>
+                            <select id="investment-currency" class="p-3 border border-l-0 rounded-r-lg bg-white">
+                                <option value="USD">USD</option>
+                                <option value="VND">VND</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Quantity</label>
+                        <input type="text" id="investment-quantity" class="w-full p-3 border rounded-lg" placeholder="0" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Price per Coin</label>
+                        <input type="text" id="investment-price-per-coin" class="w-full p-3 border rounded-lg" placeholder="0" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2">Date & Time</label>
+                        <input type="datetime-local" id="investment-datetime" class="w-full p-3 border rounded-lg" required>
+                    </div>
+                    <div class="flex justify-end gap-4">
+                        <button type="button" onclick="hideInvestmentTransactionModal()" class="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 font-semibold">Cancel</button>
+                        <button type="submit" class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 font-semibold">Add Transaction</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Gắn event listener cho form
+    const form = document.getElementById('investment-transaction-form');
+    if (form) {
+        form.addEventListener('submit', handleInvestmentTransactionSubmit);
+    }
+    
+    // Gắn event listeners cho các input
+    setupInvestmentFormListeners();
+}
+
+// Xử lý submit form giao dịch đầu tư
+function handleInvestmentTransactionSubmit(e) {
+    e.preventDefault();
+    
+    const formData = {
+        coinId: document.getElementById('investment-coin-select').value,
+        type: document.getElementById('investment-type-select').value,
+        totalSpend: document.getElementById('investment-total-spend').value,
+        quantity: document.getElementById('investment-quantity').value,
+        pricePerCoin: document.getElementById('investment-price-per-coin').value,
+        currency: document.getElementById('investment-currency').value,
+        dateTime: document.getElementById('investment-datetime').value
+    };
+    
+    if (typeof window.addInvestmentTransaction === 'function') {
+        window.addInvestmentTransaction(formData);
+        hideInvestmentTransactionModal();
+        renderInvestmentView();
+    }
+}
+
+// Ẩn modal giao dịch đầu tư
+export function hideInvestmentTransactionModal() {
+    const modal = document.getElementById('investment-transaction-modal');
+    if (modal) {
+        modal.classList.replace('flex', 'hidden');
+    }
+}
+
+// Hiển thị lịch sử giao dịch của coin
+export function showTransactionHistory(coinId) {
+    const transactions = window.getTransactionsByCoin ? window.getTransactionsByCoin(coinId) : [];
+    const coin = coinsList.find(c => c.id === coinId);
+    
+    const modalHTML = `
+        <div id="transaction-history-modal" class="fixed inset-0 z-50 items-center justify-center flex">
+            <div class="modal-backdrop fixed inset-0"></div>
+            <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl z-10 m-4 max-h-[80vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Transaction History - ${coin?.symbol || coinId}</h2>
+                    <button onclick="hideTransactionHistoryModal()" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date & Time</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cost</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            ${transactions.length === 0 ? `
+                                <tr>
+                                    <td colspan="6" class="px-4 py-4 text-center text-gray-500">
+                                        No transactions found
+                                    </td>
+                                </tr>
+                            ` : transactions.map(tx => `
+                                <tr>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full ${tx.type === 'buy' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                            ${tx.type.toUpperCase()}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">$${tx.pricePerCoin.toFixed(2)}</td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">${tx.quantity.toFixed(6)}</td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(tx.dateTime).toLocaleString()}</td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">$${tx.totalSpend.toFixed(2)}</td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                                        <div class="flex space-x-2">
+                                            <button onclick="editTransaction('${tx.id}')" class="text-indigo-600 hover:text-indigo-900">Edit</button>
+                                            <button onclick="removeTransaction('${tx.id}')" class="text-red-600 hover:text-red-900">Remove</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Xóa modal cũ nếu có
+    const oldModal = document.getElementById('transaction-history-modal');
+    if (oldModal) {
+        oldModal.remove();
+    }
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// Ẩn modal lịch sử giao dịch
+export function hideTransactionHistoryModal() {
+    const modal = document.getElementById('transaction-history-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Setup event listeners cho form đầu tư
+function setupInvestmentFormListeners() {
+    const totalSpendInput = document.getElementById('investment-total-spend');
+    const quantityInput = document.getElementById('investment-quantity');
+    const pricePerCoinInput = document.getElementById('investment-price-per-coin');
+    
+    // Auto calculate quantity when total spend and price per coin change
+    if (totalSpendInput && pricePerCoinInput) {
+        const calculateQuantity = () => {
+            const totalSpend = parseFloat(totalSpendInput.value) || 0;
+            const pricePerCoin = parseFloat(pricePerCoinInput.value) || 0;
+            if (pricePerCoin > 0) {
+                quantityInput.value = (totalSpend / pricePerCoin).toFixed(6);
+            }
+        };
+        
+        totalSpendInput.addEventListener('input', calculateQuantity);
+        pricePerCoinInput.addEventListener('input', calculateQuantity);
+    }
+    
+    // Auto calculate price per coin when total spend and quantity change
+    if (totalSpendInput && quantityInput) {
+        const calculatePrice = () => {
+            const totalSpend = parseFloat(totalSpendInput.value) || 0;
+            const quantity = parseFloat(quantityInput.value) || 0;
+            if (quantity > 0) {
+                pricePerCoinInput.value = (totalSpend / quantity).toFixed(2);
+            }
+        };
+        
+        quantityInput.addEventListener('input', calculatePrice);
+    }
+    
+    // Set default datetime to now
+    const datetimeInput = document.getElementById('investment-datetime');
+    if (datetimeInput) {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        datetimeInput.value = now.toISOString().slice(0, 16);
+    }
+}
+
+// Export các hàm để sử dụng trong window
+window.showAddTransactionModal = showAddTransactionModal;
+window.hideInvestmentTransactionModal = hideInvestmentTransactionModal;
+window.showTransactionHistory = showTransactionHistory;
+window.hideTransactionHistoryModal = hideTransactionHistoryModal;
+
+// Hàm edit transaction
+export function editTransaction(transactionId) {
+    const transaction = state.investmentPortfolio.transactions.find(tx => tx.id === transactionId);
+    if (!transaction) return;
+    
+    const coin = coinsList.find(c => c.id === transaction.coinId);
+    
+    const modalHTML = `
+        <div id="edit-transaction-modal" class="fixed inset-0 z-50 items-center justify-center flex">
+            <div class="modal-backdrop fixed inset-0"></div>
+            <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md z-10 m-4">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Edit Transaction</h2>
+                    <button onclick="hideEditTransactionModal()" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
+                </div>
+                <form id="edit-transaction-form">
+                    <input type="hidden" id="edit-transaction-id" value="${transaction.id}">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Type</label>
+                        <select id="edit-type-select" class="w-full p-3 border rounded-lg bg-white" required>
+                            <option value="buy" ${transaction.type === 'buy' ? 'selected' : ''}>Buy</option>
+                            <option value="sell" ${transaction.type === 'sell' ? 'selected' : ''}>Sell</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Select Coin</label>
+                        <select id="edit-coin-select" class="w-full p-3 border rounded-lg bg-white" required>
+                            ${coinsList.map(coin => `
+                                <option value="${coin.id}" ${transaction.coinId === coin.id ? 'selected' : ''}>${coin.symbol} - ${coin.name}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Total Spend</label>
+                        <div class="flex">
+                            <input type="text" id="edit-total-spend" class="flex-1 p-3 border rounded-l-lg" value="${transaction.totalSpend}" required>
+                            <select id="edit-currency" class="p-3 border border-l-0 rounded-r-lg bg-white">
+                                <option value="USD" ${transaction.currency === 'USD' ? 'selected' : ''}>USD</option>
+                                <option value="VND" ${transaction.currency === 'VND' ? 'selected' : ''}>VND</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Quantity</label>
+                        <input type="text" id="edit-quantity" class="w-full p-3 border rounded-lg" value="${transaction.quantity}" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Price per Coin</label>
+                        <input type="text" id="edit-price-per-coin" class="w-full p-3 border rounded-lg" value="${transaction.pricePerCoin}" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2">Date & Time</label>
+                        <input type="datetime-local" id="edit-datetime" class="w-full p-3 border rounded-lg" value="${transaction.dateTime.slice(0, 16)}" required>
+                    </div>
+                    <div class="flex justify-end gap-4">
+                        <button type="button" onclick="hideEditTransactionModal()" class="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 font-semibold">Cancel</button>
+                        <button type="submit" class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 font-semibold">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    // Xóa modal cũ nếu có
+    const oldModal = document.getElementById('edit-transaction-modal');
+    if (oldModal) {
+        oldModal.remove();
+    }
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Gắn event listener cho form
+    const form = document.getElementById('edit-transaction-form');
+    if (form) {
+        form.addEventListener('submit', handleEditTransactionSubmit);
+    }
+    
+    // Setup auto calculation
+    setupEditFormListeners();
+}
+
+// Xử lý submit form edit transaction
+function handleEditTransactionSubmit(e) {
+    e.preventDefault();
+    
+    const transactionId = document.getElementById('edit-transaction-id').value;
+    const formData = {
+        coinId: document.getElementById('edit-coin-select').value,
+        type: document.getElementById('edit-type-select').value,
+        totalSpend: document.getElementById('edit-total-spend').value,
+        quantity: document.getElementById('edit-quantity').value,
+        pricePerCoin: document.getElementById('edit-price-per-coin').value,
+        currency: document.getElementById('edit-currency').value,
+        dateTime: document.getElementById('edit-datetime').value
+    };
+    
+    if (typeof window.updateInvestmentTransaction === 'function') {
+        window.updateInvestmentTransaction(transactionId, formData);
+        hideEditTransactionModal();
+        renderInvestmentView();
+    }
+}
+
+// Ẩn modal edit transaction
+export function hideEditTransactionModal() {
+    const modal = document.getElementById('edit-transaction-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Hàm remove transaction
+export function removeTransaction(transactionId) {
+    const modalHTML = `
+        <div id="remove-transaction-modal" class="fixed inset-0 z-50 items-center justify-center flex">
+            <div class="modal-backdrop fixed inset-0"></div>
+            <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md z-10 m-4">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Remove Transaction</h2>
+                    <button onclick="hideRemoveTransactionModal()" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
+                </div>
+                <div class="mb-6">
+                    <p class="text-gray-700">Are you sure you want to remove this transaction? This cannot be undone.</p>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button onclick="hideRemoveTransactionModal()" class="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 font-semibold">Cancel</button>
+                    <button onclick="confirmRemoveTransaction('${transactionId}')" class="px-6 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 font-semibold">Confirm</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Xóa modal cũ nếu có
+    const oldModal = document.getElementById('remove-transaction-modal');
+    if (oldModal) {
+        oldModal.remove();
+    }
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// Xác nhận xóa transaction
+export function confirmRemoveTransaction(transactionId) {
+    if (typeof window.deleteInvestmentTransaction === 'function') {
+        window.deleteInvestmentTransaction(transactionId);
+        hideRemoveTransactionModal();
+        renderInvestmentView();
+    }
+}
+
+// Ẩn modal remove transaction
+export function hideRemoveTransactionModal() {
+    const modal = document.getElementById('remove-transaction-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Setup event listeners cho form edit
+function setupEditFormListeners() {
+    const totalSpendInput = document.getElementById('edit-total-spend');
+    const quantityInput = document.getElementById('edit-quantity');
+    const pricePerCoinInput = document.getElementById('edit-price-per-coin');
+    
+    // Auto calculate quantity when total spend and price per coin change
+    if (totalSpendInput && pricePerCoinInput) {
+        const calculateQuantity = () => {
+            const totalSpend = parseFloat(totalSpendInput.value) || 0;
+            const pricePerCoin = parseFloat(pricePerCoinInput.value) || 0;
+            if (pricePerCoin > 0) {
+                quantityInput.value = (totalSpend / pricePerCoin).toFixed(6);
+            }
+        };
+        
+        totalSpendInput.addEventListener('input', calculateQuantity);
+        pricePerCoinInput.addEventListener('input', calculateQuantity);
+    }
+    
+    // Auto calculate price per coin when total spend and quantity change
+    if (totalSpendInput && quantityInput) {
+        const calculatePrice = () => {
+            const totalSpend = parseFloat(totalSpendInput.value) || 0;
+            const quantity = parseFloat(quantityInput.value) || 0;
+            if (quantity > 0) {
+                pricePerCoinInput.value = (totalSpend / quantity).toFixed(2);
+            }
+        };
+        
+        quantityInput.addEventListener('input', calculatePrice);
+    }
+}
+
+// Export thêm các hàm mới
+window.editTransaction = editTransaction;
+window.hideEditTransactionModal = hideEditTransactionModal;
+window.removeTransaction = removeTransaction;
+window.confirmRemoveTransaction = confirmRemoveTransaction;
+window.hideRemoveTransactionModal = hideRemoveTransactionModal;

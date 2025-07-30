@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Simple Test</h1>
+        
+        <div id="test-container" class="bg-white rounded-lg p-6">
+            <p>Test content...</p>
+        </div>
+        
+        <button id="test-btn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+            Test Button
+        </button>
+    </div>
+
+    <script type="module">
+        // Test import
+        try {
+            const { state, coinsList } = await import('./Project-Root/data.js');
+            console.log('Import successful:', { state, coinsList });
+            
+            document.getElementById('test-btn').addEventListener('click', () => {
+                console.log('Button clicked');
+                console.log('State:', state);
+                console.log('CoinsList:', coinsList);
+                
+                const container = document.getElementById('test-container');
+                container.innerHTML = `
+                    <h2 class="text-lg font-semibold mb-2">Test Results</h2>
+                    <p>State loaded: ${state ? 'Yes' : 'No'}</p>
+                    <p>Coins count: ${coinsList ? coinsList.length : 0}</p>
+                    <p>Investment portfolio: ${state.investmentPortfolio ? 'Exists' : 'Missing'}</p>
+                `;
+            });
+        } catch (error) {
+            console.error('Import failed:', error);
+            document.getElementById('test-container').innerHTML = `
+                <h2 class="text-lg font-semibold mb-2 text-red-600">Import Error</h2>
+                <p>${error.message}</p>
+            `;
+        }
+    </script>
+</body>
+</html> 

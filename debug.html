@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Investment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Debug Investment</h1>
+        
+        <div id="debug-container" class="bg-white rounded-lg p-6 mb-4">
+            <h2 class="text-lg font-semibold mb-2">Debug Info</h2>
+            <div id="debug-info">Loading...</div>
+        </div>
+        
+        <div id="investment-view" class="bg-white rounded-lg p-6">
+            <p>Investment view will appear here...</p>
+        </div>
+        
+        <button id="debug-btn" class="mt-4 bg-green-500 text-white px-4 py-2 rounded">
+            Debug State
+        </button>
+        
+        <button id="render-btn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded ml-2">
+            Render Investment
+        </button>
+    </div>
+
+    <script type="module">
+        let state = null;
+        let coinsList = null;
+        
+        try {
+            // Import data
+            const dataModule = await import('./Project-Root/data.js');
+            state = dataModule.state;
+            coinsList = dataModule.coinsList;
+            
+            console.log('Data imported successfully');
+            console.log('State:', state);
+            console.log('CoinsList:', coinsList);
+            
+            // Update debug info
+            document.getElementById('debug-info').innerHTML = `
+                <p>✅ Data imported successfully</p>
+                <p>State exists: ${state ? 'Yes' : 'No'}</p>
+                <p>Coins count: ${coinsList ? coinsList.length : 0}</p>
+                <p>Investment portfolio: ${state.investmentPortfolio ? 'Exists' : 'Missing'}</p>
+            `;
+            
+        } catch (error) {
+            console.error('Import failed:', error);
+            document.getElementById('debug-info').innerHTML = `
+                <p class="text-red-600">❌ Import failed: ${error.message}</p>
+            `;
+        }
+        
+        // Debug button
+        document.getElementById('debug-btn').addEventListener('click', () => {
+            console.log('Current state:', state);
+            console.log('Investment portfolio:', state?.investmentPortfolio);
+            
+            document.getElementById('debug-info').innerHTML = `
+                <p>State: ${JSON.stringify(state, null, 2)}</p>
+            `;
+        });
+        
+        // Render button
+        document.getElementById('render-btn').addEventListener('click', async () => {
+            try {
+                const { renderInvestmentView } = await import('./Project-Root/output.js');
+                console.log('renderInvestmentView imported');
+                renderInvestmentView();
+            } catch (error) {
+                console.error('Render failed:', error);
+                document.getElementById('investment-view').innerHTML = `
+                    <p class="text-red-600">Render failed: ${error.message}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html> 
