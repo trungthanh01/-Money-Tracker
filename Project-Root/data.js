@@ -5,11 +5,26 @@
 // --- CONFIGURATION DATA ---
 // Dữ liệu cấu hình cố định cho 5 chiếc hũ.
 export const jarsConfig = {
-    spending: { name: "Chi tiêu", color: "bg-blue-500", description: "Tiền chi tiêu hàng ngày (ăn uống, đi lại, hóa đơn...)" },
-    emergency: { name: "Khẩn cấp", color: "bg-red-500", description: "Quỹ dự phòng cho các trường hợp bất ngờ, mục tiêu 6 tháng chi tiêu." },
-    saving: { name: "Tiết kiệm", color: "bg-green-500", description: "Dành cho các mục tiêu lớn (du lịch, mua sắm, xe cộ...)" },
-    investment: { name: "Đầu tư", color: "bg-purple-500", description: "Gia tăng tài sản qua các kênh đầu tư (chứng khoán, crypto...)" },
-    education: { name: "Học tập", color: "bg-yellow-500", description: "Đầu tư cho kiến thức và phát triển bản thân." }
+    spending: { 
+        name: "Chi tiêu", 
+        color: "bg-blue-500", 
+        description: "Tiền chi tiêu hàng ngày (ăn uống, đi lại, hóa đơn...)" },
+    emergency: { 
+        name: "Khẩn cấp", 
+        color: "bg-red-500", 
+        description: "Quỹ dự phòng cho các trường hợp bất ngờ, mục tiêu 6 tháng chi tiêu." },
+    saving: { 
+        name: "Tiết kiệm", 
+        color: "bg-green-500", 
+        description: "Dành cho các mục tiêu lớn (du lịch, mua sắm, xe cộ...)" },
+    investment: { 
+        name: "Đầu tư", 
+        color: "bg-purple-500", 
+        description: "Gia tăng tài sản qua các kênh đầu tư (chứng khoán, crypto...)" },
+    education: { 
+        name: "Học tập", 
+        color: "bg-yellow-500", 
+        description: "Đầu tư cho kiến thức và phát triển bản thân." }
 };
 
 
