@@ -59,5 +59,9 @@ xây dựng nó 100% giống của coin gecko
                             cancel: tắt modal
                             confirm: dữ liệu đó sẽ bị xóa -> update lại chart, my portfolio
     
-
+/=====================================================/
+1. update chart.js cho phần invest
+2. tính toán PnL, tại sao, bằng cách nào lại xuất hiện con số PnL đó
+    giá thị trường cần được update như thế nào
+3. update file logo crypto
 
