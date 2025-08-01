@@ -338,11 +338,17 @@ function showSalaryLeftInTransactionModal() {
     salaryLeftEl.textContent = 'Tổng lương còn lại: ' + formatCurrency(salaryLeft);
 }
 
+
+
+
+
+
+
 // =================================================================
 // PHẦN RENDER ĐẦU TƯ
 // =================================================================
 
-// Render trang đầu tư
+//=============================================== Render trang đầu tư ===============================================
 export function renderInvestmentView() {
     const investmentView = document.getElementById('investment-view');
     if (!investmentView) {
