@@ -18,4 +18,23 @@ I. Nhập lương
 
 II. Thêm thu nhập
     đây là phần thêm thu nhập từ các nguồn tiền bên ngoài, gắn thêm mô tả cho user biết "Thu nhập thêm của bạn từ các nguồn công việc khác, hãy chọn hủ để bỏ vào, *nếu có nợ thì ưu tiên trả nợ trước nhé*". 
-    
+
+III. Thêm chi tiêu
+IV. 6 hủ và các tính năng chung và riêng.
+    Tính năng chung:
+    ------
+    Tính năng riêng:
+    Nợ:
+    Chi tiêu:
+    Khẩn cấp:
+    Tiết kiệm:
+    Đầu tư:
+    Học tập:
+
+    Mô tả toàn bộ tính năng từng hủ:
+    Nợ:
+    Chi tiêu:
+    Khẩn cấp:
+    Tiết kiệm:
+    Đầu tư:
+    Học tập:
