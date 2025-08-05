@@ -4,152 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Tài Chính Cá Nhân - 5 Hũ</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="icon" type="image/png" href="Project-Root/img/favicon-32x32.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <meta name="description" content="Ứng dụng quản lý tài chính cá nhân theo phương pháp 5 hũ. Giúp bạn kiểm soát thu chi, đầu tư và học tập hiệu quả.">
     <meta name="keywords" content="quản lý tài chính, 5 hũ, thu chi, đầu tư, học tập, cá nhân, money jars, money tracker">
     <meta name="author" content="Le Trung Thanh - Marcusleovn">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://yourdomain.com/">
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourdomain.com/">
     <meta property="og:title" content="Quản Lý Tài Chính Cá Nhân - 5 Hũ">
     <meta property="og:description" content="Ứng dụng quản lý tài chính cá nhân theo phương pháp 5 hũ. Giúp bạn kiểm soát thu chi, đầu tư và học tập hiệu quả.">
     <meta property="og:image" content="Project-Root/favicon-32x32.png">
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yourdomain.com/">
     <meta property="twitter:title" content="Quản Lý Tài Chính Cá Nhân - 5 Hũ">
     <meta property="twitter:description" content="Ứng dụng quản lý tài chính cá nhân theo phương pháp 5 hũ. Giúp bạn kiểm soát thu chi, đầu tư và học tập hiệu quả.">
     <meta property="twitter:image" content="Project-Root/favicon-32x32.png">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #f0f2f5; }
-        .view { display: none; animation: fadeIn 0.5s; }
-        .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .modal-backdrop { background-color: rgba(0,0,0,0.5); }
-        .nav-btn.active-nav-btn { background-color: #eef2ff; color: #4f46e5; }
-    </style>
 </head>
-<body class="text-gray-800">
-    <!-- Toàn bộ cấu trúc HTML của các thẻ div, header, main, nav, modal... vẫn giữ nguyên như cũ -->
-    <!-- ... (Phần thân HTML không thay đổi) ... -->
-
-    <div id="app-container" class="max-w-7xl mx-auto p-4">
-        <!-- Header -->
-        <header class="bg-white shadow-md rounded-xl p-4 mb-6 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center">
+<body>
+    <div id="app-container">
+        <header class="card header-main">
+            <div class="header-title">
+                <div class="logo-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Logo quản lý tài chính"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
                 </div>
-                <h1 class="text-2xl font-bold text-gray-800">Trình Quản Lý Tài Chính</h1>
+                <h1>Trình Quản Lý Tài Chính</h1>
             </div>
-            <div id="auth-info" class="text-xs text-gray-500">Dữ liệu được lưu trên trình duyệt này</div>
+            <div id="auth-info">Dữ liệu được lưu trên trình duyệt này</div>
         </header>
 
-        <!-- Navigation -->
-        <nav class="bg-white shadow-md rounded-xl p-2 mb-6">
-            <ul class="flex items-center justify-center space-x-2 sm:space-x-4">
-                <li><button data-view="dashboard" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Bảng Tin</span></button></li>
-                <li><button data-view="investment" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Đầu Tư</span></button></li>
-                <li><button data-view="education" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-200"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg><span>Học Tập</span></button></li>
+        <nav class="card nav-main">
+            <ul>
+                <li><button data-view="dashboard" class="nav-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Bảng Tin</span></button></li>
+                <li><button data-view="investment" class="nav-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Đầu Tư</span></button></li>
+                <li><button data-view="education" class="nav-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg><span>Học Tập</span></button></li>
             </ul>
         </nav>
 
-        <!-- Main Content -->
         <main>
             <div id="dashboard-view" class="view active">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div class="bg-white shadow-md rounded-xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between col-span-1 md:col-span-2">
+                <div class="grid-container dashboard-summary">
+                    <div class="card card-balance">
                         <div>
-                            <p class="text-gray-500">Tổng Số Dư</p>
-                            <p id="total-balance" class="text-4xl font-bold text-indigo-600">0 ₫</p>
+                            <p class="text-muted">Tổng Số Dư</p>
+                            <p id="total-balance" class="total-balance-amount">0 ₫</p>
                         </div>
-                        <div class="flex gap-2 mt-4 sm:mt-0">
-                            <button id="add-income-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-5 rounded-lg transition-colors">Thêm Thu Nhập</button>
-                            <button id="add-expense-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-5 rounded-lg transition-colors">Thêm Chi Tiêu</button>
-                            <button id="add-salary-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-5 rounded-lg transition-colors">Nhập Lương</button>
+                        <div class="action-buttons">
+                            <button id="add-income-btn" class="btn btn-green">Thêm Thu Nhập</button>
+                            <button id="add-expense-btn" class="btn btn-red">Thêm Chi Tiêu</button>
+                            <button id="add-salary-btn" class="btn btn-blue">Nhập Lương</button>
                         </div>
                     </div>
-                    <div class="bg-white shadow-md rounded-xl p-6">
-                         <p class="text-gray-500 mb-2">Phân Bổ Tài Sản</p>
+                    <div class="card card-chart">
+                         <p class="text-muted">Phân Bổ Tài Sản</p>
                          <canvas id="jars-chart"></canvas>
                     </div>
                 </div>
-                <div id="jars-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"></div>
+                <div id="jars-container" class="grid-container jars-grid"></div>
             </div>
             <div id="investment-view" class="view"></div>
             <div id="education-view" class="view"></div>
         </main>
     </div>
 
-    <!-- Modals -->
-    <div id="transaction-modal" class="fixed inset-0 z-50 items-center justify-center hidden">
-        <div class="modal-backdrop fixed inset-0"></div>
-        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md z-10 m-4">
-            <h2 id="transaction-modal-title" class="text-2xl font-bold mb-6">Thêm Giao Dịch</h2>
+    <div id="transaction-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="transaction-modal-title" class="modal-title">Thêm Giao Dịch</h2>
             <form id="transaction-form">
                 <input type="hidden" id="transaction-type">
-                <div class="mb-4">
-                    <label for="transaction-amount" class="block text-gray-700 font-medium mb-2">Số tiền</label>
-                    <input type="text" id="transaction-amount" class="w-full p-3 border rounded-lg" placeholder="0" required>
+                <div class="form-group">
+                    <label for="transaction-amount">Số tiền</label>
+                    <input type="text" id="transaction-amount" class="form-input" placeholder="0" required>
                 </div>
-                <div class="mb-4">
-                    <label for="transaction-description" class="block text-gray-700 font-medium mb-2">Mô tả</label>
-                    <input type="text" id="transaction-description" class="w-full p-3 border rounded-lg" placeholder="VD: Lương tháng 7, Tiền ăn tối" required>
+                <div class="form-group">
+                    <label for="transaction-description">Mô tả</label>
+                    <input type="text" id="transaction-description" class="form-input" placeholder="VD: Lương tháng 7, Tiền ăn tối" required>
                 </div>
-                <div class="mb-6">
-                    <label for="transaction-jar" class="block text-gray-700 font-medium mb-2">Chọn hũ</label>
-                    <select id="transaction-jar" class="w-full p-3 border rounded-lg bg-white"></select>
+                <div class="form-group">
+                    <label for="transaction-jar">Chọn hũ</label>
+                    <select id="transaction-jar" class="form-input"></select>
                 </div>
-                <div class="flex justify-end gap-4">
-                    <button type="button" id="cancel-transaction-btn" class="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 font-semibold">Hủy</button>
-                    <button type="submit" id="save-transaction-btn" class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 font-semibold">Lưu</button>
+                <div class="form-actions">
+                    <button type="button" id="cancel-transaction-btn" class="btn btn-light">Hủy</button>
+                    <button type="submit" id="save-transaction-btn" class="btn btn-primary">Lưu</button>
                 </div>
             </form>
         </div>
     </div>
-    <div id="jar-detail-modal" class="fixed inset-0 z-50 items-center justify-center hidden"></div>
+    <div id="jar-detail-modal" class="modal"></div>
 
-    <!-- Modal chỉnh sửa tổng lương -->
-    <div id="edit-salary-modal" class="fixed inset-0 z-50 items-center justify-center hidden">
-        <div class="modal-backdrop fixed inset-0"></div>
-        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md z-10 m-4 relative flex flex-col">
-            <button class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-2xl font-bold" onclick="hideEditSalaryModal()">&times;</button>
-            <h2 class="text-2xl font-bold mb-4">Chỉnh sửa tổng lương</h2>
-            <div class="mb-4">
-                <label for="edit-salary-amount" class="block text-gray-700 font-medium mb-2">Tổng lương mới</label>
-                <input type="text" id="edit-salary-amount" class="w-full p-3 border rounded-lg" placeholder="0" autocomplete="off" required>
+    <div id="edit-salary-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideEditSalaryModal()">&times;</button>
+            <h2 class="modal-title">Chỉnh sửa tổng lương</h2>
+            <div class="form-group">
+                <label for="edit-salary-amount">Tổng lương mới</label>
+                <input type="text" id="edit-salary-amount" class="form-input" placeholder="0" autocomplete="off" required>
             </div>
-            <div class="flex justify-end gap-4">
-                <button type="button" id="cancel-edit-salary-btn" class="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 font-semibold">Hủy</button>
-                <button type="button" id="save-edit-salary-btn" class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 font-semibold">Lưu</button>
+            <div class="form-actions">
+                <button type="button" id="cancel-edit-salary-btn" class="btn btn-light">Hủy</button>
+                <button type="button" id="save-edit-salary-btn" class="btn btn-primary">Lưu</button>
             </div>
         </div>
     </div>
-    <footer class="bg-white shadow-md rounded-xl flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-6 py-4 mt-8 w-full">
-        <div class="flex items-center gap-2">
-            <span class="text-gray-500">By</span>
-            <a href="https://trungthanh01.github.io/Personal-Portfolio-2/" 
-                class="text-indigo-600 font-semibold hover:underline" target="_blank">Marcusleovn</a>
+
+    <footer class="card footer-main">
+        <div class="footer-credit">
+            <span class="text-muted">By</span>
+            <a href="https://trungthanh01.github.io/Personal-Portfolio-2/" class="footer-link" target="_blank">Marcusleovn</a>
         </div>
-        <div class="flex items-center gap-4 mt-2 sm:mt-0">
-            <a href="https://github.com/trungthanh01" target="_blank" rel="noopener" aria-label="GitHub" class="text-gray-500 hover:text-indigo-600 transition-colors text-xl">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/trung-thanh-le-8460bb35b/" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-gray-500 hover:text-indigo-600 transition-colors text-xl">
-                <i class="fa-brands fa-linkedin-in"></i>
-            </a>
-            <a href="https://x.com/marcusleovn" target="_blank" rel="noopener" aria-label="X (Twitter)" class="text-gray-500 hover:text-indigo-600 transition-colors text-xl">
-                <i class="fa-brands fa-x-twitter"></i>
-            </a>
+        <div class="footer-social">
+            <a href="https://github.com/trungthanh01" target="_blank" rel="noopener" aria-label="GitHub" class="social-icon"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/trung-thanh-le-8460bb35b/" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://x.com/marcusleovn" target="_blank" rel="noopener" aria-label="X (Twitter)" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
         </div>
     </footer>
-    <!-- Chỉ cần gọi một file script chính, nó sẽ tự import các file khác -->
-    <script type="module" src="Project-Root/main.js"></script>
+
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
