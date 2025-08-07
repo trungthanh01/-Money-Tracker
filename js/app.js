@@ -18,14 +18,13 @@ import {
 import { 
   initializeI18n, 
   changeLanguage, 
-  getLanguageCode,
-  t 
+  getCurrentLanguage,
+  getTranslation 
 } from './i18n.js';
 
 import { 
   initializeTheme, 
-  toggleTheme, 
-  getCurrentTheme 
+  toggleTheme 
 } from './theme.js';
 
 // === GLOBAL VARIABLES ===
@@ -421,27 +420,7 @@ function handleThemeToggle() {
  * Function: Initialize settings
  * Trách nhiệm duy nhất: Khởi tạo settings modules
  */
-async function initializeSettings() {
-  try {
-    console.log('⚙️ Initializing settings...');
-    
-    // Initialize i18n
-    await initializeI18n();
-    
-    // Initialize theme
-    initializeTheme();
-    
-    // Set language selector value
-    const languageSelect = document.getElementById('language-select');
-    if (languageSelect) {
-      languageSelect.value = getLanguageCode();
-    }
-    
-    console.log('✅ Settings initialized');
-  } catch (error) {
-    console.error('❌ Settings initialization failed:', error);
-  }
-}
+
 
 // === INITIALIZATION ===
 
@@ -539,7 +518,8 @@ async function initApp() {
   console.log('🚀 Starting Money Tracker with Settings...');
   
   // 1. Initialize settings first (không ảnh hưởng core)
-  await initializeSettings();
+  await initializeI18n();
+  await initializeTheme();
   
   // 2. Update UI
   updateUI();
@@ -553,8 +533,8 @@ async function initApp() {
   // 5. Check first time user
   if (getSalary() === 0) {
     setTimeout(() => {
-      // Use translated welcome message if available
-      const welcomeMsg = (typeof t === 'function' && t('messages.welcome')) || 'Chào mừng! Hãy nhập lương để bắt đầu.';
+      // Use translated welcome message
+      const welcomeMsg = window.t ? window.t('messages.welcome') : 'Chào mừng! Hãy nhập lương để bắt đầu.';
       alert(welcomeMsg);
       loadSalaryData();
       showModal('salary-modal');

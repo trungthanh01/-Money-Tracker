@@ -32,10 +32,10 @@
                     <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
                         <span class="text-white font-bold text-xl">💰</span>
                     </div>
-                    <h1 class="text-xl font-bold text-gray-900">Trình Quản Lý Tài Chính</h1>
+                    <h1 class="text-xl font-bold text-gray-900" data-i18n="header.title">Trình Quản Lý Tài Chính</h1>
                 </div>
                 <!-- Thông báo về việc lưu trữ local -->
-                <div class="text-sm text-gray-500">
+                <div class="text-sm text-gray-500" data-i18n="header.subtitle">
                     Dữ liệu được lưu trên trình duyệt này
                 </div>
             </div>
@@ -47,19 +47,19 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex space-x-8">
                 <!-- Tab Bảng tin - Màn hình chính -->
-                <button class="tab-btn py-4 px-2 border-b-2 border-blue-500 text-blue-600 font-medium" data-tab="dashboard">
+                <button class="tab-btn py-4 px-2 border-b-2 border-blue-500 text-blue-600 font-medium" data-tab="dashboard" data-i18n="navigation.dashboard">
                     🏠 Bảng Tin
                 </button>
                 <!-- Tab Đầu tư - Tính năng mở rộng -->
-                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="investment">
+                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="investment" data-i18n="navigation.investment">
                     💹 Đầu Tư
                 </button>
                 <!-- Tab Học tập - Tính năng mở rộng -->
-                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="learning">
+                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="learning" data-i18n="navigation.learning">
                     📚 Học Tập
                 </button>
                 <!-- Tab Cài đặt - Settings -->
-                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="settings">
+                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="settings" data-i18n="navigation.settings">
                     ⚙️ Cài Đặt
                 </button>
             </div>
@@ -77,23 +77,23 @@
                     <div class="bg-white rounded-lg shadow-sm p-6">
                         <div class="flex items-center justify-between mb-4">
                         <div>
-                                <h2 class="text-lg font-semibold text-gray-700">Tổng Số Dư</h2>
+                                <h2 class="text-lg font-semibold text-gray-700" data-i18n="dashboard.totalBalance">Tổng Số Dư</h2>
                                 <div class="text-3xl font-bold text-blue-600" id="total-balance">0 ₫</div>
                                 <div class="text-sm text-green-600 mt-1">
-                                    Tổng Lương: <span id="total-salary">0 ₫</span>
+                                    <span data-i18n="dashboard.totalSalary">Tổng Lương</span>: <span id="total-salary">0 ₫</span>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Action Buttons - Các nút thao tác chính -->
                         <div class="flex space-x-3">
-                            <button id="btn-add-income" class="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                            <button id="btn-add-income" class="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="dashboard.addIncome">
                                 Thêm Thu Nhập
                             </button>
-                            <button id="btn-add-expense" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                            <button id="btn-add-expense" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="dashboard.addExpense">
                                 Thêm Chi Tiêu
                             </button>
-                            <button id="btn-edit-salary" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                            <button id="btn-edit-salary" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="dashboard.editSalary">
                                 Nhập Lương
                             </button>
                         </div>
@@ -106,7 +106,7 @@
 
                     <!-- Recent Transactions - Danh sách giao dịch gần đây -->
                     <div class="bg-white rounded-lg shadow-sm p-6">
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Giao Dịch Gần Đây</h3>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="dashboard.recentTransactions">Giao Dịch Gần Đây</h3>
                         <div id="transactions-list">
                             <!-- Danh sách giao dịch sẽ được tạo động -->
                         </div>
@@ -117,7 +117,7 @@
                 <div class="space-y-6">
                     <!-- Chart Card - Card hiển thị biểu đồ tròn -->
                     <div class="bg-white rounded-lg shadow-sm p-6">
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Phân Bổ Tài Sản</h3>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="dashboard.assetAllocation">Phân Bổ Tài Sản</h3>
                         <!-- Canvas cho Chart.js -->
                         <div class="relative h-64">
                             <canvas id="jar-chart"></canvas>
@@ -134,16 +134,16 @@
         <!-- Investment Tab - Tab đầu tư (placeholder) -->
         <div id="investment-tab" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-sm p-6 text-center">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Tính Năng Đầu Tư</h2>
-                <p class="text-gray-500">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4" data-i18n="tabs.investmentTitle">Tính Năng Đầu Tư</h2>
+                <p class="text-gray-500" data-i18n="tabs.investmentDescription">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
             </div>
         </div>
 
         <!-- Learning Tab - Tab học tập (placeholder) -->
         <div id="learning-tab" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-sm p-6 text-center">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Tính Năng Học Tập</h2>
-                <p class="text-gray-500">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4" data-i18n="tabs.learningTitle">Tính Năng Học Tập</h2>
+                <p class="text-gray-500" data-i18n="tabs.learningDescription">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
             </div>
         </div>
 
@@ -152,9 +152,9 @@
             <div class="max-w-2xl mx-auto space-y-6">
                 <!-- Language Settings -->
                 <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">🌐 Ngôn Ngữ</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.language">🌐 Ngôn Ngữ</h3>
                     <div class="space-y-3">
-                        <label class="block text-sm font-medium text-gray-700">Chọn ngôn ngữ</label>
+                        <label class="block text-sm font-medium text-gray-700" data-i18n="settings.languageSelect">Chọn ngôn ngữ</label>
                         <select id="language-select" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="en">English</option>
                             <option value="vi">Tiếng Việt</option>
@@ -164,9 +164,9 @@
 
                 <!-- Theme Settings -->
                 <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">🎨 Giao Diện</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.theme">🎨 Giao Diện</h3>
                     <div class="space-y-4">
-                        <label class="block text-sm font-medium text-gray-700">Chuyển đổi giao diện</label>
+                        <label class="block text-sm font-medium text-gray-700" data-i18n="settings.themeToggleLabel">Chuyển đổi giao diện</label>
                         
                         <!-- Theme Toggle Button -->
                         <button id="theme-toggle-btn" class="w-full p-4 bg-gray-200 hover:bg-gray-300 rounded-lg transition-all font-medium">
@@ -174,61 +174,42 @@
                         </button>
                         
                         <div class="text-sm text-gray-500">
-                            <p>Click để chuyển đổi giữa giao diện sáng và tối</p>
+                            <p data-i18n="settings.themeToggleDescription">Click để chuyển đổi giữa giao diện sáng và tối</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Support Settings -->
                 <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">🆘 Hỗ Trợ</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.support">🆘 Hỗ Trợ</h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
                             <div>
-                                <div class="font-medium text-blue-900">Liên Hệ Hỗ Trợ</div>
-                                <div class="text-sm text-blue-700">Gặp vấn đề? Hãy liên hệ với chúng tôi</div>
+                                <div class="font-medium text-blue-900" data-i18n="settings.contactSupport">Liên Hệ Hỗ Trợ</div>
+                                <div class="text-sm text-blue-700" data-i18n="settings.supportDescription">Gặp vấn đề? Hãy liên hệ với chúng tôi</div>
                             </div>
-                            <a href="mailto:trungthanh.marcus@gmail.com" id="contact-support-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                            <a href="mailto:trungthanh.marcus@gmail.com" id="contact-support-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="settings.sendEmail">
                                 Gửi Email
                             </a>
                         </div>
                         
                         <div class="text-sm text-gray-500">
-                            <p><strong>Email hỗ trợ:</strong> trungthanh.marcus@gmail.com</p>
-                            <p><strong>Thời gian phản hồi:</strong> 24-48 giờ</p>
+                            <p><strong data-i18n="settings.supportEmail">Email hỗ trợ</strong>: trungthanh.marcus@gmail.com</p>
+                            <p><strong data-i18n="settings.responseTime">Thời gian phản hồi</strong>: <span data-i18n="settings.responseTimeValue">24-48 giờ</span></p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Data Management -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">💾 Quản Lý Dữ Liệu</h3>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <button id="export-data-btn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                📤 Xuất Dữ Liệu
-                            </button>
-                            <button id="import-data-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                📥 Nhập Dữ Liệu
-                            </button>
-                        </div>
-                        <button id="clear-data-btn" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                            🗑️ Xóa Tất Cả Dữ Liệu
-                        </button>
-                        <div class="text-sm text-gray-500">
-                            <p><strong>Lưu ý:</strong> Dữ liệu được lưu trữ local trên trình duyệt. Hãy xuất dữ liệu để backup.</p>
-                        </div>
-                    </div>
-    </div>
+
 
                 <!-- App Info -->
                 <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">ℹ️ Thông Tin App</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.appInfo">ℹ️ Thông Tin App</h3>
                     <div class="space-y-2 text-sm text-gray-600">
-                        <p><strong>Phiên bản:</strong> 1.0.0</p>
-                        <p><strong>Ngày cập nhật:</strong> 05/01/2025</p>
-                        <p><strong>Công nghệ:</strong> HTML5, JavaScript ES6+, Tailwind CSS, Chart.js</p>
-                        <p><strong>Lưu trữ:</strong> LocalStorage (Offline)</p>
+                        <p><strong data-i18n="settings.version">Phiên bản</strong>: 1.0.0</p>
+                        <p><strong data-i18n="settings.lastUpdate">Ngày cập nhật</strong>: 05/01/2025</p>
+                        <p><strong data-i18n="settings.technology">Công nghệ</strong>: HTML5, JavaScript ES6+, Tailwind CSS, Chart.js</p>
+                        <p><strong data-i18n="settings.storage">Lưu trữ</strong>: LocalStorage (Offline)</p>
                     </div>
                 </div>
             </div>
@@ -238,27 +219,27 @@
     <!-- Transaction Modal - Modal nhập giao dịch -->
     <div id="transaction-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-            <h3 id="modal-title" class="text-lg font-semibold text-gray-700 mb-4">Thêm Giao Dịch</h3>
+            <h3 id="modal-title" class="text-lg font-semibold text-gray-700 mb-4" data-i18n="modals.addTransaction">Thêm Giao Dịch</h3>
             
             <!-- Form nhập giao dịch -->
             <form id="transaction-form">
                 <!-- Input số tiền -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Số tiền (VND)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.amount">Số tiền (VND)</label>
                     <input type="number" id="amount-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 
                 <!-- Input mô tả -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Mô tả</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.description">Mô tả</label>
                     <input type="text" id="description-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 
                 <!-- Select hủ -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Chọn hủ</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.selectJar">Chọn hủ</label>
                     <select id="jar-select" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        <option value="">-- Chọn hủ --</option>
+                        <option value="" data-i18n="modals.selectJarPlaceholder">-- Chọn hủ --</option>
                         <option value="debt">Nợ</option>
                         <option value="expenses">Chi tiêu</option>
                         <option value="emergency">Khẩn cấp</option>
@@ -270,10 +251,10 @@
                 
                 <!-- Buttons -->
                 <div class="flex space-x-3">
-                    <button type="button" id="cancel-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                    <button type="button" id="cancel-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.cancel">
                         Hủy
                     </button>
-                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.save">
                         Lưu
                     </button>
                 </div>
@@ -284,19 +265,19 @@
     <!-- Salary Modal - Modal nhập/chỉnh sửa lương -->
     <div id="salary-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Nhập Lương & Tỉ Lệ</h3>
+            <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="modals.editSalaryTitle">Nhập Lương & Tỉ Lệ</h3>
             
             <!-- Form nhập lương -->
             <form id="salary-form">
                 <!-- Input lương -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Lương tháng (VND)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.monthlySalary">Lương tháng (VND)</label>
                     <input type="number" id="salary-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 
                 <!-- Inputs tỉ lệ các hủ -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Tỉ lệ các hủ (%)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.jarRatios">Tỉ lệ các hủ (%)</label>
                     <div class="space-y-2">
                         <div class="flex items-center space-x-2">
                             <span class="w-16 text-sm">Nợ:</span>
@@ -330,16 +311,16 @@
                         </div>
                     </div>
                     <div class="mt-2 text-sm text-gray-500">
-                        Tổng: <span id="total-ratio">100</span>%
+                        <span data-i18n="modals.total">Tổng</span>: <span id="total-ratio">100</span>%
                     </div>
             </div>
                 
                 <!-- Buttons -->
                 <div class="flex space-x-3">
-                    <button type="button" id="cancel-salary-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                    <button type="button" id="cancel-salary-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.cancel">
                         Hủy
                     </button>
-                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.save">
                         Lưu
                     </button>
             </div>
