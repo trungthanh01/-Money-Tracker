@@ -1,0 +1,107 @@
+{
+  "header": {
+    "title": "Personal Finance Manager",
+    "subtitle": "Data stored locally on this browser"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "investment": "Investment", 
+    "learning": "Learning",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "totalBalance": "Total Balance",
+    "totalSalary": "Total Salary",
+    "addIncome": "Add Income",
+    "addExpense": "Add Expense", 
+    "editSalary": "Edit Salary",
+    "assetAllocation": "Asset Allocation",
+    "recentTransactions": "Recent Transactions",
+    "noTransactions": "No transactions yet"
+  },
+  "jars": {
+    "debt": {
+      "name": "Debt",
+      "description": "Money for paying off debts and credit cards"
+    },
+    "expenses": {
+      "name": "Expenses",
+      "description": "Daily expenses (food, transport, bills...)"
+    },
+    "emergency": {
+      "name": "Emergency", 
+      "description": "Emergency fund for unexpected situations"
+    },
+    "savings": {
+      "name": "Savings",
+      "description": "Savings for big goals (travel, shopping, vehicles...)"
+    },
+    "investment": {
+      "name": "Investment",
+      "description": "Growing wealth through investments (stocks, crypto...)"
+    },
+    "learning": {
+      "name": "Learning",
+      "description": "Investment in knowledge and personal development"
+    }
+  },
+  "modals": {
+    "addTransaction": "Add Transaction",
+    "addIncomeTitle": "Add Income",
+    "addExpenseTitle": "Add Expense", 
+    "editSalaryTitle": "Edit Salary & Ratios",
+    "amount": "Amount (VND)",
+    "description": "Description",
+    "selectJar": "Select Jar",
+    "selectJarPlaceholder": "-- Select Jar --",
+    "monthlySalary": "Monthly Salary (VND)",
+    "jarRatios": "Jar Ratios (%)",
+    "total": "Total",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "settings": {
+    "language": "Language",
+    "languageSelect": "Select Language",
+    "theme": "Theme",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "lightDescription": "White background, dark text",
+    "darkDescription": "Dark background, white text",
+    "support": "Support",
+    "contactSupport": "Contact Support",
+    "supportDescription": "Having issues? Contact us",
+    "supportEmail": "Support email:",
+    "responseTime": "Response time:",
+    "responseTimeValue": "24-48 hours",
+    "dataManagement": "Data Management",
+    "exportData": "Export Data",
+    "importData": "Import Data", 
+    "clearData": "Clear All Data",
+    "dataNote": "Note: Data is stored locally in browser. Export data for backup.",
+    "appInfo": "App Information",
+    "version": "Version:",
+    "lastUpdate": "Last update:",
+    "technology": "Technology:",
+    "storage": "Storage:"
+  },
+  "messages": {
+    "incomeAdded": "Income added successfully!",
+    "expenseAdded": "Expense added successfully!",
+    "salaryUpdated": "Salary updated successfully!",
+    "welcome": "Welcome to Money Tracker! Please enter your salary to get started.",
+    "pleaseEnterValidAmount": "Please enter a valid amount",
+    "pleaseEnterDescription": "Please enter a description", 
+    "pleaseSelectJar": "Please select a jar",
+    "pleaseEnterValidSalary": "Please enter a valid salary",
+    "totalRatioMustBe100": "Total ratio must equal 100%",
+    "languageChanged": "Language changed successfully!",
+    "themeChanged": "Theme changed successfully!"
+  },
+  "tabs": {
+    "investmentTitle": "Investment Feature",
+    "investmentDescription": "This feature will be developed in future versions",
+    "learningTitle": "Learning Feature", 
+    "learningDescription": "This feature will be developed in future versions"
+  }
+}

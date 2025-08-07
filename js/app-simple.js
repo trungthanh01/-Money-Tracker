@@ -14,20 +14,6 @@ import {
   getRatios
 } from './data.js';
 
-// Import settings modules (không ảnh hưởng core)
-import { 
-  initializeI18n, 
-  changeLanguage, 
-  getLanguageCode,
-  t 
-} from './i18n.js';
-
-import { 
-  initializeTheme, 
-  toggleTheme, 
-  getCurrentTheme 
-} from './theme.js';
-
 // === GLOBAL VARIABLES ===
 let jarChart = null; // Chart instance
 
@@ -372,77 +358,6 @@ function updateTotalRatio() {
   }
 }
 
-// === SETTINGS FUNCTIONS (riêng lẻ, không ảnh hưởng core) ===
-
-/**
- * Function: Handle language change
- * Trách nhiệm duy nhất: Xử lý thay đổi ngôn ngữ
- */
-async function handleLanguageChange(e) {
-  try {
-    const langCode = e.target.value;
-    console.log(`🌐 Changing language to: ${langCode}`);
-    
-    const success = await changeLanguage(langCode);
-    
-    if (success) {
-      // Simple success message
-      alert(langCode === 'vi' ? 'Đã thay đổi ngôn ngữ!' : 'Language changed!');
-    } else {
-      alert('Language change failed');
-    }
-  } catch (error) {
-    console.error('Language change error:', error);
-    alert('Language change failed');
-  }
-}
-
-/**
- * Function: Handle theme toggle
- * Trách nhiệm duy nhất: Xử lý toggle theme
- */
-function handleThemeToggle() {
-  try {
-    console.log('🎨 Toggling theme...');
-    
-    const newTheme = toggleTheme();
-    
-    // Simple success message
-    const message = newTheme === 'dark' ? 'Đã chuyển sang giao diện tối!' : 'Đã chuyển sang giao diện sáng!';
-    alert(message);
-    
-  } catch (error) {
-    console.error('Theme toggle error:', error);
-    alert('Theme change failed');
-  }
-}
-
-/**
- * Function: Initialize settings
- * Trách nhiệm duy nhất: Khởi tạo settings modules
- */
-async function initializeSettings() {
-  try {
-    console.log('⚙️ Initializing settings...');
-    
-    // Initialize i18n
-    await initializeI18n();
-    
-    // Initialize theme
-    initializeTheme();
-    
-    // Set language selector value
-    const languageSelect = document.getElementById('language-select');
-    if (languageSelect) {
-      languageSelect.value = getLanguageCode();
-    }
-    
-    console.log('✅ Settings initialized');
-  } catch (error) {
-    console.error('❌ Settings initialization failed:', error);
-  }
-}
-
 // === INITIALIZATION ===
 
 function bindEvents() {
@@ -508,22 +423,6 @@ function bindEvents() {
     }
   });
   
-  // === SETTINGS EVENTS (riêng lẻ) ===
-  
-  // Language selector
-  const languageSelect = document.getElementById('language-select');
-  if (languageSelect) {
-    languageSelect.addEventListener('change', handleLanguageChange);
-    console.log('✅ Language selector bound');
-  }
-  
-  // Theme toggle button
-  const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', handleThemeToggle);
-    console.log('✅ Theme toggle bound');
-  }
-  
   // ESC key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -532,36 +431,31 @@ function bindEvents() {
     }
   });
   
-  console.log('✅ All events bound');
+  console.log('✅ Events bound');
 }
 
-async function initApp() {
-  console.log('🚀 Starting Money Tracker with Settings...');
+function initApp() {
+  console.log('🚀 Starting Simple Money Tracker...');
   
-  // 1. Initialize settings first (không ảnh hưởng core)
-  await initializeSettings();
-  
-  // 2. Update UI
+  // 1. Update UI first
   updateUI();
   
-  // 3. Bind events
+  // 2. Bind events
   bindEvents();
   
-  // 4. Show dashboard
+  // 3. Show dashboard
   switchTab('dashboard');
   
-  // 5. Check first time user
+  // 4. Check first time user
   if (getSalary() === 0) {
     setTimeout(() => {
-      // Use translated welcome message if available
-      const welcomeMsg = (typeof t === 'function' && t('messages.welcome')) || 'Chào mừng! Hãy nhập lương để bắt đầu.';
-      alert(welcomeMsg);
+      alert('Chào mừng! Hãy nhập lương để bắt đầu.');
       loadSalaryData();
       showModal('salary-modal');
-    }, 1000);
+    }, 500);
   }
   
-  console.log('✅ Money Tracker with Settings Started!');
+  console.log('✅ Simple Money Tracker Started!');
 }
 
 // === APP START ===

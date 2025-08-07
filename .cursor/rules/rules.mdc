@@ -5,7 +5,7 @@ alwaysApply: true
  - đặt các comment để giải thích code một cách chi tiết và dễ hiểu sử dụng Feynman
 tạo một file riêng để giải thích các file javascript, tôi cần hiểu các dòng code là gì.
  - mỗi framework sẽ có 1 file riêng như javascript là 1 file document riêng và tailwind css là 1 file document riêng và tất cả các file khác cũng vậy.
-
+- đọc qua tất cả các file để hiểu được dự án là gì.
 
 
 

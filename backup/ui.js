@@ -14,6 +14,9 @@ import {
   getRatios
 } from './data.js';
 
+// Import functions từ i18n module
+import { t, getCurrentLanguage } from './i18n.js';
+
 // === CHART INSTANCE ===
 // Biến global để lưu instance của Chart.js
 let jarChart = null;
@@ -57,16 +60,17 @@ export function renderJarCards() {
     // Lấy thông tin hiển thị của hủ từ JAR_INFO
     const jarInfo = JAR_INFO[jarKey];
     
-    // Tạo element div cho card
+    // Tạo element div cho card với data attribute cho i18n
     const cardEl = document.createElement('div');
-    cardEl.className = 'bg-white rounded-lg shadow-sm p-4 border-l-4';
+    cardEl.className = 'jar-card bg-white rounded-lg shadow-sm p-4 border-l-4';
     cardEl.style.borderLeftColor = jarInfo.color; // Màu viền trái theo màu hủ
+    cardEl.setAttribute('data-jar-type', jarKey); // Để update i18n sau
     
-    // Nội dung HTML của card
+    // Nội dung HTML của card với i18n
     cardEl.innerHTML = `
       <!-- Header với tên hủ và icon màu -->
       <div class="flex items-center justify-between mb-2">
-        <h4 class="font-semibold text-gray-700">${jarInfo.name}</h4>
+        <h4 class="font-semibold text-gray-700">${t(jarKey)}</h4>
         <div class="w-4 h-4 rounded-full" style="background-color: ${jarInfo.color}"></div>
       </div>
       
@@ -77,7 +81,7 @@ export function renderJarCards() {
       
       <!-- Mô tả về hủ -->
       <p class="text-sm text-gray-500">
-        ${jarInfo.description}
+        ${t(jarKey + 'Desc')}
       </p>
     `;
     
@@ -129,7 +133,7 @@ export function renderTransactionsList(limit = 5) {
       <div class="flex-1">
         <div class="font-medium text-gray-900">${transaction.desc}</div>
         <div class="text-sm text-gray-500">
-          ${jarInfo.name} • ${transaction.date}
+          ${t(jarKey)} • ${transaction.date}
         </div>
       </div>
       
@@ -153,6 +157,18 @@ export function renderTransactionsList(limit = 5) {
 export function renderChart() {
   // Lấy canvas element
   const canvas = document.getElementById('jar-chart');
+  if (!canvas) {
+    console.error('Canvas element "jar-chart" not found');
+    return;
+  }
+  
+  // Kiểm tra Chart.js có loaded không, retry nếu chưa có
+  if (typeof Chart === 'undefined') {
+    console.log('Chart.js chưa load, retry sau 500ms...');
+    setTimeout(() => renderChart(), 500);
+    return;
+  }
+  
   const ctx = canvas.getContext('2d');
   
   // Lấy dữ liệu số dư các hủ
@@ -179,11 +195,17 @@ export function renderChart() {
     jarChart.destroy();
   }
   
-  // Tạo chart mới
+      // Tạo chart mới với labels đã được translate
+  const translatedLabels = chartLabels.map(jarName => {
+    // Tìm jarKey tương ứng với jarName
+    const jarKey = Object.keys(JAR_INFO).find(key => JAR_INFO[key].name === jarName);
+    return jarKey ? t(jarKey) : jarName;
+  });
+  
   jarChart = new Chart(ctx, {
     type: 'doughnut', // Loại biểu đồ: doughnut (tròn rỗng giữa)
     data: {
-      labels: chartLabels,     // Tên các hủ
+      labels: translatedLabels,     // Tên các hủ đã được translate
       datasets: [{
         data: chartData,       // Số dư các hủ
         backgroundColor: chartColors, // Màu các phần
@@ -268,6 +290,11 @@ export function updateAllUI() {
  */
 export function showModal(modalId) {
   const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal with ID "${modalId}" not found`);
+    return;
+  }
+  
   modal.classList.remove('hidden');
   
   // Focus vào input đầu tiên trong modal
@@ -283,6 +310,11 @@ export function showModal(modalId) {
  */
 export function hideModal(modalId) {
   const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal with ID "${modalId}" not found`);
+    return;
+  }
+  
   modal.classList.add('hidden');
   
   // Reset form trong modal
@@ -344,10 +376,14 @@ export function switchTab(activeTabId) {
   if (activeButton) {
     activeButton.classList.remove('border-transparent', 'text-gray-500');
     activeButton.classList.add('border-blue-500', 'text-blue-600');
+  } else {
+    console.error(`Tab button with data-tab="${activeTabId}" not found`);
   }
   
   if (activeContent) {
     activeContent.classList.remove('hidden');
+  } else {
+    console.error(`Tab content with id="${activeTabId}-tab" not found`);
   }
 }
 
