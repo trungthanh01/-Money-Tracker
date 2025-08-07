@@ -250,29 +250,34 @@ function setupTransactionModal(type) {
 // === TAB FUNCTIONS ===
 
 function switchTab(activeTabId) {
-  // Hide all tabs
+  // Hide all tab content
   document.querySelectorAll('.tab-content').forEach(tab => {
     tab.classList.add('hidden');
   });
-  
-  // Remove active from all buttons
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.remove('border-blue-500', 'text-blue-600');
-    btn.classList.add('border-transparent', 'text-gray-500');
-  });
-  
-  // Show active tab
+
+  // Show the active tab content
   const activeTab = document.getElementById(`${activeTabId}-tab`);
   if (activeTab) {
     activeTab.classList.remove('hidden');
   }
+
+  // Update desktop tab buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    const isMatched = btn.dataset.tab === activeTabId;
+    btn.classList.toggle('border-blue-500', isMatched);
+    btn.classList.toggle('text-blue-600', isMatched);
+    btn.classList.toggle('border-transparent', !isMatched);
+    btn.classList.toggle('text-gray-500', !isMatched);
+  });
   
-  // Activate button
-  const activeBtn = document.querySelector(`[data-tab="${activeTabId}"]`);
-  if (activeBtn) {
-    activeBtn.classList.remove('border-transparent', 'text-gray-500');
-    activeBtn.classList.add('border-blue-500', 'text-blue-600');
-  }
+  // Update mobile tab buttons
+  document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
+    const isMatched = btn.dataset.tab === activeTabId;
+    btn.classList.toggle('bg-blue-50', isMatched);
+    btn.classList.toggle('text-blue-600', isMatched);
+    btn.classList.toggle('text-gray-600', !isMatched);
+    btn.classList.toggle('hover:bg-gray-50', !isMatched);
+  });
 }
 
 // === EVENT HANDLERS ===
@@ -283,7 +288,8 @@ function handleTransactionSubmit(e) {
   try {
     const modal = document.getElementById('transaction-modal');
     const type = modal.dataset.transactionType;
-    const amount = document.getElementById('amount-input').value;
+    const amountValue = document.getElementById('amount-input').value;
+    const amount = amountValue.replace(/,/g, '');
     const description = document.getElementById('description-input').value;
     const jar = document.getElementById('jar-select').value;
     

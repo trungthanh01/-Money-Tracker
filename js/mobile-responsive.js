@@ -38,16 +38,15 @@ function setupMobileMenu() {
   mobileTabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const tabId = btn.dataset.tab;
-      switchTab(tabId);
+      // Sử dụng `window.SimpleMoneyTracker` để gọi hàm từ scope global
+      if (window.SimpleMoneyTracker && typeof window.SimpleMoneyTracker.switchTab === 'function') {
+        window.SimpleMoneyTracker.switchTab(tabId);
+      } else {
+        console.error('switchTab function is not available on window.SimpleMoneyTracker');
+      }
       closeMobileMenu();
       
-      // Update mobile tab active state
-      mobileTabBtns.forEach(b => {
-        b.classList.remove('bg-blue-50', 'text-blue-600');
-        b.classList.add('text-gray-600', 'hover:bg-gray-50');
-      });
-      btn.classList.remove('text-gray-600', 'hover:bg-gray-50');
-      btn.classList.add('bg-blue-50', 'text-blue-600');
+
     });
   });
 
@@ -56,61 +55,61 @@ function setupMobileMenu() {
 
 // === MOBILE INPUT FIX ===
 
-function setupMobileFriendlySalaryInput() {
-  const salaryInput = document.getElementById('salary-input');
-  if (!salaryInput) return;
+function setupMobileFriendlyInput(inputId) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
 
   let isFormatting = false;
   let timeoutId = null;
-  
-  function formatSalaryInput() {
+
+  function formatInput() {
     if (isFormatting) return;
     isFormatting = true;
     
     try {
-      let value = salaryInput.value;
+      let value = input.value;
       value = value.replace(/[^\d]/g, '');
       
       if (value !== '') {
         const formattedValue = Number(value).toLocaleString();
-        if (salaryInput.value !== formattedValue) {
-          salaryInput.value = formattedValue;
+        if (input.value !== formattedValue) {
+          input.value = formattedValue;
         }
       } else {
-        salaryInput.value = '';
+        input.value = '';
       }
     } catch (error) {
-      console.error('Salary formatting error:', error);
+      console.error(`Formatting error for ${inputId}:`, error);
     } finally {
       isFormatting = false;
     }
   }
-  
-  // Input event với debounce
-  salaryInput.addEventListener('input', (e) => {
+
+  input.addEventListener('input', () => {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
-    
-    timeoutId = setTimeout(() => {
-      formatSalaryInput();
-    }, 100);
+    timeoutId = setTimeout(formatInput, 100);
   });
-  
-  // Blur event cho mobile
-  salaryInput.addEventListener('blur', () => {
-    formatSalaryInput();
-  });
-  
-  // Focus event để clear formatting
-  salaryInput.addEventListener('focus', () => {
-    let value = salaryInput.value.replace(/,/g, '');
+
+  input.addEventListener('blur', formatInput);
+
+  input.addEventListener('focus', () => {
+    let value = input.value.replace(/,/g, '');
     if (value !== '') {
-      salaryInput.value = value;
+      input.value = value;
     }
   });
-  
-  console.log('✅ Mobile-friendly salary input setup completed');
+
+  console.log(`✅ Mobile-friendly input for #${inputId} setup completed`);
+}
+
+function setupMobileFriendlySalaryInput() {
+  setupMobileFriendlyInput('salary-input');
+}
+
+function setupMobileFriendlyTransactionInput() {
+  setupMobileFriendlyInput('amount-input');
 }
 
 // === RESPONSIVE UTILITIES ===
@@ -147,8 +146,9 @@ function initializeMobileResponsive() {
   // Setup mobile menu
   setupMobileMenu();
   
-  // Setup mobile-friendly input
+  // Setup mobile-friendly inputs
   setupMobileFriendlySalaryInput();
+  setupMobileFriendlyTransactionInput();
   
   // Initial layout update
   updateMobileLayout();
