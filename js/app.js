@@ -10,8 +10,12 @@ import {
   getJars,
   getTransactions,
   formatCurrency,
+  formatCurrencyWithSymbol,
   JAR_INFO,
-  getRatios
+  CURRENCY_INFO,
+  getRatios,
+  getCurrency,
+  setCurrency
 } from './data.js';
 
 // Import settings modules (không ảnh hưởng core)
@@ -30,6 +34,23 @@ import {
 // === GLOBAL VARIABLES ===
 let jarChart = null; // Chart instance
 
+// === UTILITY FUNCTIONS ===
+
+/**
+ * Simple number formatting for salary input (theo đề xuất của user)
+ */
+function setupSalaryInputFormatting() {
+  const salaryInput = document.getElementById('salary-input');
+  if (salaryInput) {
+    salaryInput.addEventListener('input', () => {
+      let value = salaryInput.value.replace(/,/g, ''); // Xóa dấu phẩy cũ
+      if (!isNaN(value) && value !== '') {
+        salaryInput.value = Number(value).toLocaleString(); // Thêm dấu phẩy
+      }
+    });
+  }
+}
+
 // === BASIC UI FUNCTIONS ===
 
 function updateUI() {
@@ -39,8 +60,8 @@ function updateUI() {
   const totalBalanceEl = document.getElementById('total-balance');
   const totalSalaryEl = document.getElementById('total-salary');
   
-  if (totalBalanceEl) totalBalanceEl.textContent = formatCurrency(getTotalBalance());
-  if (totalSalaryEl) totalSalaryEl.textContent = formatCurrency(getSalary());
+  if (totalBalanceEl) totalBalanceEl.textContent = formatCurrencyWithSymbol(getTotalBalance());
+  if (totalSalaryEl) totalSalaryEl.textContent = formatCurrencyWithSymbol(getSalary());
   
   // 2. Update jar cards
   updateJarCards();
@@ -68,16 +89,20 @@ function updateJarCards() {
     cardEl.className = 'bg-white rounded-lg shadow-sm p-4 border-l-4';
     cardEl.style.borderLeftColor = jarInfo.color;
     
+    // Get translated jar name and description
+    const jarName = window.t ? window.t(`jars.${jarKey}.name`) : jarInfo.name;
+    const jarDescription = window.t ? window.t(`jars.${jarKey}.description`) : jarInfo.description;
+    
     cardEl.innerHTML = `
       <div class="flex items-center justify-between mb-2">
-        <h4 class="font-semibold text-gray-700">${jarInfo.name}</h4>
+        <h4 class="font-semibold text-gray-700">${jarName}</h4>
         <div class="w-4 h-4 rounded-full" style="background-color: ${jarInfo.color}"></div>
       </div>
       <div class="text-xl font-bold text-gray-900 mb-2">
-        ${formatCurrency(balance)}
+        ${formatCurrencyWithSymbol(balance)}
       </div>
       <p class="text-sm text-gray-500">
-        ${jarInfo.description}
+        ${jarDescription}
       </p>
     `;
     
@@ -92,7 +117,8 @@ function updateTransactionsList() {
   const transactions = getTransactions().slice(-5); // 5 giao dịch gần nhất
   
   if (transactions.length === 0) {
-    container.innerHTML = '<p class="text-gray-500 text-center">Chưa có giao dịch nào</p>';
+    const noTransactionsText = window.t ? window.t('dashboard.noTransactions') : 'Chưa có giao dịch nào';
+    container.innerHTML = `<p class="text-gray-500 text-center">${noTransactionsText}</p>`;
     return;
   }
   
@@ -100,6 +126,7 @@ function updateTransactionsList() {
   
   transactions.forEach(transaction => {
     const jarInfo = JAR_INFO[transaction.jar];
+    const jarName = window.t ? window.t(`jars.${transaction.jar}.name`) : jarInfo.name;
     const itemEl = document.createElement('div');
     itemEl.className = 'flex items-center justify-between py-3 border-b border-gray-100';
     
@@ -107,12 +134,12 @@ function updateTransactionsList() {
       <div class="flex-1">
         <div class="font-medium text-gray-900">${transaction.desc}</div>
         <div class="text-sm text-gray-500">
-          ${jarInfo.name} • ${transaction.date}
+          ${jarName} • ${transaction.date}
         </div>
       </div>
       <div class="text-right">
         <div class="font-semibold ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}">
-          ${transaction.type === 'income' ? '+' : '-'}${formatCurrency(Math.abs(transaction.amount))}
+          ${transaction.type === 'income' ? '+' : '-'}${formatCurrencyWithSymbol(Math.abs(transaction.amount))}
         </div>
       </div>
     `;
@@ -147,7 +174,9 @@ function updateChart() {
     if (balance > 0) {
       const jarInfo = JAR_INFO[jarKey];
       chartData.push(balance);
-      chartLabels.push(jarInfo.name);
+      // Use translated jar name
+      const jarName = window.t ? window.t(`jars.${jarKey}.name`) : jarInfo.name;
+      chartLabels.push(jarName);
       chartColors.push(jarInfo.color);
     }
   });
@@ -297,7 +326,8 @@ function handleSalarySubmit(e) {
   e.preventDefault();
   
   try {
-    const salary = document.getElementById('salary-input').value;
+    const salaryInput = document.getElementById('salary-input');
+    const salary = salaryInput.value.replace(/,/g, ''); // Xóa dấu phẩy đơn giản
     
     // Get ratios
     const ratios = {
@@ -342,7 +372,9 @@ function loadSalaryData() {
   const salary = getSalary();
   const ratios = getRatios();
   
-  document.getElementById('salary-input').value = salary;
+  // Format salary với toLocaleString() đơn giản
+  const salaryInput = document.getElementById('salary-input');
+  salaryInput.value = salary > 0 ? salary.toLocaleString() : '';
   document.getElementById('debt-ratio').value = ratios.debt;
   document.getElementById('expenses-ratio').value = ratios.expenses;
   document.getElementById('emergency-ratio').value = ratios.emergency;
@@ -417,6 +449,51 @@ function handleThemeToggle() {
 }
 
 /**
+ * Handle currency change event
+ */
+function handleCurrencyChange(e) {
+  try {
+    const newCurrency = e.target.value;
+    console.log(`💱 Changing currency to: ${newCurrency}`);
+    
+    // Update currency
+    setCurrency(newCurrency);
+    
+    // Update UI to reflect new currency
+    updateUI();
+    
+    // Success message
+    const currencyInfo = CURRENCY_INFO[newCurrency];
+    const message = `Đã chuyển sang ${currencyInfo.name} (${currencyInfo.symbol})`;
+    alert(message);
+    
+  } catch (error) {
+    console.error('Currency change error:', error);
+    alert('Có lỗi xảy ra khi thay đổi đơn vị tiền tệ');
+  }
+}
+
+/**
+ * Initialize currency settings
+ */
+function initializeCurrency() {
+  try {
+    const currentCurrency = getCurrency();
+    console.log(`💱 Current currency: ${currentCurrency}`);
+    
+    // Set currency selector value
+    const currencySelect = document.getElementById('currency-select');
+    if (currencySelect) {
+      currencySelect.value = currentCurrency;
+    }
+    
+    console.log('✅ Currency initialized');
+  } catch (error) {
+    console.error('❌ Currency initialization failed:', error);
+  }
+}
+
+/**
  * Function: Initialize settings
  * Trách nhiệm duy nhất: Khởi tạo settings modules
  */
@@ -465,6 +542,9 @@ function bindEvents() {
     salaryForm.addEventListener('submit', handleSalarySubmit);
   }
   
+  // Setup simple salary formatting theo đề xuất của user
+  setupSalaryInputFormatting();
+  
   // Cancel buttons
   const cancelBtns = document.querySelectorAll('#cancel-btn, #cancel-salary-btn');
   cancelBtns.forEach(btn => {
@@ -503,6 +583,13 @@ function bindEvents() {
     console.log('✅ Theme toggle bound');
   }
   
+  // Currency selector
+  const currencySelect = document.getElementById('currency-select');
+  if (currencySelect) {
+    currencySelect.addEventListener('change', handleCurrencyChange);
+    console.log('✅ Currency selector bound');
+  }
+  
   // ESC key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -520,6 +607,7 @@ async function initApp() {
   // 1. Initialize settings first (không ảnh hưởng core)
   await initializeI18n();
   await initializeTheme();
+  initializeCurrency();
   
   // 2. Update UI
   updateUI();

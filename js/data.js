@@ -9,6 +9,9 @@ const DEFAULT_DATA = {
   // Lương hiện tại của user (VND)
   salary: 0,
   
+  // Đơn vị tiền tệ hiện tại
+  currency: 'VND',
+  
   // Tỉ lệ phần trăm cho từng hủ (tổng phải = 100%)
   ratios: {
     debt: 20,        // Hủ nợ: 20% lương
@@ -31,6 +34,21 @@ const DEFAULT_DATA = {
   
   // Danh sách tất cả giao dịch (mảng các object)
   transactions: []
+};
+
+// === CURRENCY INFORMATION ===
+// Object chứa thông tin các đơn vị tiền tệ
+export const CURRENCY_INFO = {
+  VND: { symbol: '₫', name: 'Vietnamese Dong', flag: '🇻🇳' },
+  USD: { symbol: '$', name: 'US Dollar', flag: '🇺🇸' },
+  EUR: { symbol: '€', name: 'Euro', flag: '🇪🇺' },
+  GBP: { symbol: '£', name: 'British Pound', flag: '🇬🇧' },
+  JPY: { symbol: '¥', name: 'Japanese Yen', flag: '🇯🇵' },
+  CNY: { symbol: '¥', name: 'Chinese Yuan', flag: '🇨🇳' },
+  KRW: { symbol: '₩', name: 'Korean Won', flag: '🇰🇷' },
+  INR: { symbol: '₹', name: 'Indian Rupee', flag: '🇮🇳' },
+  AUD: { symbol: 'A$', name: 'Australian Dollar', flag: '🇦🇺' },
+  CAD: { symbol: 'C$', name: 'Canadian Dollar', flag: '🇨🇦' }
 };
 
 // === THÔNG TIN HIỂN THỊ CỦA CÁC HỦ ===
@@ -290,5 +308,53 @@ export function importData(jsonString) {
   } catch (error) {
     console.error('Error importing data:', error);
     throw new Error('File dữ liệu không hợp lệ');
+  }
+}
+
+// === CURRENCY FUNCTIONS ===
+
+/**
+ * Lấy đơn vị tiền tệ hiện tại
+ * @returns {string} Mã đơn vị tiền tệ (VD: 'VND', 'USD')
+ */
+export function getCurrency() {
+  const data = getData();
+  return data.currency || 'VND';
+}
+
+/**
+ * Cập nhật đơn vị tiền tệ
+ * @param {string} currencyCode - Mã đơn vị tiền tệ mới
+ */
+export function setCurrency(currencyCode) {
+  if (!CURRENCY_INFO[currencyCode]) {
+    throw new Error('Đơn vị tiền tệ không hợp lệ');
+  }
+  
+  const data = getData();
+  data.currency = currencyCode;
+  setData(data);
+}
+
+/**
+ * Format tiền tệ theo đơn vị hiện tại (có cập nhật)
+ * @param {number} amount - Số tiền cần format
+ * @returns {string} Chuỗi tiền tệ đã format
+ */
+export function formatCurrencyWithSymbol(amount) {
+  const currency = getCurrency();
+  const currencyInfo = CURRENCY_INFO[currency];
+  
+  if (!currencyInfo) {
+    return formatCurrency(amount); // Fallback
+  }
+  
+  const formattedNumber = Math.abs(amount).toLocaleString();
+  
+  // Special handling for different currencies
+  if (currency === 'VND') {
+    return `${formattedNumber} ${currencyInfo.symbol}`;
+  } else {
+    return `${currencyInfo.symbol}${formattedNumber}`;
   }
 }

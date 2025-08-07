@@ -179,6 +179,29 @@
                     </div>
                 </div>
 
+                <!-- Currency Settings -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.currency">💱 Đơn Vị Tiền Tệ</h3>
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700" data-i18n="settings.currencySelect">Chọn đơn vị tiền tệ</label>
+                        <select id="currency-select" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="VND">🇻🇳 Vietnamese Dong (₫)</option>
+                            <option value="USD">🇺🇸 US Dollar ($)</option>
+                            <option value="EUR">🇪🇺 Euro (€)</option>
+                            <option value="GBP">🇬🇧 British Pound (£)</option>
+                            <option value="JPY">🇯🇵 Japanese Yen (¥)</option>
+                            <option value="CNY">🇨🇳 Chinese Yuan (¥)</option>
+                            <option value="KRW">🇰🇷 Korean Won (₩)</option>
+                            <option value="INR">🇮🇳 Indian Rupee (₹)</option>
+                            <option value="AUD">🇦🇺 Australian Dollar (A$)</option>
+                            <option value="CAD">🇨🇦 Canadian Dollar (C$)</option>
+                        </select>
+                        <div class="text-sm text-gray-500">
+                            <p data-i18n="settings.currencyDescription">Thay đổi đơn vị tiền tệ hiển thị trên toàn bộ ứng dụng</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Support Settings -->
                 <div class="bg-white rounded-lg shadow-sm p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.support">🆘 Hỗ Trợ</h3>
@@ -272,7 +295,7 @@
                 <!-- Input lương -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.monthlySalary">Lương tháng (VND)</label>
-                    <input type="number" id="salary-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" id="salary-input" placeholder="10,000,000" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 
                 <!-- Inputs tỉ lệ các hủ -->
@@ -280,32 +303,32 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.jarRatios">Tỉ lệ các hủ (%)</label>
                     <div class="space-y-2">
                         <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm">Nợ:</span>
+                            <span class="w-16 text-sm" data-i18n="jars.debt.name">Nợ:</span>
                             <input type="number" id="debt-ratio" value="20" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
                             <span class="text-sm">%</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm">Chi tiêu:</span>
+                            <span class="w-16 text-sm" data-i18n="jars.expenses.name">Chi tiêu:</span>
                             <input type="number" id="expenses-ratio" value="40" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
                             <span class="text-sm">%</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm">Khẩn cấp:</span>
+                            <span class="w-16 text-sm" data-i18n="jars.emergency.name">Khẩn cấp:</span>
                             <input type="number" id="emergency-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
                             <span class="text-sm">%</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm">Tiết kiệm:</span>
+                            <span class="w-16 text-sm" data-i18n="jars.savings.name">Tiết kiệm:</span>
                             <input type="number" id="savings-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
                             <span class="text-sm">%</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm">Đầu tư:</span>
+                            <span class="w-16 text-sm" data-i18n="jars.investment.name">Đầu tư:</span>
                             <input type="number" id="investment-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
                             <span class="text-sm">%</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm">Học tập:</span>
+                            <span class="w-16 text-sm" data-i18n="jars.learning.name">Học tập:</span>
                             <input type="number" id="learning-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
                             <span class="text-sm">%</span>
                         </div>

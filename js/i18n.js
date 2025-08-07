@@ -84,7 +84,13 @@ function updateAllTranslations() {
                 } else if (element.tagName === 'INPUT') {
                     element.placeholder = translation;
                 } else {
-                    element.textContent = translation;
+                    // Special handling for jar names in salary modal (need colon)
+                    if (keyPath.startsWith('jars.') && keyPath.endsWith('.name') && 
+                        element.closest('#salary-modal')) {
+                        element.textContent = translation + ':';
+                    } else {
+                        element.textContent = translation;
+                    }
                 }
             }
         });
@@ -155,6 +161,11 @@ async function changeLanguage(langCode) {
         
         // Update all UI
         updateAllTranslations();
+        
+        // Update dynamic content (jar cards, etc.) if available
+        if (window.SimpleMoneyTracker && window.SimpleMoneyTracker.updateUI) {
+            window.SimpleMoneyTracker.updateUI();
+        }
         
         // Update language select
         const langSelect = document.getElementById('language-select');

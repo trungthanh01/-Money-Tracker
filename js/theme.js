@@ -84,12 +84,37 @@ function updateHeaderTheme(isDark) {
   const nav = document.querySelector('nav');
   
   if (header) {
+    // Update header background
     if (isDark) {
       header.classList.remove('bg-white', 'border-gray-200');
       header.classList.add('bg-gray-800', 'border-gray-700');
     } else {
       header.classList.remove('bg-gray-800', 'border-gray-700');
       header.classList.add('bg-white', 'border-gray-200');
+    }
+    
+    // Update header text colors
+    const headerTitle = header.querySelector('h1');
+    const headerSubtitle = header.querySelector('.text-sm');
+    
+    if (headerTitle) {
+      if (isDark) {
+        headerTitle.classList.remove('text-gray-900');
+        headerTitle.classList.add('text-white');
+      } else {
+        headerTitle.classList.remove('text-white');
+        headerTitle.classList.add('text-gray-900');
+      }
+    }
+    
+    if (headerSubtitle) {
+      if (isDark) {
+        headerSubtitle.classList.remove('text-gray-500');
+        headerSubtitle.classList.add('text-gray-300');
+      } else {
+        headerSubtitle.classList.remove('text-gray-300');
+        headerSubtitle.classList.add('text-gray-500');
+      }
     }
   }
   
