@@ -31,6 +31,11 @@ import {
   toggleTheme 
 } from './theme.js';
 
+// Import mobile responsive functions
+import { 
+  initializeMobileResponsive 
+} from './mobile-responsive.js';
+
 // === GLOBAL VARIABLES ===
 let jarChart = null; // Chart instance
 
@@ -38,17 +43,11 @@ let jarChart = null; // Chart instance
 
 /**
  * Simple number formatting for salary input (theo đề xuất của user)
+ * DEPRECATED: Now handled by mobile-responsive.js
  */
 function setupSalaryInputFormatting() {
-  const salaryInput = document.getElementById('salary-input');
-  if (salaryInput) {
-    salaryInput.addEventListener('input', () => {
-      let value = salaryInput.value.replace(/,/g, ''); // Xóa dấu phẩy cũ
-      if (!isNaN(value) && value !== '') {
-        salaryInput.value = Number(value).toLocaleString(); // Thêm dấu phẩy
-      }
-    });
-  }
+  // This function is now deprecated - mobile input is handled by mobile-responsive.js
+  console.log('⚠️ setupSalaryInputFormatting is deprecated - use mobile-responsive.js instead');
 }
 
 // === BASIC UI FUNCTIONS ===
@@ -543,7 +542,8 @@ function bindEvents() {
   }
   
   // Setup simple salary formatting theo đề xuất của user
-  setupSalaryInputFormatting();
+  // Salary input formatting - now handled by mobile-responsive.js
+  // setupSalaryInputFormatting(); // DEPRECATED
   
   // Cancel buttons
   const cancelBtns = document.querySelectorAll('#cancel-btn, #cancel-salary-btn');
@@ -608,6 +608,7 @@ async function initApp() {
   await initializeI18n();
   await initializeTheme();
   initializeCurrency();
+  initializeMobileResponsive(); // Thêm mobile responsive
   
   // 2. Update UI
   updateUI();

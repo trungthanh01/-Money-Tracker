@@ -4,154 +4,181 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trình Quản Lý Tài Chính</title>
-    <!-- Tailwind CSS CDN - Framework CSS để styling nhanh và responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN - Thư viện vẽ biểu đồ tròn -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Font Inter từ Google Fonts cho typography đẹp -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Custom CSS để override một số style Tailwind -->
     <style>
         body { font-family: 'Inter', sans-serif; }
-        /* Custom colors cho các hủ tiền theo PRD */
         .jar-debt { background-color: #ef4444; }
         .jar-expenses { background-color: #3b82f6; }
         .jar-emergency { background-color: #f59e0b; }
         .jar-savings { background-color: #10b981; }
         .jar-investment { background-color: #8b5cf6; }
         .jar-learning { background-color: #f97316; }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- Header - Thanh tiêu đề chính -->
+    <!-- Header - Mobile First -->
     <header class="bg-white shadow-sm border-b">
-        <div class="max-w-7xl mx-auto px-4 py-4">
+        <div class="max-w-7xl mx-auto px-4 py-3">
             <div class="flex items-center justify-between">
+                <!-- Hamburger Menu Button (Mobile) -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                
                 <!-- Logo và tên app -->
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-xl">💰</span>
+                    <div class="w-8 h-8 lg:w-10 lg:h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg lg:text-xl">💰</span>
                     </div>
-                    <h1 class="text-xl font-bold text-gray-900" data-i18n="header.title">Trình Quản Lý Tài Chính</h1>
+                    <h1 class="text-lg lg:text-xl font-bold text-gray-900" data-i18n="header.title">Trình Quản Lý Tài Chính</h1>
                 </div>
-                <!-- Thông báo về việc lưu trữ local -->
-                <div class="text-sm text-gray-500" data-i18n="header.subtitle">
+                
+                <!-- Desktop: Thông báo về việc lưu trữ local -->
+                <div class="hidden lg:block text-sm text-gray-500" data-i18n="header.subtitle">
                     Dữ liệu được lưu trên trình duyệt này
                 </div>
             </div>
         </div>
-        </header>
+    </header>
 
-    <!-- Navigation Tabs - Menu điều hướng 3 tab chính -->
-    <nav class="bg-white border-b">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
+    
+    <!-- Mobile Navigation Menu -->
+    <nav id="mobile-menu" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 lg:hidden mobile-menu">
+        <div class="p-4">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-lg font-semibold text-gray-900">Menu</h2>
+                <button id="mobile-menu-close" class="p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu Items -->
+            <div class="space-y-2">
+                <button class="mobile-tab-btn w-full text-left py-3 px-4 rounded-lg bg-blue-50 text-blue-600 font-medium" data-tab="dashboard" data-i18n="navigation.dashboard">
+                    🏠 Bảng Tin
+                </button>
+                <button class="mobile-tab-btn w-full text-left py-3 px-4 rounded-lg text-gray-600 hover:bg-gray-50" data-tab="investment" data-i18n="navigation.investment">
+                    💹 Đầu Tư
+                </button>
+                <button class="mobile-tab-btn w-full text-left py-3 px-4 rounded-lg text-gray-600 hover:bg-gray-50" data-tab="learning" data-i18n="navigation.learning">
+                    📚 Học Tập
+                </button>
+                <button class="mobile-tab-btn w-full text-left py-3 px-4 rounded-lg text-gray-600 hover:bg-gray-50" data-tab="settings" data-i18n="navigation.settings">
+                    ⚙️ Cài Đặt
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Desktop Navigation Tabs -->
+    <nav class="bg-white border-b hidden lg:block">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex space-x-8">
-                <!-- Tab Bảng tin - Màn hình chính -->
                 <button class="tab-btn py-4 px-2 border-b-2 border-blue-500 text-blue-600 font-medium" data-tab="dashboard" data-i18n="navigation.dashboard">
                     🏠 Bảng Tin
                 </button>
-                <!-- Tab Đầu tư - Tính năng mở rộng -->
                 <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="investment" data-i18n="navigation.investment">
                     💹 Đầu Tư
                 </button>
-                <!-- Tab Học tập - Tính năng mở rộng -->
                 <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="learning" data-i18n="navigation.learning">
                     📚 Học Tập
                 </button>
-                <!-- Tab Cài đặt - Settings -->
                 <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="settings" data-i18n="navigation.settings">
                     ⚙️ Cài Đặt
                 </button>
             </div>
         </div>
-        </nav>
+    </nav>
 
-    <!-- Main Content - Nội dung chính -->
-    <main class="max-w-7xl mx-auto px-4 py-6">
-        <!-- Dashboard Tab - Màn hình chính hiển thị tổng quan tài chính -->
+    <!-- Main Content - Mobile First -->
+    <main class="max-w-7xl mx-auto px-4 py-4 lg:py-6">
+        <!-- Dashboard Tab -->
         <div id="dashboard-tab" class="tab-content">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Left Column - Cột trái chứa tổng số dư và nút thao tác -->
-                <div class="lg:col-span-2 space-y-6">
-                    <!-- Total Balance Card - Card hiển thị tổng số dư -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <div class="flex items-center justify-between mb-4">
-                        <div>
-                                <h2 class="text-lg font-semibold text-gray-700" data-i18n="dashboard.totalBalance">Tổng Số Dư</h2>
-                                <div class="text-3xl font-bold text-blue-600" id="total-balance">0 ₫</div>
-                                <div class="text-sm text-green-600 mt-1">
-                                    <span data-i18n="dashboard.totalSalary">Tổng Lương</span>: <span id="total-salary">0 ₫</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Action Buttons - Các nút thao tác chính -->
-                        <div class="flex space-x-3">
-                            <button id="btn-add-income" class="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="dashboard.addIncome">
-                                Thêm Thu Nhập
-                            </button>
-                            <button id="btn-add-expense" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="dashboard.addExpense">
-                                Thêm Chi Tiêu
-                            </button>
-                            <button id="btn-edit-salary" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="dashboard.editSalary">
-                                Nhập Lương
-                            </button>
+            <div class="space-y-4 lg:space-y-6">
+                <!-- Total Balance Card -->
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
+                    <div class="mb-4">
+                        <h2 class="text-lg font-semibold text-gray-700" data-i18n="dashboard.totalBalance">Tổng Số Dư</h2>
+                        <div class="text-2xl lg:text-3xl font-bold text-blue-600" id="total-balance">0 ₫</div>
+                        <div class="text-sm text-green-600 mt-1">
+                            <span data-i18n="dashboard.totalSalary">Tổng Lương</span>: <span id="total-salary">0 ₫</span>
                         </div>
                     </div>
-
-                    <!-- Jar Cards Grid - Lưới hiển thị 6 hủ tiền -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="jars-container">
-                        <!-- Các card hủ sẽ được tạo động bằng JavaScript -->
-                    </div>
-
-                    <!-- Recent Transactions - Danh sách giao dịch gần đây -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="dashboard.recentTransactions">Giao Dịch Gần Đây</h3>
-                        <div id="transactions-list">
-                            <!-- Danh sách giao dịch sẽ được tạo động -->
-                        </div>
+                    
+                    <!-- Action Buttons - Stack on mobile -->
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                        <button id="btn-add-income" class="w-full sm:flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg font-medium transition-colors" data-i18n="dashboard.addIncome">
+                            Thêm Thu Nhập
+                        </button>
+                        <button id="btn-add-expense" class="w-full sm:flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-lg font-medium transition-colors" data-i18n="dashboard.addExpense">
+                            Thêm Chi Tiêu
+                        </button>
+                        <button id="btn-edit-salary" class="w-full sm:flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition-colors" data-i18n="dashboard.editSalary">
+                            Nhập Lương
+                        </button>
                     </div>
                 </div>
 
-                <!-- Right Column - Cột phải chứa biểu đồ phân bổ -->
-                <div class="space-y-6">
-                    <!-- Chart Card - Card hiển thị biểu đồ tròn -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="dashboard.assetAllocation">Phân Bổ Tài Sản</h3>
-                        <!-- Canvas cho Chart.js -->
-                        <div class="relative h-64">
-                            <canvas id="jar-chart"></canvas>
-                        </div>
-                        <!-- Legend cho biểu đồ -->
-                        <div class="mt-4 space-y-2" id="chart-legend">
-                            <!-- Legend sẽ được tạo động -->
-                        </div>
+                <!-- Jar Cards Grid - Mobile First -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="jars-container">
+                    <!-- Các card hủ sẽ được tạo động -->
+                </div>
+
+                <!-- Chart Card - Full width on mobile -->
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="dashboard.assetAllocation">Phân Bổ Tài Sản</h3>
+                    <div class="relative h-48 lg:h-64">
+                        <canvas id="jar-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="dashboard.recentTransactions">Giao Dịch Gần Đây</h3>
+                    <div id="transactions-list">
+                        <!-- Danh sách giao dịch sẽ được tạo động -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Investment Tab - Tab đầu tư (placeholder) -->
+        <!-- Other tabs remain the same but with mobile padding -->
         <div id="investment-tab" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-sm p-6 text-center">
+            <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6 text-center">
                 <h2 class="text-xl font-semibold text-gray-700 mb-4" data-i18n="tabs.investmentTitle">Tính Năng Đầu Tư</h2>
                 <p class="text-gray-500" data-i18n="tabs.investmentDescription">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
             </div>
         </div>
 
-        <!-- Learning Tab - Tab học tập (placeholder) -->
         <div id="learning-tab" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-sm p-6 text-center">
+            <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6 text-center">
                 <h2 class="text-xl font-semibold text-gray-700 mb-4" data-i18n="tabs.learningTitle">Tính Năng Học Tập</h2>
                 <p class="text-gray-500" data-i18n="tabs.learningDescription">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
             </div>
         </div>
 
-        <!-- Settings Tab - Tab cài đặt -->
+        <!-- Settings Tab - Mobile optimized -->
         <div id="settings-tab" class="tab-content hidden">
-            <div class="max-w-2xl mx-auto space-y-6">
-                <!-- Language Settings -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="max-w-2xl mx-auto space-y-4 lg:space-y-6">
+                <!-- Settings sections with mobile padding -->
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.language">🌐 Ngôn Ngữ</h3>
                     <div class="space-y-3">
                         <label class="block text-sm font-medium text-gray-700" data-i18n="settings.languageSelect">Chọn ngôn ngữ</label>
@@ -162,25 +189,20 @@
                     </div>
                 </div>
 
-                <!-- Theme Settings -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.theme">🎨 Giao Diện</h3>
                     <div class="space-y-4">
                         <label class="block text-sm font-medium text-gray-700" data-i18n="settings.themeToggleLabel">Chuyển đổi giao diện</label>
-                        
-                        <!-- Theme Toggle Button -->
                         <button id="theme-toggle-btn" class="w-full p-4 bg-gray-200 hover:bg-gray-300 rounded-lg transition-all font-medium">
                             🌙 Switch to Dark
                         </button>
-                        
                         <div class="text-sm text-gray-500">
                             <p data-i18n="settings.themeToggleDescription">Click để chuyển đổi giữa giao diện sáng và tối</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Currency Settings -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.currency">💱 Đơn Vị Tiền Tệ</h3>
                     <div class="space-y-3">
                         <label class="block text-sm font-medium text-gray-700" data-i18n="settings.currencySelect">Chọn đơn vị tiền tệ</label>
@@ -202,8 +224,7 @@
                     </div>
                 </div>
 
-                <!-- Support Settings -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.support">🆘 Hỗ Trợ</h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
@@ -223,10 +244,7 @@
                     </div>
                 </div>
 
-
-
-                <!-- App Info -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.appInfo">ℹ️ Thông Tin App</h3>
                     <div class="space-y-2 text-sm text-gray-600">
                         <p><strong data-i18n="settings.version">Phiên bản</strong>: 1.0.0</p>
@@ -239,26 +257,23 @@
         </div>
     </main>
 
-    <!-- Transaction Modal - Modal nhập giao dịch -->
-    <div id="transaction-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+    <!-- Modals remain the same but with mobile optimization -->
+    <!-- Transaction Modal -->
+    <div id="transaction-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg p-4 lg:p-6 w-full max-w-md">
             <h3 id="modal-title" class="text-lg font-semibold text-gray-700 mb-4" data-i18n="modals.addTransaction">Thêm Giao Dịch</h3>
             
-            <!-- Form nhập giao dịch -->
             <form id="transaction-form">
-                <!-- Input số tiền -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.amount">Số tiền (VND)</label>
-                    <input type="number" id="amount-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" inputmode="numeric" id="amount-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 
-                <!-- Input mô tả -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.description">Mô tả</label>
                     <input type="text" id="description-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 
-                <!-- Select hủ -->
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.selectJar">Chọn hủ</label>
                     <select id="jar-select" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -272,8 +287,7 @@
                     </select>
                 </div>
                 
-                <!-- Buttons -->
-                <div class="flex space-x-3">
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                     <button type="button" id="cancel-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.cancel">
                         Hủy
                     </button>
@@ -285,20 +299,17 @@
         </div>
     </div>
 
-    <!-- Salary Modal - Modal nhập/chỉnh sửa lương -->
-    <div id="salary-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+    <!-- Salary Modal -->
+    <div id="salary-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg p-4 lg:p-6 w-full max-w-md">
             <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="modals.editSalaryTitle">Nhập Lương & Tỉ Lệ</h3>
             
-            <!-- Form nhập lương -->
             <form id="salary-form">
-                <!-- Input lương -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.monthlySalary">Lương tháng (VND)</label>
-                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="salary-input" placeholder="10,000,000" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" inputmode="numeric" id="salary-input" placeholder="10,000,000" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 
-                <!-- Inputs tỉ lệ các hủ -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.jarRatios">Tỉ lệ các hủ (%)</label>
                     <div class="space-y-2">
@@ -336,28 +347,28 @@
                     <div class="mt-2 text-sm text-gray-500">
                         <span data-i18n="modals.total">Tổng</span>: <span id="total-ratio">100</span>%
                     </div>
-            </div>
+                </div>
                 
-                <!-- Buttons -->
-                <div class="flex space-x-3">
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                     <button type="button" id="cancel-salary-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.cancel">
                         Hủy
                     </button>
                     <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.save">
                         Lưu
                     </button>
-            </div>
+                </div>
             </form>
         </div>
     </div>
 
-    <!-- Input file hidden cho import data -->
+    <!-- Hidden file input -->
     <input type="file" id="import-file-input" accept=".json" style="display: none;">
 
-    <!-- Load modules: core + settings -->
+    <!-- Load modules -->
     <script type="module" src="./js/data.js"></script>
     <script type="module" src="./js/i18n.js"></script>
     <script type="module" src="./js/theme.js"></script>
+    <script type="module" src="./js/mobile-responsive.js"></script>
     <script type="module" src="./js/app.js"></script>
 </body>
 </html>
