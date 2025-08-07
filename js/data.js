@@ -39,12 +39,12 @@ export const JAR_INFO = {
   debt: {
     name: 'Nợ',
     color: '#ef4444',
-    description: 'Tiền chi tiêu hàng ngày (ăn uống, đi lại, hóa đơn...)'
+    description: 'Tiền nợ của bạn'
   },
   expenses: {
     name: 'Chi tiêu', 
     color: '#3b82f6',
-    description: 'Quỹ dự phòng cho các trường hợp bất ngờ, mục tiêu 6 tháng chi tiêu.'
+    description: 'Các khoản chi tiêu hàng ngày, ăn uống, đi lại, hóa đơn...'
   },
   emergency: {
     name: 'Khẩn cấp',
@@ -101,12 +101,11 @@ export function getData() {
  */
 export function setData(data) {
   try {
-    // Chuyển object thành chuỗi JSON và lưu vào LocalStorage
     localStorage.setItem('money-tracker-data', JSON.stringify(data));
   } catch (error) {
-    // Nếu có lỗi khi lưu (ví dụ: storage đầy), log lỗi
+    // Im lặng log error, không làm phiền user
     console.error('Error saving data to localStorage:', error);
-    alert('Không thể lưu dữ liệu. Vui lòng kiểm tra dung lượng trình duyệt.');
+    // Có thể thêm fallback: lưu vào memory temporarily
   }
 }
 

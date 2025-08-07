@@ -290,7 +290,7 @@ function debugLog() {
  */
 window.addEventListener('error', (e) => {
   console.error('💥 Global Error:', e.error);
-  showToast('Đã xảy ra lỗi. Vui lòng thử lại.', 'error');
+  
 });
 
 /**
@@ -298,7 +298,7 @@ window.addEventListener('error', (e) => {
  */
 window.addEventListener('unhandledrejection', (e) => {
   console.error('💥 Unhandled Promise Rejection:', e.reason);
-  showToast('Đã xảy ra lỗi. Vui lòng thử lại.', 'error');
+  
 });
 
 // === APP STARTUP ===
