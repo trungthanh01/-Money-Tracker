@@ -273,7 +273,7 @@ Lương → Tự động chia vào 6 hủ → Chỉ chi tiêu trong giới hạn
 - **Toàn bộ UI, thông báo, lỗi đều bằng tiếng Việt**
 - **Định dạng số tiền:** 1.500.000₫ (dấu chấm ngăn cách, ký hiệu ₫ cuối)
 - **Định dạng ngày:** dd/mm/yyyy (ví dụ: 15/07/2024)
-- **Chuẩn bị sẵn file JSON cho đa ngôn ngữ (i18n) nếu mở rộng**
+- **Chuẩn bị sẵn file JSON cho đa ngôn ngữ (i18n) nếu mở rộng, hiện tại cần tiếng Việt và english cho toàn bộ app**
 
 ---
 

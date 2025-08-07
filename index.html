@@ -3,127 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Tài Chính Cá Nhân - 5 Hũ</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>Trình Quản Lý Tài Chính</title>
+    <!-- Tailwind CSS CDN - Framework CSS để styling nhanh và responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN - Thư viện vẽ biểu đồ tròn -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <meta name="description" content="Ứng dụng quản lý tài chính cá nhân theo phương pháp 5 hũ. Giúp bạn kiểm soát thu chi, đầu tư và học tập hiệu quả.">
-    <meta name="keywords" content="quản lý tài chính, 5 hũ, thu chi, đầu tư, học tập, cá nhân, money jars, money tracker">
-    <meta name="author" content="Le Trung Thanh - Marcusleovn">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://yourdomain.com/">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourdomain.com/">
-    <meta property="og:title" content="Quản Lý Tài Chính Cá Nhân - 5 Hũ">
-    <meta property="og:description" content="Ứng dụng quản lý tài chính cá nhân theo phương pháp 5 hũ. Giúp bạn kiểm soát thu chi, đầu tư và học tập hiệu quả.">
-    <meta property="og:image" content="Project-Root/favicon-32x32.png">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yourdomain.com/">
-    <meta property="twitter:title" content="Quản Lý Tài Chính Cá Nhân - 5 Hũ">
-    <meta property="twitter:description" content="Ứng dụng quản lý tài chính cá nhân theo phương pháp 5 hũ. Giúp bạn kiểm soát thu chi, đầu tư và học tập hiệu quả.">
-    <meta property="twitter:image" content="Project-Root/favicon-32x32.png">
+    <!-- Font Inter từ Google Fonts cho typography đẹp -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS để override một số style Tailwind -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom colors cho các hủ tiền theo PRD */
+        .jar-debt { background-color: #ef4444; }
+        .jar-expenses { background-color: #3b82f6; }
+        .jar-emergency { background-color: #f59e0b; }
+        .jar-savings { background-color: #10b981; }
+        .jar-investment { background-color: #8b5cf6; }
+        .jar-learning { background-color: #f97316; }
+    </style>
 </head>
-<body>
-    <div id="app-container">
-        <header class="card header-main">
-            <div class="header-title">
-                <div class="logo-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Logo quản lý tài chính"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header - Thanh tiêu đề chính -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo và tên app -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">💰</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-900">Trình Quản Lý Tài Chính</h1>
                 </div>
-                <h1>Trình Quản Lý Tài Chính</h1>
+                <!-- Thông báo về việc lưu trữ local -->
+                <div class="text-sm text-gray-500">
+                    Dữ liệu được lưu trên trình duyệt này
+                </div>
             </div>
-            <div id="auth-info">Dữ liệu được lưu trên trình duyệt này</div>
-        </header>
+        </div>
+    </header>
 
-        <nav class="card nav-main">
-            <ul>
-                <li><button data-view="dashboard" class="nav-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Bảng Tin</span></button></li>
-                <li><button data-view="investment" class="nav-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Đầu Tư</span></button></li>
-                <li><button data-view="education" class="nav-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg><span>Học Tập</span></button></li>
-            </ul>
-        </nav>
+    <!-- Navigation Tabs - Menu điều hướng 3 tab chính -->
+    <nav class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex space-x-8">
+                <!-- Tab Bảng tin - Màn hình chính -->
+                <button class="tab-btn py-4 px-2 border-b-2 border-blue-500 text-blue-600 font-medium" data-tab="dashboard">
+                    🏠 Bảng Tin
+                </button>
+                <!-- Tab Đầu tư - Tính năng mở rộng -->
+                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="investment">
+                    💹 Đầu Tư
+                </button>
+                <!-- Tab Học tập - Tính năng mở rộng -->
+                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="learning">
+                    📚 Học Tập
+                </button>
+            </div>
+        </div>
+    </nav>
 
-        <main>
-            <div id="dashboard-view" class="view active">
-                <div class="grid-container dashboard-summary">
-                    <div class="card card-balance">
-                        <div>
-                            <p class="text-muted">Tổng Số Dư</p>
-                            <p id="total-balance" class="total-balance-amount">0 ₫</p>
+    <!-- Main Content - Nội dung chính -->
+    <main class="max-w-7xl mx-auto px-4 py-6">
+        <!-- Dashboard Tab - Màn hình chính hiển thị tổng quan tài chính -->
+        <div id="dashboard-tab" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column - Cột trái chứa tổng số dư và nút thao tác -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Total Balance Card - Card hiển thị tổng số dư -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-700">Tổng Số Dư</h2>
+                                <div class="text-3xl font-bold text-blue-600" id="total-balance">0 ₫</div>
+                                <div class="text-sm text-green-600 mt-1">
+                                    Tổng Lương: <span id="total-salary">0 ₫</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="action-buttons">
-                            <button id="add-income-btn" class="btn btn-green">Thêm Thu Nhập</button>
-                            <button id="add-expense-btn" class="btn btn-red">Thêm Chi Tiêu</button>
-                            <button id="add-salary-btn" class="btn btn-blue">Nhập Lương</button>
+                        
+                        <!-- Action Buttons - Các nút thao tác chính -->
+                        <div class="flex space-x-3">
+                            <button id="btn-add-income" class="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                Thêm Thu Nhập
+                            </button>
+                            <button id="btn-add-expense" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                Thêm Chi Tiêu
+                            </button>
+                            <button id="btn-edit-salary" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                Nhập Lương
+                            </button>
                         </div>
                     </div>
-                    <div class="card card-chart">
-                         <p class="text-muted">Phân Bổ Tài Sản</p>
-                         <canvas id="jars-chart"></canvas>
+
+                    <!-- Jar Cards Grid - Lưới hiển thị 6 hủ tiền -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="jars-container">
+                        <!-- Các card hủ sẽ được tạo động bằng JavaScript -->
+                    </div>
+
+                    <!-- Recent Transactions - Danh sách giao dịch gần đây -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Giao Dịch Gần Đây</h3>
+                        <div id="transactions-list">
+                            <!-- Danh sách giao dịch sẽ được tạo động -->
+                        </div>
                     </div>
                 </div>
-                <div id="jars-container" class="grid-container jars-grid"></div>
-            </div>
-            <div id="investment-view" class="view"></div>
-            <div id="education-view" class="view"></div>
-        </main>
-    </div>
 
-    <div id="transaction-modal" class="modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-            <h2 id="transaction-modal-title" class="modal-title">Thêm Giao Dịch</h2>
+                <!-- Right Column - Cột phải chứa biểu đồ phân bổ -->
+                <div class="space-y-6">
+                    <!-- Chart Card - Card hiển thị biểu đồ tròn -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Phân Bổ Tài Sản</h3>
+                        <!-- Canvas cho Chart.js -->
+                        <div class="relative h-64">
+                            <canvas id="jar-chart"></canvas>
+                        </div>
+                        <!-- Legend cho biểu đồ -->
+                        <div class="mt-4 space-y-2" id="chart-legend">
+                            <!-- Legend sẽ được tạo động -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Tab - Tab đầu tư (placeholder) -->
+        <div id="investment-tab" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-sm p-6 text-center">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Tính Năng Đầu Tư</h2>
+                <p class="text-gray-500">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
+            </div>
+        </div>
+
+        <!-- Learning Tab - Tab học tập (placeholder) -->
+        <div id="learning-tab" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-sm p-6 text-center">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Tính Năng Học Tập</h2>
+                <p class="text-gray-500">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Transaction Modal - Modal nhập giao dịch -->
+    <div id="transaction-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 id="modal-title" class="text-lg font-semibold text-gray-700 mb-4">Thêm Giao Dịch</h3>
+            
+            <!-- Form nhập giao dịch -->
             <form id="transaction-form">
-                <input type="hidden" id="transaction-type">
-                <div class="form-group">
-                    <label for="transaction-amount">Số tiền</label>
-                    <input type="text" id="transaction-amount" class="form-input" placeholder="0" required>
+                <!-- Input số tiền -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Số tiền (VND)</label>
+                    <input type="number" id="amount-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
-                <div class="form-group">
-                    <label for="transaction-description">Mô tả</label>
-                    <input type="text" id="transaction-description" class="form-input" placeholder="VD: Lương tháng 7, Tiền ăn tối" required>
+                
+                <!-- Input mô tả -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Mô tả</label>
+                    <input type="text" id="description-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
-                <div class="form-group">
-                    <label for="transaction-jar">Chọn hũ</label>
-                    <select id="transaction-jar" class="form-input"></select>
+                
+                <!-- Select hủ -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Chọn hủ</label>
+                    <select id="jar-select" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <option value="">-- Chọn hủ --</option>
+                        <option value="debt">Nợ</option>
+                        <option value="expenses">Chi tiêu</option>
+                        <option value="emergency">Khẩn cấp</option>
+                        <option value="savings">Tiết kiệm</option>
+                        <option value="investment">Đầu tư</option>
+                        <option value="learning">Học tập</option>
+                    </select>
                 </div>
-                <div class="form-actions">
-                    <button type="button" id="cancel-transaction-btn" class="btn btn-light">Hủy</button>
-                    <button type="submit" id="save-transaction-btn" class="btn btn-primary">Lưu</button>
+                
+                <!-- Buttons -->
+                <div class="flex space-x-3">
+                    <button type="button" id="cancel-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                        Hủy
+                    </button>
+                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        Lưu
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-    <div id="jar-detail-modal" class="modal"></div>
 
-    <div id="edit-salary-modal" class="modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-            <button class="modal-close" onclick="hideEditSalaryModal()">&times;</button>
-            <h2 class="modal-title">Chỉnh sửa tổng lương</h2>
-            <div class="form-group">
-                <label for="edit-salary-amount">Tổng lương mới</label>
-                <input type="text" id="edit-salary-amount" class="form-input" placeholder="0" autocomplete="off" required>
-            </div>
-            <div class="form-actions">
-                <button type="button" id="cancel-edit-salary-btn" class="btn btn-light">Hủy</button>
-                <button type="button" id="save-edit-salary-btn" class="btn btn-primary">Lưu</button>
-            </div>
+    <!-- Salary Modal - Modal nhập/chỉnh sửa lương -->
+    <div id="salary-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Nhập Lương & Tỉ Lệ</h3>
+            
+            <!-- Form nhập lương -->
+            <form id="salary-form">
+                <!-- Input lương -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Lương tháng (VND)</label>
+                    <input type="number" id="salary-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                
+                <!-- Inputs tỉ lệ các hủ -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tỉ lệ các hủ (%)</label>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-16 text-sm">Nợ:</span>
+                            <input type="number" id="debt-ratio" value="20" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
+                            <span class="text-sm">%</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-16 text-sm">Chi tiêu:</span>
+                            <input type="number" id="expenses-ratio" value="40" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
+                            <span class="text-sm">%</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-16 text-sm">Khẩn cấp:</span>
+                            <input type="number" id="emergency-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
+                            <span class="text-sm">%</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-16 text-sm">Tiết kiệm:</span>
+                            <input type="number" id="savings-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
+                            <span class="text-sm">%</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-16 text-sm">Đầu tư:</span>
+                            <input type="number" id="investment-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
+                            <span class="text-sm">%</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-16 text-sm">Học tập:</span>
+                            <input type="number" id="learning-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
+                            <span class="text-sm">%</span>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500">
+                        Tổng: <span id="total-ratio">100</span>%
+                    </div>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="flex space-x-3">
+                    <button type="button" id="cancel-salary-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                        Hủy
+                    </button>
+                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        Lưu
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <footer class="card footer-main">
-        <div class="footer-credit">
-            <span class="text-muted">By</span>
-            <a href="https://trungthanh01.github.io/Personal-Portfolio-2/" class="footer-link" target="_blank">Marcusleovn</a>
-        </div>
-        <div class="footer-social">
-            <a href="https://github.com/trungthanh01" target="_blank" rel="noopener" aria-label="GitHub" class="social-icon"><i class="fa-brands fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/trung-thanh-le-8460bb35b/" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://x.com/marcusleovn" target="_blank" rel="noopener" aria-label="X (Twitter)" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-        </div>
-    </footer>
-
-    <script type="module" src="Project-Root/main.js"></script>
+    <!-- Load JavaScript modules -->
+    <!-- Module quản lý dữ liệu -->
+    <script type="module" src="./js/data.js"></script>
+    <!-- Module quản lý giao diện -->
+    <script type="module" src="./js/ui.js"></script>
+    <!-- Module chính khởi động app -->
+    <script type="module" src="./js/app.js"></script>
 </body>
 </html>

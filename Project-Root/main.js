@@ -1,9 +1,9 @@
-import { input } from "./input.js";
-import { process } from "./process.js";
-import { output } from "./output.js";
-import { data } from "./data.js";
+// main.js
+// Điểm khởi động của Money Tracker
+// Import các module chính và chạy app
+// Đặt comment chi tiết theo Feynman
 
-input();
+import { process } from "./process.js";
+
+// Gọi hàm process để bắt đầu app
 process();
-output();
-data();
