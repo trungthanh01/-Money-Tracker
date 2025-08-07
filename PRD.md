@@ -1,93 +1,247 @@
-**PRODUCT REQUIREMENT DOCUMENT (PRD)**
+# PRODUCT REQUIREMENTS DOCUMENT (PRD)
+## Money Tracker - 6 Jar Personal Finance Manager
 
 ---
 
-# Tên sản phẩm
+## 📋 **EXECUTIVE SUMMARY**
 
-**Trình Quản Lý Tài Chính Cá Nhân - 5 Hũ**
+**Product Vision:** Ứng dụng quản lý tài chính cá nhân đơn giản nhất Việt Nam, giúp người dùng tự động phân bổ lương theo phương pháp 6 hủ và duy trì kỷ luật chi tiêu.
 
-# Mô tả sản phẩm
-
-Ứng dụng web giúp người dùng theo dõi, phân bổ và quản lý tài chính cá nhân theo mô hình 5 hũ: Chi tiêu, Khẩn cấp, Tiết kiệm, Đầu tư, Học tập. Hỗ trợ biểu đồ, lịch sử giao dịch, gợi ý lộ trình học tập.
+**Success Definition:** 10,000 active users sau 6 tháng, 70% retention rate, users giảm 30% chi tiêu lung tung.
 
 ---
 
-# Đối tượng sử dụng
+## 🎯 **PROBLEM STATEMENT**
 
-* Sinh viên, người mới đi làm muốn quản lý chi tiêu
-* Nhân viên văn phòng, freelance, người có thói quen chia nhóm tài chính
-* Người đang theo đuổi mục tiêu tài chính riêng (du lịch, đầu tư, học thêm)
+### Current Pain Points:
+1. **Financial Stress:** 73% nhân viên văn phòng lo lắng về tài chính cuối tháng
+2. **No Budget Discipline:** 68% không có kế hoạch phân bổ lương cụ thể  
+3. **Complex Tools:** Existing apps (Mint, YNAB) quá phức tạp, nhiều tính năng không cần thiết
+4. **Lack of Automation:** Phải tự tính toán, phân chia tiền thủ công mỗi tháng
 
----
-
-# Mục tiêu chính
-
-1. Tổng hợp giao dịch, cập nhật số dư tự động theo 5 hũ
-2. Hiển thị đồ thị (doughnut chart) tỷ lệ phân chia tài sản
-3. Lưu dữ liệu trong LocalStorage (không cần đăng nhập)
-4. Gợi ý lộ trình học dựa trên ngành nghề quan tâm
-5. Tính năng theo dõi đầu tư Ethereum qua API
+### Opportunity Size:
+- **TAM:** 54 triệu người Việt trong độ tuổi lao động
+- **SAM:** 15 triệu người có smartphone + lương ổn định  
+- **SOM:** 300,000 early adopters trong năm đầu
 
 ---
 
-# Tính năng chi tiết
+## 👥 **TARGET USERS & PERSONAS**
 
-## 1. Giao diện chính
+### Primary Persona: "Minh - Fresh Graduate"
 
-* Bài toán: Tailwind + Chart.js
-* Header: logo, tên app, thông tin lưu trữ local
-* Navigation: 3 tab (Bảng tin, Đầu tư, Học tập)
+### Secondary Persona: "Lan - Freelancer"
 
-## 2. Bảng tin (Dashboard)
-
-* Hiển thị số dư tổng
-* Nút: Thêm thu nhập / Thêm chi tiêu (mở modal)
-* Biểu đồ phân bổ 5 hũ (Chart.js)
-* Danh sách card hũ (dựa theo `jarsConfig`)
-
-## 3. Modal giao dịch
-
-* Input: Số tiền, mô tả, chọn hũ
-* Nút: Lưu / Hủy
-* Cập nhật giao dịch và số dư theo kiểu (income / expense)
-
-## 4. View Đầu tư
-
-* Nhập Ethereum Wallet + API Key
-* Hiển thị số dư ETH qua Etherscan API
-* Lịch sử giao dịch đầu tư (nhập tay)
-
-## 5. View Học tập
-
-* Nhập tên ngành nghề quan tâm
-* Gửi prompt API AI (Gemini hoặc OpenAI) để gợi ý
-* Hiển thị sách, khóa học, roadmap
 
 ---
 
-# Kỹ thuật sử dụng
+## 💡 **SOLUTION OVERVIEW**
 
-* HTML5, CSS3, JavaScript ES6
-* Tailwind CSS (giao diện nhanh, responsive)
-* Chart.js (vẽ biểu đồ)
-* LocalStorage API (lưu trữ local)
-* Etherscan API (theo dõi ví Ethereum)
-* Gemini AI API (gợi ý học tập)
+### Core Concept: "6-Jar Money Management System"
+
+### Key Value Propositions:
+1. **Zero-Effort Budgeting:** Tự động chia tiền, không cần tính toán
+2. **Visual Money Management:** Thấy rõ còn bao nhiêu tiền mỗi hủ  
+3. **Behavioral Change:** Tạo thói quen chi tiêu có kỷ luật
+4. **No Complex Features:** Chỉ có tính năng cần thiết, không rối rắm
+
+### Differentiation vs Competitors:
+| Feature | Money Tracker | Mint | YNAB | Misa |
+|---------|---------------|------|------|------|
+| Simplicité | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐ | ⭐⭐⭐ |
+| Auto Budget | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ |
+| Local Storage | ⭐⭐⭐⭐⭐ | ❌ | ❌ | ❌ |
+| Free | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ❌ | ⭐⭐⭐ |
+| Vietnamese | ⭐⭐⭐⭐⭐ | ❌ | ❌ | ⭐⭐⭐⭐⭐ |
 
 ---
 
-# MVP (Minimum Viable Product)
+## 🏗️ **CORE FEATURES & USER STORIES**
 
-* Thêm / xoá giao dịch theo hũ
-* Lưu và hiển thị dữ liệu local
-* Biểu đồ tự động vẽ theo hũ
+### Epic 1: Salary Input & Auto-Split
+User Story:
+"As a fresh graduate, I want to input my monthly salary and see it automatically split into 6 jars with recommended percentages, so I don't have to figure out budgeting myself."
+Acceptance Criteria:
+User can input salary amount (VND format)
+System auto-splits: Debt 20%, Expenses 40%, Emergency 10%, Savings 10%, Investment 10%, Learning 10%
+User can adjust percentages, total must equal 100%
+Changes reflect immediately in jar balances
+
+### Epic 2: Daily Expense Tracking
+User Story:
+"As a working professional, I want to quickly log my daily expenses to the appropriate jar and see remaining balance, so I know if I can afford additional purchases."
+Acceptance Criteria:
+Quick expense entry: amount, description, jar selection
+Real-time balance updates
+Visual warning when jar balance is low (< 20%)
+Transaction history with filters by jar and date
+
+
+### Epic 3: Visual Financial Dashboard
+User Story:
+"As someone who is visual, I want to see my money allocation in charts and clear jar cards, so I can quickly understand my financial situation."
+Acceptance Criteria:
+Doughnut chart showing current jar distribution
+6 jar cards with current balance, percentage, and visual progress
+Total balance prominently displayed
+Color-coded jars for easy recognition
+Responsive design for mobile and desktop
+
+
+### Epic 4: Additional Income Management
+User Story:
+"As a freelancer with variable income, I want to add extra income to specific jars, so I can maintain my budgeting system even with irregular earnings."
+Acceptance Criteria:
+"Add Income" button opens modal
+User selects which jar(s) to add money to
+Option to split extra income across multiple jars
+Separate tracking for salary vs additional income
+Updates total balance and jar-specific balances
+
 
 ---
 
-# Phiên bản mở rộng đề xuất
+## 🛠️ **TECHNICAL REQUIREMENTS**
 
-* Export CSV / Excel giao dịch
-* Giao diện mobile chi tiết hơn
-* Đăng nhập để dự phòng cloud backup
-* Tính lãi tiết kiệm theo % mục tiêu
-* Đồng bộ với Firebase / Supabase
+### Architecture Overview:
+Frontend (Client-side only)
+├── HTML5 Structure
+├── Tailwind CSS (Styling)
+├── Vanilla JavaScript (Logic)
+├── Chart.js (Visualizations)
+└── LocalStorage (Data Persistence)
+
+
+### Technical Specifications:
+
+#### Frontend Tech Stack:
+- **HTML5:** Semantic markup, accessibility features
+- **Tailwind CSS 3.x:** Utility-first styling, responsive design
+- **JavaScript ES6+:** Modern syntax, modules, async/await
+- **Chart.js 4.x:** Interactive charts, responsive
+- **LocalStorage API:** Client-side data persistence
+
+#### Data Structure:
+```javascript
+// User Data Schema
+{
+  userId: "generated-uuid",
+  profile: {
+    name: "optional",
+    monthlyTarget: 15000000,
+    currency: "VND"
+  },
+  jars: {
+    debt: { name: "Nợ", percentage: 20, balance: 3000000, color: "#ef4444" },
+    expenses: { name: "Chi tiêu", percentage: 40, balance: 6000000, color: "#06b6d4" },
+    emergency: { name: "Khẩn cấp", percentage: 10, balance: 1500000, color: "#f59e0b" },
+    savings: { name: "Tiết kiệm", percentage: 10, balance: 1500000, color: "#10b981" },
+    investment: { name: "Đầu tư", percentage: 10, balance: 1500000, color: "#8b5cf6" },
+    learning: { name: "Học tập", percentage: 10, balance: 1500000, color: "#f97316" }
+  },
+  transactions: [
+    {
+      id: "txn-uuid",
+      type: "income|expense",
+      amount: 50000,
+      description: "Cà phê sáng",
+      jar: "expenses",
+      date: "2024-01-15T08:30:00Z",
+      category: "food-drink"
+    }
+  ],
+  settings: {
+    theme: "light|dark",
+    notifications: true,
+    autoBackup: false
+  }
+}
+```
+
+#### Performance Requirements:
+- **Load Time:** < 2 seconds on 3G
+- **Bundle Size:** < 500KB total
+- **Responsiveness:** 60fps animations
+- **Offline Support:** Full functionality without internet
+
+#### Security & Privacy:
+- **No User Authentication:** Anonymous usage
+- **Local Data Only:** No server transmission
+- **Data Export:** JSON download for backup
+- **Clear Data Option:** Complete reset functionality
+
+---
+
+## 📱 **USER INTERFACE SPECIFICATIONS**
+
+### Design System:
+
+#### Color Palette:
+```css
+/* Jar Colors */
+--debt: #ef4444 (red-500)
+--expenses: #06b6d4 (cyan-500)  
+--emergency: #f59e0b (amber-500)
+--savings: #10b981 (emerald-500)
+--investment: #8b5cf6 (violet-500)
+--learning: #f97316 (orange-500)
+
+/* UI Colors */
+--primary: #1f2937 (gray-800)
+--secondary: #6b7280 (gray-500)
+--success: #10b981 (emerald-500)
+--warning: #f59e0b (amber-500)
+--error: #ef4444 (red-500)
+```
+
+#### Typography:
+- **Primary Font:** Inter (Google Fonts)
+- **Headers:** Font weight 600-700
+- **Body:** Font weight 400-500
+- **Numbers:** Tabular nums for alignment
+
+#### Layout:
+Mobile-First Responsive Design
+├── Mobile: 320px - 768px (Primary)
+├── Tablet: 768px - 1024px
+└── Desktop: 1024px+ (Enhanced)
+
+### Screen Specifications:
+
+#### 1. Dashboard (Main Screen)
+Components:
+┌─────────────────────────────────┐
+│ Header: Logo + Total Balance │
+├─────────────────────────────────┤
+│ Action Buttons: +Income +Expense│
+├─────────────────────────────────┤
+│ Doughnut Chart (Jar Distribution)│
+├─────────────────────────────────┤
+│ 6 Jar Cards (2x3 grid mobile) │
+├─────────────────────────────────┤
+│ Recent Transactions (last 5) │
+└─────────────────────────────────┘
+
+
+#### 2. Income/Expense Modal
+Modal Content:
+┌─────────────────────┐
+│ Amount Input (VND) │
+│ Description Input │
+│ Jar Selection │
+│ [Cancel] [Save] │
+└─────────────────────┘
+
+
+#### 3. Jar Detail View
+Jar Breakdown:
+┌─────────────────────┐
+│ Jar Name + Balance │
+│ Progress Bar │
+│ Recent Transactions │
+│ [Add] [History] │
+└─────────────────────┘
+
+
+---
+
