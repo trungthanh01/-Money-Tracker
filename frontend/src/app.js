@@ -212,10 +212,16 @@ function switchTab(activeTabId) {
   });
   document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
     const isMatched = btn.dataset.tab === activeTabId;
-    btn.classList.toggle('bg-blue-50', isMatched);
-    btn.classList.toggle('text-blue-600', isMatched);
-    btn.classList.toggle('text-gray-600', !isMatched);
-    btn.classList.toggle('hover:bg-gray-50', !isMatched);
+
+    // Active
+    btn.classList.toggle('bg-blue-600', isMatched);
+    btn.classList.toggle('text-white', isMatched);
+
+    // Inactive (mặc định trong suốt + hover tối)
+    btn.classList.toggle('bg-transparent', !isMatched);
+    btn.classList.toggle('text-gray-300', !isMatched);
+    btn.classList.toggle('hover:bg-gray-700', !isMatched);
+    btn.classList.toggle('hover:text-white', !isMatched);
   });
 }
 
@@ -302,7 +308,7 @@ function updateTotalRatio() {
   const total = ids.reduce((sum, id) => sum + (Number(document.getElementById(id).value) || 0), 0);
   const totalEl = document.getElementById('total-ratio');
   if (totalEl) {
-    totalEl.textContent = total + '%';
+    totalEl.textContent = total; // chỉ set số, không thêm '%'
     totalEl.className = total === 100 ? 'text-green-600' : 'text-red-600';
   }
 }
@@ -371,6 +377,7 @@ function bindEvents() {
   const editSalaryBtn = document.getElementById('btn-edit-salary'); if (editSalaryBtn) editSalaryBtn.addEventListener('click', () => { loadSalaryData(); showModal('salary-modal'); });
   const transactionForm = document.getElementById('transaction-form'); if (transactionForm) transactionForm.addEventListener('submit', handleTransactionSubmit);
   const salaryForm = document.getElementById('salary-form'); if (salaryForm) salaryForm.addEventListener('submit', handleSalarySubmit);
+
   document.querySelectorAll('#cancel-btn, #cancel-salary-btn').forEach(btn => btn.addEventListener('click', () => { hideModal('transaction-modal'); hideModal('salary-modal'); }));
   const languageSelect = document.getElementById('language-select'); if (languageSelect) languageSelect.addEventListener('change', handleLanguageChange);
   const currencySelect = document.getElementById('currency-select'); if (currencySelect) currencySelect.addEventListener('change', handleCurrencyChange);
@@ -378,7 +385,14 @@ function bindEvents() {
   const importBtn = document.getElementById('import-data-btn'); if (importBtn) importBtn.addEventListener('click', handleImportData);
   const resetBtn = document.getElementById('reset-data-btn'); if (resetBtn) resetBtn.addEventListener('click', handleResetData);
   const importFileInput = document.getElementById('import-file-input'); if (importFileInput) importFileInput.addEventListener('change', handleFileImport);
+  
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hideModal('transaction-modal'); hideModal('salary-modal'); } });
+  
+  const ratioIds = ['debt-ratio','expenses-ratio','emergency-ratio','savings-ratio','investment-ratio','learning-ratio'];
+  ratioIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateTotalRatio);
+  });
 }
 
 async function initApp() {
