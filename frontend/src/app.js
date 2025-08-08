@@ -53,7 +53,7 @@ function updateJarCards() {
   Object.entries(jars).forEach(([jarKey, balance]) => {
     const jarInfo = JAR_INFO[jarKey];
     const cardEl = document.createElement('div');
-    cardEl.className = 'bg-white rounded-lg shadow-sm p-4 border-l-4';
+    cardEl.className = 'jar-card bg-white rounded-lg shadow-sm p-4 border-l-4';
     cardEl.style.borderLeftColor = jarInfo.color;
     const jarName = window.t ? window.t(`jars.${jarKey}.name`) : jarInfo.name;
     const jarDescription = window.t ? window.t(`jars.${jarKey}.description`) : jarInfo.description;
@@ -138,8 +138,57 @@ function updateChart() {
   }
 }
 
-function showModal(id) { const m = document.getElementById(id); if (m) m.classList.remove('hidden'); }
-function hideModal(id) { const m = document.getElementById(id); if (m) { m.classList.add('hidden'); const f = m.querySelector('form'); if (f) f.reset(); } }
+function showModal(id) { 
+  const m = document.getElementById(id); 
+  if (m) {
+    m.classList.remove('hidden'); 
+    // Trigger animation after modal is visible
+    setTimeout(() => {
+      const container = m.querySelector('.modal-container');
+      if (container) container.classList.add('show');
+    }, 10);
+  }
+}
+
+function hideModal(id) { 
+  const m = document.getElementById(id); 
+  if (m) { 
+    const container = m.querySelector('.modal-container');
+    if (container) container.classList.remove('show');
+    // Hide modal after animation completes
+    setTimeout(() => {
+      m.classList.add('hidden'); 
+      const f = m.querySelector('form'); 
+      if (f) f.reset();
+    }, 200);
+  } 
+}
+
+// Toast notification system
+function showToast(message, type = 'success', duration = 3000) {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <div class="flex items-start justify-between">
+      <span class="text-sm text-gray-700">${message}</span>
+      <button onclick="this.parentElement.parentElement.remove()" class="ml-3 text-gray-400 hover:text-gray-600">✕</button>
+    </div>
+  `;
+  
+  container.appendChild(toast);
+  
+  // Show animation
+  setTimeout(() => toast.classList.add('show'), 10);
+  
+  // Auto remove
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
 
 function setupTransactionModal(type) {
   const modal = document.getElementById('transaction-modal');
@@ -179,16 +228,32 @@ function handleTransactionSubmit(e) {
     const amount = amountRaw.replace(/[^\d]/g, '');
     const description = document.getElementById('description-input').value;
     const jar = document.getElementById('jar-select').value;
-    if (!amount || Number(amount) <= 0) { alert('Vui lòng nhập số tiền hợp lệ'); return; }
-    if (!description.trim()) { alert('Vui lòng nhập mô tả'); return; }
-    if (!jar) { alert('Vui lòng chọn hủ'); return; }
+    
+    if (!amount || Number(amount) <= 0) { 
+      showToast('Vui lòng nhập số tiền hợp lệ', 'error'); 
+      return; 
+    }
+    if (!description.trim()) { 
+      showToast('Vui lòng nhập mô tả', 'error'); 
+      return; 
+    }
+    if (!jar) { 
+      showToast('Vui lòng chọn hủ', 'error'); 
+      return; 
+    }
+    
     addTransaction(type, amount, jar, description);
     updateUI();
     hideModal('transaction-modal');
-    alert(type === 'income' ? 'Đã thêm thu nhập!' : 'Đã thêm chi tiêu!');
+    showToast(type === 'income' ? '💰 Đã thêm thu nhập thành công!' : '💸 Đã thêm chi tiêu thành công!');
   } catch (error) {
     console.error('Transaction error:', error);
-    alert('Có lỗi xảy ra: ' + error.message);
+    // Friendly error message based on error type
+    if (error.message.includes('Số dư hủ không đủ')) {
+      showToast(`⚠️ Không thể chi tiêu! Số dư trong hủ ${jar} không đủ. Hãy kiểm tra lại số tiền hoặc chọn hủ khác.`, 'warning', 5000);
+    } else {
+      showToast('❌ Có lỗi xảy ra: ' + error.message, 'error');
+    }
   }
 }
 

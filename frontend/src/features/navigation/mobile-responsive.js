@@ -27,7 +27,8 @@ function setupMobileMenu() {
       if (window.SimpleMoneyTracker && typeof window.SimpleMoneyTracker.switchTab === 'function') {
         window.SimpleMoneyTracker.switchTab(tabId);
       }
-      closeMenu();
+      // Auto-close mobile menu after tab selection
+      setTimeout(closeMenu, 100);
     });
   });
 }

@@ -64,16 +64,16 @@ Tài liệu này dùng để theo dõi tiến độ hoàn thành các tính năn
 *Đây là danh sách các công việc cần làm để sản phẩm hoàn thiện hơn, được chia nhỏ để dễ dàng yêu cầu.*
 
 ### **TASK GROUP 5: Cải thiện Trải nghiệm Người dùng (UX Improvements)**
-- `5.1 [ ]` Thêm định dạng số (dấu phẩy) ngay khi người dùng nhập số tiền trong modal "Thêm Giao Dịch", tương tự như ô nhập lương.
-- `5.2 [ ]` Thêm các hiệu ứng chuyển động (transition) nhẹ nhàng khi mở/đóng modal, chuyển tab để ứng dụng mượt mà hơn.
-- `5.3 [ ]` Khi người dùng chi tiêu vượt quá số dư trong hủ, thay vì chỉ chặn, hãy hiển thị một thông báo pop-up thân thiện giải thích lý do.
-- `5.4 [ ]` Tự động đóng menu trên mobile sau khi chọn một tab.
+- `5.1 [x]` Thêm định dạng số (dấu phẩy) ngay khi người dùng nhập số tiền trong modal "Thêm Giao Dịch", tương tự như ô nhập lương.
+- `5.2 [x]` Thêm các hiệu ứng chuyển động (transition) nhẹ nhàng khi mở/đóng modal, chuyển tab để ứng dụng mượt mà hơn.
+- `5.3 [x]` Khi người dùng chi tiêu vượt quá số dư trong hủ, thay vì chỉ chặn, hãy hiển thị một thông báo pop-up thân thiện giải thích lý do.
+- `5.4 [x]` Tự động đóng menu trên mobile sau khi chọn một tab.
 
 ### **TASK GROUP 6: Hoàn thiện Tính năng (Feature Completion)**
-- `6.1 [ ]` Implement logic cho nút "Thêm Thu Nhập" để mở một modal cho phép người dùng thêm một khoản tiền vào một hủ tùy chọn.
-- `6.2 [ ]` Implement tính năng "Export Data" trong phần Cài đặt, cho phép người dùng tải về một file `data.json`.
-- `6.3 [ ]` Implement tính năng "Import Data" trong phần Cài đặt, cho phép người dùng chọn một file `data.json` để khôi phục dữ liệu. Cần có cảnh báo rằng hành động này sẽ ghi đè dữ liệu hiện tại.
-- `6.4 [ ]` Implement tính năng "Reset App" trong phần Cài đặt. Cần có một pop-up xác nhận (confirm dialog) để tránh người dùng vô tình xóa dữ liệu.
+- `6.1 [x]` Implement logic cho nút "Thêm Thu Nhập" để mở một modal cho phép người dùng thêm một khoản tiền vào một hủ tùy chọn.
+- `6.2 [x]` Implement tính năng "Export Data" trong phần Cài đặt, cho phép người dùng tải về một file `data.json`.
+- `6.3 [x]` Implement tính năng "Import Data" trong phần Cài đặt, cho phép người dùng chọn một file `data.json` để khôi phục dữ liệu. Cần có cảnh báo rằng hành động này sẽ ghi đè dữ liệu hiện tại.
+- `6.4 [x]` Implement tính năng "Reset App" trong phần Cài đặt. Cần có một pop-up xác nhận (confirm dialog) để tránh người dùng vô tình xóa dữ liệu.
 
 ### **TASK GROUP 7: Tối ưu & Refactor Code (Optimization & Refactoring)**
 - `7.1 [ ]` Tối ưu hàm `updateUI()`. Thay vì gọi lại toàn bộ hàm, chỉ cập nhật những thành phần bị ảnh hưởng bởi hành động của người dùng (ví dụ: chỉ cập nhật 1 Jar Card khi có giao dịch liên quan).
