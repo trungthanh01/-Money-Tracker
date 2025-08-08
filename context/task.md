@@ -77,5 +77,29 @@ Tài liệu này dùng để theo dõi tiến độ hoàn thành các tính năn
 
 ### **TASK GROUP 7: Tối ưu & Refactor Code (Optimization & Refactoring)**
 - `7.1 [ ]` Tối ưu hàm `updateUI()`. Thay vì gọi lại toàn bộ hàm, chỉ cập nhật những thành phần bị ảnh hưởng bởi hành động của người dùng (ví dụ: chỉ cập nhật 1 Jar Card khi có giao dịch liên quan).
-- `7.2 [ ]` Refactor lại file `js/app.js`. Tách các hàm xử lý sự kiện trong `bindEvents()` ra các hàm nhỏ hơn, chuyên biệt hơn (ví dụ: `bindModalEvents()`, `bindTabEvents()`, `bindSettingsEvents()`).
-- `7.3 [ ]` Review và bổ sung comment chi tiết hơn cho các hàm xử lý logic phức tạp trong `js/data.js` và `js/app.js` theo phương pháp Feynman.
+- `7.2 [ ]` Refactor lại file `frontend/src/app.js`. Tách các hàm xử lý sự kiện trong `bindEvents()` ra các hàm nhỏ hơn, chuyên biệt hơn (ví dụ: `bindModalEvents()`, `bindTabEvents()`, `bindSettingsEvents()`).
+- `7.3 [ ]` Review và bổ sung comment chi tiết hơn cho các hàm xử lý logic phức tạp trong `frontend/src/core/data.js` và `frontend/src/app.js` theo phương pháp Feynman.
+
+### **TASK GROUP 8: Xóa Giao Dịch Gần Đây (Delete Recent Transactions)**
+- `8.1 [ ]` UI: Thêm nút `X` (Delete) cho từng item trong danh sách "Giao dịch gần đây" trên Dashboard (kèm tooltip/i18n).
+- `8.2 [ ]` A11y: Thêm `aria-label`, hỗ trợ xóa bằng phím Enter/Space; trạng thái focus rõ ràng.
+- `8.3 [ ]` Confirm: Hộp thoại xác nhận trước khi xóa (tùy chọn bật/tắt trong Cài đặt).
+- `8.4 [ ]` Logic dữ liệu: Xóa giao dịch theo `id` khỏi LocalStorage; cập nhật số dư hủ liên quan; cập nhật tổng số dư và biểu đồ.
+- `8.5 [ ]` UI sync: Cập nhật ngay danh sách 5 giao dịch gần đây; hiển thị Empty state khi danh sách rỗng.
+- `8.6 [ ]` Undo (tùy chọn): Toast cho phép "Hoàn tác" trong 5 giây; nếu hoàn tác, khôi phục dữ liệu và UI.
+- `8.7 [ ]` i18n: Thêm chuỗi ngôn ngữ cho tooltip, confirm, toast (EN/VI).
+- `8.8 [ ]` Kiểm thử: Cases xóa ở vị trí đầu/cuối/danh sách 1 phần tử; đồng bộ biểu đồ, số dư; reload trang.
+
+### **TASK GROUP 9: Mục Tiêu Cho Từng Hủ (Per-Jar Goals)**
+- `9.1 [ ]` Data model: Thêm cấu trúc `goals` trong LocalStorage tại `frontend/src/core/data.js` (mỗi hủ có `goalAmount`, `goalType`, `period` nếu cần); viết migration an toàn với dữ liệu cũ.
+- `9.2 [ ]` Settings UI: Màn hình/section đặt mục tiêu cho từng hủ (nhập số tiền, chọn loại mục tiêu); validate số dương, đơn vị tiền tệ; lưu/persist.
+- `9.3 [ ]` Dashboard UI: Thể hiện progress bar + % ngay trên mỗi Jar Card; hiển thị `đã đạt X / mục tiêu Y` (định dạng tiền tệ).
+- `9.4 [ ]` Jar Detail: Khi click vào Jar Card, mở modal chi tiết mục tiêu (xem/sửa/xóa mục tiêu của hủ đó).
+- `9.5 [ ]` Tính toán tiến độ theo từng hủ:
+  - `9.5.1 [ ]` Hủ Nợ (Debt): mục tiêu trả nợ; tiến độ = `số tiền đã trả lũy kế / mục tiêu` (hoặc `1 - nợ còn lại / mục tiêu` nếu theo remaining). Chọn 1 công thức thống nhất và hiển thị rõ ràng.
+  - `9.5.2 [ ]` Hủ Chi Tiêu (Expenses): ngân sách theo tháng; tiến độ = `số đã chi trong tháng hiện tại / ngân sách tháng` (yêu cầu lọc giao dịch theo thời gian).
+  - `9.5.3 [ ]` Hủ Khẩn Cấp, Tiết Kiệm, Đầu Tư, Học Tập: tiến độ = `số dư hiện tại / mục tiêu`.
+- `9.6 [ ]` Time filter: Hàm lọc giao dịch theo tháng hiện tại phục vụ 9.5.2 (kèm i18n định dạng ngày).
+- `9.7 [ ]` UX/Visual: Màu theo ngưỡng (<=33% đỏ, <=66% vàng, >66% xanh), animation nhẹ; a11y (contrast, SR text).
+- `9.8 [ ]` Notifications: Thông báo khi đạt 100% mục tiêu; i18n; tuỳ chọn bật/tắt trong Cài đặt.
+- `9.9 [ ]` Kiểm thử & Tài liệu: Test công thức, edge-cases (mục tiêu = 0, chưa đặt mục tiêu, số dư > mục tiêu); cập nhật tài liệu trong `docs/`.
