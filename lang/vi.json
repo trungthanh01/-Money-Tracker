@@ -4,18 +4,18 @@
     "subtitle": "Dữ liệu được lưu trên trình duyệt này"
   },
   "navigation": {
-    "dashboard": "Bảng Tin",
-    "investment": "Đầu Tư", 
-    "learning": "Học Tập",
-    "settings": "Cài Đặt"
+    "dashboard": "🏠 Bảng Tin",
+    "investment": "💹 Đầu Tư", 
+    "learning": "📚 Học Tập",
+    "settings": "⚙️ Cài Đặt"
   },
   "dashboard": {
     "totalBalance": "Tổng Số Dư",
     "totalSalary": "Tổng Lương",
     "addIncome": "Thêm Thu Nhập",
-    "addExpense": "Thêm Chi Tiêu", 
+    "addExpense": "Thêm Chi Tiêu",
     "editSalary": "Nhập Lương",
-    "assetAllocation": "Phân Bổ Tài Sản",
+    "assetAllocation": "Phân Bổ Tài Sản", 
     "recentTransactions": "Giao Dịch Gần Đây",
     "noTransactions": "Chưa có giao dịch nào"
   },
@@ -29,11 +29,11 @@
       "description": "Các khoản chi tiêu hàng ngày, ăn uống, đi lại, hóa đơn..."
     },
     "emergency": {
-      "name": "Khẩn cấp", 
+      "name": "Khẩn cấp",
       "description": "Quỹ dự phòng cho các trường hợp khẩn cấp (ốm đau, mất việc...)"
     },
     "savings": {
-      "name": "Tiết kiệm",
+      "name": "Tiết kiệm", 
       "description": "Dành cho các mục tiêu lớn (du lịch, mua sắm, xe cộ...)"
     },
     "investment": {
@@ -47,62 +47,40 @@
   },
   "modals": {
     "addTransaction": "Thêm Giao Dịch",
-    "addIncomeTitle": "Thêm Thu Nhập",
-    "addExpenseTitle": "Thêm Chi Tiêu", 
-    "editSalaryTitle": "Nhập Lương & Tỉ Lệ",
     "amount": "Số tiền (VND)",
     "description": "Mô tả",
     "selectJar": "Chọn hủ",
     "selectJarPlaceholder": "-- Chọn hủ --",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "editSalaryTitle": "Nhập Lương & Tỉ Lệ",
     "monthlySalary": "Lương tháng (VND)",
     "jarRatios": "Tỉ lệ các hủ (%)",
-    "total": "Tổng",
-    "cancel": "Hủy",
-    "save": "Lưu"
+    "total": "Tổng"
   },
   "settings": {
-    "language": "Ngôn Ngữ",
+    "language": "🌐 Ngôn Ngữ",
     "languageSelect": "Chọn ngôn ngữ",
-    "theme": "Giao Diện",
-    "themeToggleLabel": "Chuyển đổi giao diện",
-    "themeToggleDescription": "Click để chuyển đổi giữa giao diện sáng và tối",
-    "currency": "Đơn Vị Tiền Tệ",
+    "currency": "💱 Đơn Vị Tiền Tệ",
     "currencySelect": "Chọn đơn vị tiền tệ",
     "currencyDescription": "Thay đổi đơn vị tiền tệ hiển thị trên toàn bộ ứng dụng",
-    "lightMode": "Giao Diện Sáng",
-    "darkMode": "Giao Diện Tối",
-    "lightDescription": "Nền trắng, chữ đen",
-    "darkDescription": "Nền đen, chữ trắng",
-    "support": "Hỗ Trợ",
+    "support": "🆘 Hỗ Trợ",
     "contactSupport": "Liên Hệ Hỗ Trợ",
     "supportDescription": "Gặp vấn đề? Hãy liên hệ với chúng tôi",
     "sendEmail": "Gửi Email",
     "supportEmail": "Email hỗ trợ",
     "responseTime": "Thời gian phản hồi",
     "responseTimeValue": "24-48 giờ",
-    "appInfo": "Thông Tin App",
+    "appInfo": "ℹ️ Thông Tin App",
     "version": "Phiên bản",
-    "lastUpdate": "Ngày cập nhật",
+    "lastUpdate": "Ngày cập nhật", 
     "technology": "Công nghệ",
     "storage": "Lưu trữ"
-  },
-  "messages": {
-    "incomeAdded": "Đã thêm thu nhập thành công!",
-    "expenseAdded": "Đã thêm chi tiêu thành công!",
-    "salaryUpdated": "Đã cập nhật lương thành công!",
-    "welcome": "Chào mừng bạn đến với Money Tracker! Hãy nhập lương để bắt đầu.",
-    "pleaseEnterValidAmount": "Vui lòng nhập số tiền hợp lệ",
-    "pleaseEnterDescription": "Vui lòng nhập mô tả", 
-    "pleaseSelectJar": "Vui lòng chọn hủ",
-    "pleaseEnterValidSalary": "Vui lòng nhập lương hợp lệ",
-    "totalRatioMustBe100": "Tổng tỉ lệ các hủ phải bằng 100%",
-    "languageChanged": "Đã thay đổi ngôn ngữ thành công!",
-    "themeChanged": "Đã thay đổi giao diện thành công!"
   },
   "tabs": {
     "investmentTitle": "Tính Năng Đầu Tư",
     "investmentDescription": "Tính năng này sẽ được phát triển trong phiên bản tương lai",
-    "learningTitle": "Tính Năng Học Tập", 
+    "learningTitle": "Tính Năng Học Tập",
     "learningDescription": "Tính năng này sẽ được phát triển trong phiên bản tương lai"
   }
 }

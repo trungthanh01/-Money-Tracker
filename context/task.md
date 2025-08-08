@@ -33,9 +33,9 @@ Tài liệu này dùng để theo dõi tiến độ hoàn thành các tính năn
 - `2.5 [x]` Cập nhật tổng số dư toàn bộ.
 - `2.6 [x]` Lưu mọi giao dịch vào LocalStorage.
 - `2.7 [x]` Hiển thị danh sách 5 giao dịch gần đây trên Dashboard.
-- `2.8 [ ]` **(CHƯA LÀM)** Hoàn thiện logic cho nút "Thêm Thu Nhập" để có thể thêm tiền vào một hủ cụ thể, không chỉ từ việc nhập lương.
-- `2.9 [ ]` **(CẦN CẢI THIỆN)** Validate số tiền nhập vào phải là số dương và hiển thị lỗi thân thiện.
-- `2.10 [ ]` **(CẦN CẢI THIỆN)** Cảnh báo khi chi tiêu vượt quá số dư trong hủ.
+- `2.8 [x]` Hoàn thiện logic cho nút "Thêm Thu Nhập" để thêm tiền vào một hủ cụ thể (không chỉ từ lương).
+- `2.9 [x]` Validate số tiền nhập vào phải là số dương và hiển thị lỗi.
+- `2.10 [x]` Cảnh báo khi chi tiêu vượt quá số dư trong hủ (không cho âm số dư).
 
 ### **EPIC 3: Dashboard Trực quan (Visual Financial Dashboard)**
 *Mục tiêu: Cung cấp một cái nhìn tổng quan, dễ hiểu về tình hình tài chính của người dùng.*
@@ -45,18 +45,18 @@ Tài liệu này dùng để theo dõi tiến độ hoàn thành các tính năn
 - `3.3 [x]` Biểu đồ tròn (Doughnut Chart) thể hiện phân bổ tài sản.
 - `3.4 [x]` Giao diện responsive (Mobile-first) với Hamburger Menu.
 - `3.5 [x]` Dữ liệu trên dashboard được cập nhật real-time sau mỗi hành động.
-- `3.6 [x]` Chú thích (Legend) cho biểu đồ được tích hợp ngay trên biểu đồ.
+- `3.6 [x]` Chú thích (Legend) cho biểu đồ hiển thị cạnh canvas.
 
 ### **EPIC 4: Cài đặt & Tùy chỉnh (Settings & Customization)**
 *Mục tiêu: Cho phép người dùng cá nhân hóa trải nghiệm ứng dụng.*
 
-- `4.1 [x]` Xây dựng Tab Cài đặt với giao diện responsive.
-- `4.2 [x]` Chức năng chuyển đổi ngôn ngữ (Đa ngôn ngữ: Anh/Việt).
-- `4.3 [x]` Chức năng chuyển đổi giao diện Sáng/Tối (Light/Dark Theme).
-- `4.4 [x]` Chức năng chọn đơn vị tiền tệ (10 loại tiền tệ phổ biến).
+- `4.1 [x]` Tab Cài đặt responsive.
+- `4.2 [x]` Đa ngôn ngữ Anh/Việt.
+- `4.3 [x]` Giao diện Dark mode mặc định (không cho đổi sáng/tối).
+- `4.4 [x]` Chọn đơn vị tiền tệ (10 loại tiền tệ phổ biến).
 - `4.5 [x]` Thông tin liên hệ hỗ trợ (`mailto:`).
-- `4.6 [ ]` **(CHƯA LÀM)** Chức năng Export/Import dữ liệu ra file JSON để backup/restore.
-- `4.7 [ ]` **(CHƯA LÀM)** Chức năng Reset toàn bộ dữ liệu ứng dụng.
+- `4.6 [x]` Export/Import dữ liệu ra file JSON.
+- `4.7 [x]` Reset toàn bộ dữ liệu ứng dụng.
 
 ---
 

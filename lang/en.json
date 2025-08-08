@@ -4,10 +4,10 @@
     "subtitle": "Data stored locally on this browser"
   },
   "navigation": {
-    "dashboard": "Dashboard",
-    "investment": "Investment", 
-    "learning": "Learning",
-    "settings": "Settings"
+    "dashboard": "🏠 Dashboard", 
+    "investment": "💹 Investment",
+    "learning": "📚 Learning",
+    "settings": "⚙️ Settings"
   },
   "dashboard": {
     "totalBalance": "Total Balance",
@@ -25,11 +25,11 @@
       "description": "Money for paying off debts and credit cards"
     },
     "expenses": {
-      "name": "Expenses",
+      "name": "Expenses", 
       "description": "Daily expenses (food, transport, bills...)"
     },
     "emergency": {
-      "name": "Emergency", 
+      "name": "Emergency",
       "description": "Emergency fund for unexpected situations"
     },
     "savings": {
@@ -47,57 +47,35 @@
   },
   "modals": {
     "addTransaction": "Add Transaction",
-    "addIncomeTitle": "Add Income",
-    "addExpenseTitle": "Add Expense", 
-    "editSalaryTitle": "Edit Salary & Ratios",
-    "amount": "Amount (VND)",
-    "description": "Description",
+    "amount": "Amount",
+    "description": "Description", 
     "selectJar": "Select Jar",
     "selectJarPlaceholder": "-- Select Jar --",
-    "monthlySalary": "Monthly Salary (VND)",
-    "jarRatios": "Jar Ratios (%)",
-    "total": "Total",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "editSalaryTitle": "Edit Salary & Ratios",
+    "monthlySalary": "Monthly Salary",
+    "jarRatios": "Jar Ratios (%)",
+    "total": "Total"
   },
   "settings": {
-    "language": "Language",
-    "languageSelect": "Select Language",
-    "theme": "Theme",
-    "themeToggleLabel": "Switch Theme",
-    "themeToggleDescription": "Click to switch between light and dark modes",
-    "currency": "Currency",
-    "currencySelect": "Select Currency",
-    "currencyDescription": "Change currency display throughout the application",
-    "lightMode": "Light Mode",
-    "darkMode": "Dark Mode",
-    "lightDescription": "White background, dark text",
-    "darkDescription": "Dark background, white text",
-    "support": "Support",
-    "contactSupport": "Contact Support",
+    "language": "🌐 Language",
+    "languageSelect": "Select language",
+    "currency": "💱 Currency",
+    "currencySelect": "Select currency",
+    "currencyDescription": "Change currency display throughout the app",
+    "support": "🆘 Support",
+    "contactSupport": "Contact Support", 
     "supportDescription": "Having issues? Contact us",
     "sendEmail": "Send Email",
-    "supportEmail": "Support email",
-    "responseTime": "Response time",
+    "supportEmail": "Support Email",
+    "responseTime": "Response Time",
     "responseTimeValue": "24-48 hours",
-    "appInfo": "App Information",
+    "appInfo": "ℹ️ App Info",
     "version": "Version",
-    "lastUpdate": "Last update",
+    "lastUpdate": "Last Update",
     "technology": "Technology",
     "storage": "Storage"
-  },
-  "messages": {
-    "incomeAdded": "Income added successfully!",
-    "expenseAdded": "Expense added successfully!",
-    "salaryUpdated": "Salary updated successfully!",
-    "welcome": "Welcome to Money Tracker! Please enter your salary to get started.",
-    "pleaseEnterValidAmount": "Please enter a valid amount",
-    "pleaseEnterDescription": "Please enter a description", 
-    "pleaseSelectJar": "Please select a jar",
-    "pleaseEnterValidSalary": "Please enter a valid salary",
-    "totalRatioMustBe100": "Total ratio must equal 100%",
-    "languageChanged": "Language changed successfully!",
-    "themeChanged": "Theme changed successfully!"
   },
   "tabs": {
     "investmentTitle": "Investment Feature",

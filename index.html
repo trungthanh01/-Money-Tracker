@@ -50,9 +50,9 @@
                 <div class="hidden lg:block text-sm text-gray-500" data-i18n="header.subtitle">
                     Dữ liệu được lưu trên trình duyệt này
                 </div>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
@@ -105,7 +105,7 @@
                 </button>
             </div>
         </div>
-    </nav>
+        </nav>
 
     <!-- Main Content - Mobile First -->
     <main class="max-w-7xl mx-auto px-4 py-4 lg:py-6">
@@ -147,6 +147,7 @@
                     <div class="relative h-48 lg:h-64">
                         <canvas id="jar-chart"></canvas>
                     </div>
+                    <div id="chart-legend" class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
                 </div>
 
                 <!-- Recent Transactions -->
@@ -190,19 +191,6 @@
                 </div>
 
                 <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.theme">🎨 Giao Diện</h3>
-                    <div class="space-y-4">
-                        <label class="block text-sm font-medium text-gray-700" data-i18n="settings.themeToggleLabel">Chuyển đổi giao diện</label>
-                        <button id="theme-toggle-btn" class="w-full p-4 bg-gray-200 hover:bg-gray-300 rounded-lg transition-all font-medium">
-                            🌙 Switch to Dark
-                        </button>
-                        <div class="text-sm text-gray-500">
-                            <p data-i18n="settings.themeToggleDescription">Click để chuyển đổi giữa giao diện sáng và tối</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.currency">💱 Đơn Vị Tiền Tệ</h3>
                     <div class="space-y-3">
                         <label class="block text-sm font-medium text-gray-700" data-i18n="settings.currencySelect">Chọn đơn vị tiền tệ</label>
@@ -224,11 +212,22 @@
                     </div>
                 </div>
 
+                <!-- Data Management (Export / Import / Reset) -->
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4">💾 Dữ liệu</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <button id="export-data-btn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium">Export</button>
+                        <button id="import-data-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg font-medium">Import</button>
+                        <button id="reset-data-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium">Reset</button>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500">Xuất/nhập dữ liệu JSON. Reset sẽ xóa toàn bộ dữ liệu hiện tại.</p>
+                </div>
+
                 <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.support">🆘 Hỗ Trợ</h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-                            <div>
+                        <div>
                                 <div class="font-medium text-blue-900" data-i18n="settings.contactSupport">Liên Hệ Hỗ Trợ</div>
                                 <div class="text-sm text-blue-700" data-i18n="settings.supportDescription">Gặp vấn đề? Hãy liên hệ với chúng tôi</div>
                             </div>
@@ -241,8 +240,8 @@
                             <p><strong data-i18n="settings.supportEmail">Email hỗ trợ</strong>: trungthanh.marcus@gmail.com</p>
                             <p><strong data-i18n="settings.responseTime">Thời gian phản hồi</strong>: <span data-i18n="settings.responseTimeValue">24-48 giờ</span></p>
                         </div>
+                        </div>
                     </div>
-                </div>
 
                 <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                     <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.appInfo">ℹ️ Thông Tin App</h3>
@@ -252,10 +251,10 @@
                         <p><strong data-i18n="settings.technology">Công nghệ</strong>: CURSOR AI</p>
                         <p><strong data-i18n="settings.storage">Lưu trữ</strong>: LocalStorage (Offline)</p>
                     </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
 
     <!-- Modals remain the same but with mobile optimization -->
     <!-- Transaction Modal -->
@@ -267,8 +266,8 @@
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.amount">Số tiền (VND)</label>
                     <input type="text" inputmode="numeric" id="amount-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                </div>
-                
+    </div>
+
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.description">Mô tả</label>
                     <input type="text" id="description-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -337,18 +336,18 @@
                             <span class="w-16 text-sm" data-i18n="jars.investment.name">Đầu tư:</span>
                             <input type="number" id="investment-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
                             <span class="text-sm">%</span>
-                        </div>
+            </div>
                         <div class="flex items-center space-x-2">
                             <span class="w-16 text-sm" data-i18n="jars.learning.name">Học tập:</span>
                             <input type="number" id="learning-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
                             <span class="text-sm">%</span>
-                        </div>
-                    </div>
+            </div>
+        </div>
                     <div class="mt-2 text-sm text-gray-500">
                         <span data-i18n="modals.total">Tổng</span>: <span id="total-ratio">100</span>%
                     </div>
-                </div>
-                
+    </div>
+
                 <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                     <button type="button" id="cancel-salary-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.cancel">
                         Hủy
@@ -359,16 +358,12 @@
                 </div>
             </form>
         </div>
-    </div>
+        </div>
 
     <!-- Hidden file input -->
     <input type="file" id="import-file-input" accept=".json" style="display: none;">
 
-    <!-- Load modules -->
-    <script type="module" src="./js/data.js"></script>
-    <script type="module" src="./js/i18n.js"></script>
-    <script type="module" src="./js/theme.js"></script>
-    <script type="module" src="./js/mobile-responsive.js"></script>
-    <script type="module" src="./js/app.js"></script>
+    <!-- Load modules (new frontend entry) -->
+    <script type="module" src="./frontend/src/app.js"></script>
 </body>
 </html>
