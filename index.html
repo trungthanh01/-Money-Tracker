@@ -214,13 +214,13 @@
 
                 <!-- Data Management (Export / Import / Reset) -->
                 <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">💾 Dữ liệu</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.dataManagement">💾 Dữ liệu</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <button id="export-data-btn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium">Export</button>
-                        <button id="import-data-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg font-medium">Import</button>
-                        <button id="reset-data-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium">Reset</button>
+                        <button id="export-data-btn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium" data-i18n="settings.exportData">Export</button>
+                        <button id="import-data-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg font-medium" data-i18n="settings.importData">Import</button>
+                        <button id="reset-data-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium" data-i18n="settings.resetData">Reset</button>
                     </div>
-                    <p class="mt-2 text-sm text-gray-500">Xuất/nhập dữ liệu JSON. Reset sẽ xóa toàn bộ dữ liệu hiện tại.</p>
+                    <p class="mt-2 text-sm text-gray-500" data-i18n="settings.dataDescription">Xuất/nhập dữ liệu JSON. Reset sẽ xóa toàn bộ dữ liệu hiện tại.</p>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
@@ -345,7 +345,7 @@
         </div>
                     <div class="mt-2 text-sm text-gray-500">
                         <span data-i18n="modals.total">Tổng</span>: <span id="total-ratio">100</span>%
-                    </div>
+        </div>
     </div>
 
                 <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">

@@ -144,7 +144,8 @@ function hideModal(id) { const m = document.getElementById(id); if (m) { m.class
 function setupTransactionModal(type) {
   const modal = document.getElementById('transaction-modal');
   const title = document.getElementById('modal-title');
-  title.textContent = type === 'income' ? 'Thêm Thu Nhập' : 'Thêm Chi Tiêu';
+  const titleKey = type === 'income' ? 'modals.addIncome' : 'modals.addExpense';
+  title.textContent = window.t ? window.t(titleKey) : (type === 'income' ? 'Thêm Thu Nhập' : 'Thêm Chi Tiêu');
   modal.dataset.transactionType = type;
   showModal('transaction-modal');
 }
