@@ -4,452 +4,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trình Quản Lý Tài Chính</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .jar-debt { background-color: #ef4444; }
-        .jar-expenses { background-color: #3b82f6; }
-        .jar-emergency { background-color: #f59e0b; }
-        .jar-savings { background-color: #10b981; }
-        .jar-investment { background-color: #8b5cf6; }
-        .jar-learning { background-color: #f97316; }
-        
-        /* Mobile menu styles */
-        .mobile-menu {
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-        }
-        .mobile-menu.open {
-            transform: translateX(0);
-        }
-        
-        /* Modal transition effects */
-        .modal-container {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-        }
-        .modal-container.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        /* Tab switching animation */
-        .tab-content {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        }
-        .tab-content:not(.hidden) {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Jar cards hover effect */
-        .jar-card {
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-        }
-        .jar-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Toast notifications */
-        .toast {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            padding: 12px 16px;
-            margin-bottom: 8px;
-            transform: translateX(100%);
-            transition: transform 0.3s ease-out;
-            max-width: 320px;
-            border-left: 4px solid #10b981;
-        }
-        .toast.show {
-            transform: translateX(0);
-        }
-        .toast.error {
-            border-left-color: #ef4444;
-        }
-        .toast.warning {
-            border-left-color: #f59e0b;
-        }
-    </style>
-</head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- Header - Mobile First -->
-    <header class="bg-white shadow-sm border-b">
-        <div class="max-w-7xl mx-auto px-4 py-3">
-            <div class="flex items-center justify-between">
-                <!-- Hamburger Menu Button (Mobile) -->
-                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-                
-                <!-- Logo và tên app -->
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 lg:w-10 lg:h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-lg lg:text-xl">💰</span>
-                    </div>
-                    <h1 class="text-lg lg:text-xl font-bold text-gray-900" data-i18n="header.title">Trình Quản Lý Tài Chính</h1>
-                </div>
-                
-                <!-- Desktop: Thông báo về việc lưu trữ local -->
-                <div class="hidden lg:block text-sm text-gray-500" data-i18n="header.subtitle">
-                    Dữ liệu được lưu trên trình duyệt này
-                </div>
-                </div>
-            </div>
-        </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
     
-    <!-- Mobile Navigation Menu -->
-    <nav id="mobile-menu" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 lg:hidden mobile-menu">
-        <div class="p-4">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-lg font-semibold text-gray-900">Menu</h2>
-                <button id="mobile-menu-close" class="p-2 rounded-lg hover:bg-gray-100">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="./Front-End/src/style/color/root.css">
+    <link rel="stylesheet" href="./Front-End/src/style/main/dashboard.css">
+    <link rel="stylesheet" href="./Front-End/src/style/main/mobile.css">
+    <link rel="stylesheet" href="./Front-End/src/style/main/setting.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <button id="mobile-menu-btn" class="hamburger-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>  
                 </button>
+                <div class="app-logo">
+                    <div class="logo-icon"><span>💰</span></div>
+                    <h1 data-i18n="header.title">Trình Quản Lý Tài Chính</h1>
+                </div>
+                <div class="header-subtitle" data-i18n="header.subtitle">Dữ liệu được lưu trên trình duyệt này</div>
             </div>
-            
-            <!-- Mobile Menu Items -->
-            <div class="space-y-2">
-                <button class="
-                    mobile-tab-btn 
-                    w-full 
-                    text-left 
-                    py-3 px-4 
-                    rounded-lg 
-                    bg-transparent 
-                    font-medium hover:bg-gray-700" 
-                    data-tab="dashboard" 
-                    data-i18n="navigation.dashboard">
-                    Bảng Tin
-                </button>
-                <button class="
-                    mobile-tab-btn 
-                    w-full 
-                    text-left 
-                    py-3 px-4 
-                    rounded-lg 
-                    bg-transparent 
-                    font-medium hover:bg-gray-700" data-tab="investment" data-i18n="navigation.investment">
-                    Đầu Tư
-                </button>
-                <button class="
-                    mobile-tab-btn 
-                    w-full 
-                    text-left 
-                    py-3 px-4 
-                    rounded-lg 
-                    bg-transparent 
-                    font-medium hover:bg-gray-700" data-tab="learning" data-i18n="navigation.learning">
-                    Học Tập
-                </button>
-                <button class="
-                    mobile-tab-btn 
-                    w-full 
-                    text-left 
-                    py-3 px-4 
-                    rounded-lg 
-                    bg-transparent 
-                    font-medium hover:bg-gray-700" data-tab="settings" data-i18n="navigation.settings">
-                    Cài Đặt
-                </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+    <nav id="mobile-menu" class="mobile-nav">
+        <div class="mobile-nav-header">
+            <h2 class="mobile-nav-title">Menu</h2>
+            <button id="mobile-menu-close" class="close-btn"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        </div>
+        <div class="mobile-nav-links">
+            <button class="mobile-tab-btn active" data-tab="dashboard" data-i18n="navigation.dashboard">Bảng Tin</button>
+            <button class="mobile-tab-btn" data-tab="investment" data-i18n="navigation.investment">Đầu Tư</button>
+            <button class="mobile-tab-btn" data-tab="learning" data-i18n="navigation.learning">Học Tập</button>
+            <button class="mobile-tab-btn" data-tab="settings" data-i18n="navigation.settings">Cài Đặt</button>
+        </div>
+    </nav>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+        <div class="container">
+            <div class="desktop-nav-links">
+                <button class="tab-btn active" data-tab="dashboard" data-i18n="navigation.dashboard">Bảng Tin</button>
+                <button class="tab-btn" data-tab="investment" data-i18n="navigation.investment">Đầu Tư</button>
+                <button class="tab-btn" data-tab="learning" data-i18n="navigation.learning">Học Tập</button>
+                <button class="tab-btn" data-tab="settings" data-i18n="navigation.settings">Cài Đặt</button>
             </div>
         </div>
     </nav>
 
-    <!-- Desktop Navigation Tabs -->
-    <nav class="bg-white border-b hidden lg:block">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex space-x-8">
-                <button class="tab-btn py-4 px-2 border-b-2 border-blue-500 text-blue-600 font-medium" data-tab="dashboard" data-i18n="navigation.dashboard">
-                    Bảng Tin
-                </button>
-                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="investment" data-i18n="navigation.investment">
-                    Đầu Tư
-                </button>
-                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="learning" data-i18n="navigation.learning">
-                    Học Tập
-                </button>
-                <button class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="settings" data-i18n="navigation.settings">
-                    Cài Đặt
-                </button>
-            </div>
-        </div>
-        </nav>
-
-    <!-- Main Content - Mobile First -->
-    <main class="max-w-7xl mx-auto px-4 py-4 lg:py-6">
+    <!-- Main Content -->
+    <main class="container">
         <!-- Dashboard Tab -->
         <div id="dashboard-tab" class="tab-content">
-            <div class="space-y-4 lg:space-y-6">
-                <!-- Total Balance Card -->
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <div class="mb-4">
-                        <h2 class="text-lg font-semibold text-gray-700" data-i18n="dashboard.totalBalance">Tổng Số Dư</h2>
-                        <div class="text-2xl lg:text-3xl font-bold text-blue-600" id="total-balance">0 ₫</div>
-                        <div class="text-sm text-green-600 mt-1">
+            <div class="dashboard-grid">
+                <div class="card summary-card">
+                    <div class="summary-card-header">
+                        <h2 data-i18n="dashboard.totalBalance">Tổng Số Dư</h2>
+                        <div id="total-balance">0 ₫</div>
+                        <div class="summary-card-subtitle">
                             <span data-i18n="dashboard.totalSalary">Tổng Lương</span>: <span id="total-salary">0 ₫</span>
                         </div>
                     </div>
-                    
-                    <!-- Action Buttons - Stack on mobile -->
-                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-                        <button id="btn-add-income" class="w-full sm:flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg font-medium transition-colors" data-i18n="dashboard.addIncome">
-                            Thêm Thu Nhập
-                        </button>
-                        <button id="btn-add-expense" class="w-full sm:flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-lg font-medium transition-colors" data-i18n="dashboard.addExpense">
-                            Thêm Chi Tiêu
-                        </button>
-                        <button id="btn-edit-salary" class="w-full sm:flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition-colors" data-i18n="dashboard.editSalary">
-                            Nhập Lương
-                        </button>
+                    <div class="action-buttons">
+                        <button id="btn-add-income" class="btn btn-success" data-i18n="dashboard.addIncome">Thêm Thu Nhập</button>
+                        <button id="btn-add-expense" class="btn btn-danger" data-i18n="dashboard.addExpense">Thêm Chi Tiêu</button>
+                        <button id="btn-edit-salary" class="btn btn-primary" data-i18n="dashboard.editSalary">Nhập Lương</button>
                     </div>
                 </div>
 
-                <!-- Jar Cards Grid - Mobile First -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="jars-container">
-                    <!-- Các card hủ sẽ được tạo động -->
+                <div class="card jar-grid-container">
+                    <h3 class="grid-header" data-i18n="jars.title">Các Hũ Tiền</h3>
+                    <div id="jars-container" class="jar-grid"></div>
                 </div>
 
-                <!-- Chart Card - Full width on mobile -->
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="dashboard.assetAllocation">Phân Bổ Tài Sản</h3>
-                    <div class="relative h-48 lg:h-64">
-                        <canvas id="jar-chart"></canvas>
-                    </div>
-                    <div id="chart-legend" class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
+                <div class="card chart-card">
+                    <h3 data-i18n="dashboard.assetAllocation">Phân Bổ Tài Sản</h3>
+                    <div class="chart-wrapper"><canvas id="jar-chart"></canvas></div>
+                    <div id="chart-legend" class="chart-legend"></div>
                 </div>
 
-                <!-- Recent Transactions -->
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="dashboard.recentTransactions">Giao Dịch Gần Đây</h3>
-                    <div id="transactions-list">
-                        <!-- Danh sách giao dịch sẽ được tạo động -->
-                    </div>
+                <div class="card transactions-card">
+                    <h3 data-i18n="dashboard.recentTransactions">Giao Dịch Gần Đây</h3>
+                    <div id="transactions-list" class="transactions-list"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Other tabs remain the same but with mobile padding -->
+        <!-- Other Tabs -->
         <div id="investment-tab" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6 text-center">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4" data-i18n="tabs.investmentTitle">Tính Năng Đầu Tư</h2>
-                <p class="text-gray-500" data-i18n="tabs.investmentDescription">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
-            </div>
+            <div class="card"><h2 data-i18n="tabs.investmentTitle">Tính Năng Đầu Tư</h2><p data-i18n="tabs.investmentDescription">...</p></div>
         </div>
-
         <div id="learning-tab" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6 text-center">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4" data-i18n="tabs.learningTitle">Tính Năng Học Tập</h2>
-                <p class="text-gray-500" data-i18n="tabs.learningDescription">Tính năng này sẽ được phát triển trong phiên bản tương lai</p>
-            </div>
+            <div class="card"><h2 data-i18n="tabs.learningTitle">Tính Năng Học Tập</h2><p data-i18n="tabs.learningDescription">...</p></div>
         </div>
 
-        <!-- Settings Tab - Mobile optimized -->
+        <!-- Settings Tab -->
         <div id="settings-tab" class="tab-content hidden">
-            <div class="max-w-2xl mx-auto space-y-4 lg:space-y-6">
-                <!-- Settings sections with mobile padding -->
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.language">🌐 Ngôn Ngữ</h3>
-                    <div class="space-y-3">
-                        <label class="block text-sm font-medium text-gray-700" data-i18n="settings.languageSelect">Chọn ngôn ngữ</label>
-                        <select id="language-select" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="en">English</option>
-                            <option value="vi">Tiếng Việt</option>
-                        </select>
+            <div class="settings-container">
+                <div class="card settings-card">
+                    <h3 class="settings-card-header" data-i18n="settings.language">Ngôn Ngữ</h3>
+                    <div class="settings-card-body">
+                        <label for="language-select" class="form-label" data-i18n="settings.languageSelect">Chọn ngôn ngữ</label>
+                        <select id="language-select" class="form-control"><option value="vi">Tiếng Việt</option><option value="en">English</option></select>
                     </div>
                 </div>
-
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.currency">💱 Đơn Vị Tiền Tệ</h3>
-                    <div class="space-y-3">
-                        <label class="block text-sm font-medium text-gray-700" data-i18n="settings.currencySelect">Chọn đơn vị tiền tệ</label>
-                        <select id="currency-select" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="VND">🇻🇳 Vietnamese Dong (₫)</option>
-                            <option value="USD">🇺🇸 US Dollar ($)</option>
-                            <option value="EUR">🇪🇺 Euro (€)</option>
-                            <option value="GBP">🇬🇧 British Pound (£)</option>
-                            <option value="JPY">🇯🇵 Japanese Yen (¥)</option>
-                            <option value="CNY">🇨🇳 Chinese Yuan (¥)</option>
-                            <option value="KRW">🇰🇷 Korean Won (₩)</option>
-                            <option value="INR">🇮🇳 Indian Rupee (₹)</option>
-                            <option value="AUD">🇦🇺 Australian Dollar (A$)</option>
-                            <option value="CAD">🇨🇦 Canadian Dollar (C$)</option>
-                        </select>
-                        <div class="text-sm text-gray-500">
-                            <p data-i18n="settings.currencyDescription">Thay đổi đơn vị tiền tệ hiển thị trên toàn bộ ứng dụng</p>
+                <div class="card settings-card">
+                    <h3 class="settings-card-header" data-i18n="settings.currency">Đơn Vị Tiền Tệ</h3>
+                    <div class="settings-card-body">
+                        <label for="currency-select" class="form-label" data-i18n="settings.currencySelect">Chọn đơn vị tiền tệ</label>
+                        <select id="currency-select" class="form-control"></select>
+                        <p class="form-description" data-i18n="settings.currencyDescription">...</p>
+                    </div>
+                </div>
+                <div class="card settings-card">
+                    <h3 class="settings-card-header" data-i18n="settings.dataManagement">Quản Lý Dữ Liệu</h3>
+                    <div class="settings-card-body">
+                        <div class="data-actions">
+                            <button id="export-data-btn" class="btn btn-success" data-i18n="settings.exportData">Xuất</button>
+                            <button id="import-data-btn" class="btn btn-warning" data-i18n="settings.importData">Nhập</button>
+                            <button id="reset-data-btn" class="btn btn-danger" data-i18n="settings.resetData">Reset</button>
                         </div>
+                        <p class="form-description" data-i18n="settings.dataDescription">...</p>
                     </div>
                 </div>
-
-                <!-- Data Management (Export / Import / Reset) -->
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.dataManagement">💾 Dữ liệu</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <button id="export-data-btn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium" data-i18n="settings.exportData">Export</button>
-                        <button id="import-data-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg font-medium" data-i18n="settings.importData">Import</button>
-                        <button id="reset-data-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium" data-i18n="settings.resetData">Reset</button>
-                    </div>
-                    <p class="mt-2 text-sm text-gray-500" data-i18n="settings.dataDescription">Xuất/nhập dữ liệu JSON. Reset sẽ xóa toàn bộ dữ liệu hiện tại.</p>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.support">🆘 Hỗ Trợ</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-                        <div>
-                                <div class="font-medium text-blue-900" data-i18n="settings.contactSupport">Liên Hệ Hỗ Trợ</div>
-                                <div class="text-sm text-blue-700" data-i18n="settings.supportDescription">Gặp vấn đề? Hãy liên hệ với chúng tôi</div>
+                 <div class="card settings-card">
+                    <h3 class="settings-card-header" data-i18n="settings.support">Hỗ Trợ</h3>
+                    <div class="settings-card-body">
+                        <div class="support-contact">
+                            <div>
+                                <div class="support-title" data-i18n="settings.contactSupport">Liên Hệ</div>
+                                <div class="support-description" data-i18n="settings.supportDescription">...</div>
                             </div>
-                            <a href="mailto:trungthanh.marcus@gmail.com" id="contact-support-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="settings.sendEmail">
-                                Gửi Email
-                            </a>
+                            <a href="mailto:trungthanh.marcus@gmail.com" id="contact-support-btn" class="btn btn-primary" data-i18n="settings.sendEmail">Gửi Email</a>
                         </div>
-                        
-                        <div class="text-sm text-gray-500">
-                            <p><strong data-i18n="settings.supportEmail">Email hỗ trợ</strong>: trungthanh.marcus@gmail.com</p>
-                            <p><strong data-i18n="settings.responseTime">Thời gian phản hồi</strong>: <span data-i18n="settings.responseTimeValue">24-48 giờ</span></p>
-                        </div>
+                        <div class="support-details">
+                            <p><strong data-i18n="settings.supportEmail">Email</strong>: <span>trungthanh.marcus@gmail.com</span></p>
+                            <p><strong data-i18n="settings.responseTime">Phản hồi</strong>: <span data-i18n="settings.responseTimeValue">24-48 giờ</span></p>
                         </div>
                     </div>
-
-                <div class="bg-white rounded-lg shadow-sm p-4 lg:p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="settings.appInfo">ℹ️ Thông Tin App</h3>
-                    <div class="space-y-2 text-sm text-gray-600">
-                        <p><strong data-i18n="settings.version">Phiên bản</strong>: 1.0.0</p>
-                        <p><strong data-i18n="settings.lastUpdate">Ngày cập nhật</strong>: 08/07/2025</p>
-                        <p><strong data-i18n="settings.technology">Công nghệ</strong>: CURSOR AI</p>
-                        <p><strong data-i18n="settings.storage">Lưu trữ</strong>: LocalStorage (Offline)</p>
-                    </div>
+                </div>
+                <div class="card settings-card">
+                    <h3 class="settings-card-header" data-i18n="settings.appInfo">Thông Tin</h3>
+                     <div class="info-list">
+                        <p><strong data-i18n="settings.version">Phiên bản</strong>: <span>1.0.0</span></p>
+                        <p><strong data-i18n="settings.lastUpdate">Cập nhật</strong>: <span>08/2025</span></p>
+                        <p><strong data-i18n="settings.technology">Công nghệ</strong>: <span>Cursor AI</span></p>
+                        <p><strong data-i18n="settings.storage">Lưu trữ</strong>: <span>LocalStorage</span></p>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
 
-    <!-- Modals remain the same but with mobile optimization -->
-    <!-- Transaction Modal -->
-    <div id="transaction-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div class="modal-container bg-white rounded-lg p-4 lg:p-6 w-full max-w-md">
-            <h3 id="modal-title" class="text-lg font-semibold text-gray-700 mb-4" data-i18n="modals.addTransaction">Thêm Giao Dịch</h3>
-            
+    <!-- Modals -->
+    <div id="transaction-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-title" class="modal-header">Thêm Giao Dịch</h3>
             <form id="transaction-form">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.amount">Số tiền (VND)</label>
-                    <input type="text" inputmode="numeric" id="amount-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-    </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.description">Mô tả</label>
-                    <input type="text" id="description-input" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <div class="form-group">
+                    <label for="amount-input" class="form-label" data-i18n="modals.amount">Số tiền</label>
+                    <input type="text" inputmode="numeric" id="amount-input" class="form-control" required>
                 </div>
-                
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.selectJar">Chọn hủ</label>
-                    <select id="jar-select" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        <option value="" data-i18n="modals.selectJarPlaceholder">-- Chọn hủ --</option>
-                        <option value="debt">Nợ</option>
-                        <option value="expenses">Chi tiêu</option>
-                        <option value="emergency">Khẩn cấp</option>
-                        <option value="savings">Tiết kiệm</option>
-                        <option value="investment">Đầu tư</option>
-                        <option value="learning">Học tập</option>
-                    </select>
+                <div class="form-group">
+                    <label for="description-input" class="form-label" data-i18n="modals.description">Mô tả</label>
+                    <input type="text" id="description-input" class="form-control" required>
                 </div>
-                
-                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-                    <button type="button" id="cancel-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.cancel">
-                        Hủy
-                    </button>
-                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.save">
-                        Lưu
-                    </button>
+                <div class="form-group">
+                    <label for="jar-select" class="form-label" data-i18n="modals.selectJar">Chọn hủ</label>
+                    <select id="jar-select" class="form-control" required></select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-btn" class="btn btn-secondary" data-i18n="modals.cancel">Hủy</button>
+                    <button type="submit" class="btn btn-primary" data-i18n="modals.save">Lưu</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Salary Modal -->
-    <div id="salary-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div class="modal-container bg-white rounded-lg p-4 lg:p-6 w-full max-w-md">
-            <h3 class="text-lg font-semibold text-gray-700 mb-4" data-i18n="modals.editSalaryTitle">Nhập Lương & Tỉ Lệ</h3>
-            
+    <div id="salary-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="modal-header" data-i18n="modals.editSalaryTitle">Nhập Lương & Tỉ Lệ</h3>
             <form id="salary-form">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.monthlySalary">Lương tháng (VND)</label>
-                    <input type="text" inputmode="numeric" id="salary-input" placeholder="10,000,000" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <div class="form-group">
+                    <label for="salary-input" class="form-label" data-i18n="modals.monthlySalary">Lương tháng</label>
+                    <input type="text" inputmode="numeric" id="salary-input" class="form-control" required>
                 </div>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="modals.jarRatios">Tỉ lệ các hủ (%)</label>
-                    <div class="space-y-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm" data-i18n="jars.debt.name">Nợ:</span>
-                            <input type="number" id="debt-ratio" value="20" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
-                            <span class="text-sm">%</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm" data-i18n="jars.expenses.name">Chi tiêu:</span>
-                            <input type="number" id="expenses-ratio" value="40" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
-                            <span class="text-sm">%</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm" data-i18n="jars.emergency.name">Khẩn cấp:</span>
-                            <input type="number" id="emergency-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
-                            <span class="text-sm">%</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm" data-i18n="jars.savings.name">Tiết kiệm:</span>
-                            <input type="number" id="savings-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
-                            <span class="text-sm">%</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm" data-i18n="jars.investment.name">Đầu tư:</span>
-                            <input type="number" id="investment-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
-                            <span class="text-sm">%</span>
-            </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="w-16 text-sm" data-i18n="jars.learning.name">Học tập:</span>
-                            <input type="number" id="learning-ratio" value="10" min="0" max="100" class="flex-1 border rounded px-2 py-1 text-sm">
-                            <span class="text-sm">%</span>
-            </div>
-        </div>
-                    <div class="mt-2 text-sm text-gray-500">
-                        <span data-i18n="modals.total">Tổng</span>: <span id="total-ratio">100</span>%
-        </div>
-    </div>
-
-                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-                    <button type="button" id="cancel-salary-btn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.cancel">
-                        Hủy
-                    </button>
-                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors" data-i18n="modals.save">
-                        Lưu
-                    </button>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="modals.jarRatios">Tỉ lệ các hủ (%)</label>
+                    <div id="jar-ratios-grid" class="jar-ratios-grid"></div>
+                    <div class="total-ratio"><span data-i18n="modals.total">Tổng</span>: <span id="total-ratio">100</span>%</div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-salary-btn" class="btn btn-secondary" data-i18n="modals.cancel">Hủy</button>
+                    <button type="submit" class="btn btn-primary" data-i18n="modals.save">Lưu</button>
                 </div>
             </form>
         </div>
-        </div>
-
-    <!-- Hidden file input -->
-    <input type="file" id="import-file-input" accept=".json" style="display: none;">
+    </div>
     
-    <!-- Toast Notification -->
-    <div id="toast-container" class="fixed top-4 right-4 z-50"></div>
+    <!-- Utilities -->
+    <input type="file" id="import-file-input" accept=".json" style="display: none;">
+    <div id="toast-container"></div>
 
-    <!-- Load modules (new frontend entry) -->
-    <script type="module" src="./frontend/src/app.js"></script>
+    <!-- Main Script -->
+    <script type="module" src="./Front-End/src/javascript/dashboard/dashboard.js"></script>
 </body>
 </html>

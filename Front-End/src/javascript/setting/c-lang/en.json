@@ -1,0 +1,92 @@
+// File: Front-End/src/javascript/setting/c-lang/en.json
+{
+    "header": {
+        "title": "Finance Tracker",
+        "subtitle": "Data is stored on this browser"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "investment": "Investment",
+        "learning": "Learning",
+        "settings": "Settings"
+    },
+    "dashboard": {
+        "totalBalance": "Total Balance",
+        "totalSalary": "Total Salary",
+        "addIncome": "Add Income",
+        "addExpense": "Add Expense",
+        "editSalary": "Set Salary",
+        "assetAllocation": "Asset Allocation",
+        "recentTransactions": "Recent Transactions",
+        "welcomeMessage": "Welcome! Please set your salary to start.",
+        "noTransactions": "No transactions yet."
+    },
+    "jars": {
+        "title": "Money Jars",
+        "debt": { "name": "Debt" },
+        "expenses": { "name": "Expenses" },
+        "emergency": { "name": "Emergency" },
+        "savings": { "name": "Savings" },
+        "investment": { "name": "Investment" },
+        "learning": { "name": "Learning" }
+    },
+    "tabs": {
+        "investmentTitle": "Investment Feature",
+        "investmentDescription": "This feature will be developed in a future version.",
+        "learningTitle": "Learning Feature",
+        "learningDescription": "This feature will be developed in a future version."
+    },
+    "modals": {
+        "addTransaction": "Add Transaction",
+        "addIncome": "Add Income",
+        "addExpense": "Add Expense",
+        "amount": "Amount",
+        "description": "Description",
+        "selectJar": "Select Jar",
+        "selectJarPlaceholder": "-- Select a jar --",
+        "cancel": "Cancel",
+        "save": "Save",
+        "editSalaryTitle": "Set Salary & Ratios",
+        "monthlySalary": "Monthly Salary",
+        "jarRatios": "Jar Ratios (%)",
+        "total": "Total",
+        "totalRatioError": "Total ratio must be 100%!"
+    },
+    "settings": {
+        "language": "Language",
+        "languageSelect": "Select language",
+        "currency": "Currency",
+        "currencySelect": "Select currency",
+        "currencyDescription": "Changes the currency displayed throughout the app.",
+        "dataManagement": "Data Management",
+        "exportData": "Export Data",
+        "importData": "Import Data",
+        "resetData": "Reset Data",
+        "dataDescription": "Export/import JSON data. Reset will erase all current data.",
+        "support": "Support",
+        "contactSupport": "Contact Support",
+        "supportDescription": "Having issues? Contact us.",
+        "sendEmail": "Send Email",
+        "supportEmail": "Support Email",
+        "responseTime": "Response Time",
+        "responseTimeValue": "24-48 hours",
+        "appInfo": "App Info",
+        "version": "Version",
+        "lastUpdate": "Last Updated",
+        "technology": "Technology",
+        "storage": "Storage"
+    },
+    "toast": {
+        "salaryUpdated": "Salary updated!",
+        "transactionAdded": "Transaction added!",
+        "invalidAmount": "Invalid amount.",
+        "insufficientBalance": "Insufficient balance in the jar!",
+        "dataExported": "Data exported successfully!",
+        "dataImported": "Data imported successfully!",
+        "importFailed": "Import failed. Invalid file.",
+        "dataReset": "All data has been reset!",
+        "confirmReset": "Are you sure you want to reset all data? This action cannot be undone.",
+        "languageChanged": "Language changed.",
+        "currencyChanged": "Currency changed."
+    }
+}

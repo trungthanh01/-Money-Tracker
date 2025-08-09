@@ -1,0 +1,91 @@
+{
+    "header": {
+        "title": "Trình Quản Lý Tài Chính",
+        "subtitle": "Dữ liệu được lưu trên trình duyệt này"
+    },
+    "navigation": {
+        "dashboard": "Bảng Tin",
+        "investment": "Đầu Tư",
+        "learning": "Học Tập",
+        "settings": "Cài Đặt"
+    },
+    "dashboard": {
+        "totalBalance": "Tổng Số Dư",
+        "totalSalary": "Tổng Lương",
+        "addIncome": "Thêm Thu Nhập",
+        "addExpense": "Thêm Chi Tiêu",
+        "editSalary": "Nhập Lương",
+        "assetAllocation": "Phân Bổ Tài Sản",
+        "recentTransactions": "Giao Dịch Gần Đây",
+        "welcomeMessage": "Chào mừng! Hãy nhập lương để bắt đầu.",
+        "noTransactions": "Chưa có giao dịch nào."
+    },
+    "jars": {
+        "title": "Các Hũ Tiền",
+        "debt": { "name": "Trả Nợ" },
+        "expenses": { "name": "Chi Tiêu" },
+        "emergency": { "name": "Khẩn Cấp" },
+        "savings": { "name": "Tiết Kiệm" },
+        "investment": { "name": "Đầu Tư" },
+        "learning": { "name": "Học Tập" }
+    },
+    "tabs": {
+        "investmentTitle": "Tính Năng Đầu Tư",
+        "investmentDescription": "Tính năng này sẽ được phát triển trong phiên bản tương lai.",
+        "learningTitle": "Tính Năng Học Tập",
+        "learningDescription": "Tính năng này sẽ được phát triển trong phiên bản tương lai."
+    },
+    "modals": {
+        "addTransaction": "Thêm Giao Dịch",
+        "addIncome": "Thêm Thu Nhập",
+        "addExpense": "Thêm Chi Tiêu",
+        "amount": "Số tiền",
+        "description": "Mô tả",
+        "selectJar": "Chọn hủ",
+        "selectJarPlaceholder": "-- Chọn một hủ --",
+        "cancel": "Hủy",
+        "save": "Lưu",
+        "editSalaryTitle": "Nhập Lương & Tỉ Lệ",
+        "monthlySalary": "Lương tháng",
+        "jarRatios": "Tỉ lệ các hủ (%)",
+        "total": "Tổng",
+        "totalRatioError": "Tổng tỉ lệ phải bằng 100%!"
+    },
+    "settings": {
+        "language": "Ngôn Ngữ",
+        "languageSelect": "Chọn ngôn ngữ",
+        "currency": "Đơn Vị Tiền Tệ",
+        "currencySelect": "Chọn đơn vị tiền tệ",
+        "currencyDescription": "Thay đổi đơn vị tiền tệ hiển thị trên toàn bộ ứng dụng.",
+        "dataManagement": "Quản Lý Dữ Liệu",
+        "exportData": "Xuất Dữ Liệu",
+        "importData": "Nhập Dữ Liệu",
+        "resetData": "Reset Dữ Liệu",
+        "dataDescription": "Xuất/nhập dữ liệu JSON. Reset sẽ xóa toàn bộ dữ liệu.",
+        "support": "Hỗ Trợ",
+        "contactSupport": "Liên Hệ Hỗ Trợ",
+        "supportDescription": "Gặp vấn đề? Hãy liên hệ với chúng tôi.",
+        "sendEmail": "Gửi Email",
+        "supportEmail": "Email hỗ trợ",
+        "responseTime": "Thời gian phản hồi",
+        "responseTimeValue": "24-48 giờ",
+        "appInfo": "Thông Tin Ứng Dụng",
+        "version": "Phiên bản",
+        "lastUpdate": "Cập nhật lần cuối",
+        "technology": "Công nghệ",
+        "storage": "Lưu trữ"
+    },
+    "toast": {
+        "salaryUpdated": "Đã cập nhật lương!",
+        "transactionAdded": "Đã thêm giao dịch!",
+        "invalidAmount": "Số tiền không hợp lệ.",
+        "insufficientBalance": "Số dư trong hủ không đủ!",
+        "dataExported": "Dữ liệu đã được xuất!",
+        "dataImported": "Dữ liệu đã được nhập thành công!",
+        "importFailed": "Nhập dữ liệu thất bại. File không hợp lệ.",
+        "dataReset": "Toàn bộ dữ liệu đã được reset!",
+        "confirmReset": "Bạn có chắc chắn muốn reset toàn bộ dữ liệu không? Hành động này không thể hoàn tác.",
+        "languageChanged": "Đã đổi ngôn ngữ.",
+        "currencyChanged": "Đã đổi đơn vị tiền tệ."
+    }
+}

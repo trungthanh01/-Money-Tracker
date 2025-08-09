@@ -1,0 +1,480 @@
+/* File: Front-End/src/style/main/dashboard.css */
+/* Chứa các style chính cho layout, dashboard, components, và modals */
+
+/* =================================
+   Layout & Container
+   ================================= */
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+}
+
+/* =================================
+   Header
+   ================================= */
+.main-header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.75rem 0;
+}
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.app-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.logo-icon {
+    font-size: 1.5rem;
+}
+.app-logo h1 {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+.header-subtitle {
+    display: none; /* Hidden on mobile by default */
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+.hamburger-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+/* =================================
+   Desktop Navigation
+   ================================= */
+.desktop-nav {
+    display: none; /* Hidden on mobile */
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+.desktop-nav-links {
+    display: flex;
+    gap: 0.5rem;
+}
+.tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--color-text-secondary);
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.2s, border-color 0.2s;
+}
+.tab-btn:hover {
+    color: var(--color-text-primary);
+}
+.tab-btn.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+/* =================================
+   Main Content & Tabs
+   ================================= */
+.tab-content {
+    padding-top: 1rem;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.tab-content.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+}
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* =================================
+   Generic Components
+   ================================= */
+.card {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+}
+
+.btn {
+    padding: 0.625rem 1.25rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    color: var(--color-btn-text);
+    text-align: center;
+}
+.btn:active {
+    transform: scale(0.98);
+}
+.btn-primary { background-color: var(--color-btn-primary-bg); }
+.btn-primary:hover { background-color: var(--color-btn-primary-hover-bg); }
+.btn-success { background-color: var(--color-btn-success-bg); }
+.btn-success:hover { background-color: var(--color-btn-success-hover-bg); }
+.btn-danger { background-color: var(--color-btn-danger-bg); }
+.btn-danger:hover { background-color: var(--color-btn-danger-hover-bg); }
+.btn-warning { background-color: var(--color-btn-warning-bg); }
+.btn-warning:hover { background-color: var(--color-btn-warning-hover-bg); }
+.btn-secondary { background-color: var(--color-btn-secondary-bg); }
+.btn-secondary:hover { background-color: var(--color-btn-secondary-hover-bg); }
+
+/* Form Elements */
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-secondary);
+}
+.form-control, .form-control-sm {
+    width: 100%;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    padding: 0.625rem 0.75rem;
+}
+.form-control-sm {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    text-align: right;
+}
+.form-control:focus, .form-control-sm:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5);
+}
+
+/* =================================
+   Dashboard Cards
+   ================================= */
+/* Summary Card */
+.summary-card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.summary-card-header h2 {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+}
+#total-balance {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+.summary-card-subtitle {
+    color: var(--color-text-muted);
+}
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+.action-buttons #btn-edit-salary {
+    grid-column: 1 / -1; /* Span full width */
+}
+
+/* Jar Grid */
+.grid-header {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.jar-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+.jar-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-left: 5px solid; /* color set via inline style */
+}
+.jar-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+.jar-card-balance {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+.jar-card-percentage {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+/* Chart Card */
+.chart-card h3 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.chart-wrapper {
+    position: relative;
+    height: 200px;
+    margin-bottom: 1rem;
+}
+.chart-legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.legend-color-box {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+/* Transactions Card */
+.transactions-card h3 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.transaction-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.transaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+.transaction-income .transaction-icon { background-color: rgba(74, 222, 128, 0.1); color: var(--color-success); }
+.transaction-expense .transaction-icon { background-color: rgba(248, 113, 113, 0.1); color: var(--color-danger); }
+.transaction-description {
+    font-weight: 500;
+}
+.transaction-jar {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+.transaction-amount {
+    font-weight: 600;
+    text-align: right;
+}
+.transaction-income .transaction-amount { color: var(--color-success); }
+.transaction-expense .transaction-amount { color: var(--color-danger); }
+
+/* =================================
+   Modals
+   ================================= */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: var(--shadow-lg);
+    transform: scale(0.95);
+    transition: transform 0.3s;
+}
+.modal-overlay:not(.hidden) .modal-content {
+    transform: scale(1);
+}
+.modal-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+.modal-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+/* Salary Modal Specific */
+.jar-ratios-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.ratio-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.ratio-item label {
+    flex-shrink: 0;
+    width: 70px; /* Adjust as needed */
+}
+.total-ratio {
+    margin-top: 1rem;
+    text-align: right;
+    font-weight: 600;
+    font-size: 1.125rem;
+}
+.total-ratio.error {
+    color: var(--color-danger);
+}
+
+
+/* =================================
+   Toast Notifications
+   ================================= */
+#toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.toast {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left-width: 4px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 0.75rem 1rem;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-message {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.toast-close-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    margin-left: 1rem;
+    padding: 0;
+}
+.toast-close-btn:hover {
+    color: var(--color-text-primary);
+}
+
+.toast.success { border-left-color: var(--color-success); }
+.toast.error   { border-left-color: var(--color-danger); }
+.toast.warning { border-left-color: var(--color-warning); }
+
+
+/* =================================
+   Desktop Media Queries
+   ================================= */
+@media (min-width: 768px) {
+    .container {
+        padding: 1.5rem 2rem;
+    }
+    .hamburger-btn {
+        display: none;
+    }
+    .header-subtitle {
+        display: block;
+    }
+    .desktop-nav {
+        display: block;
+    }
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+            "summary chart"
+            "jars chart"
+            "transactions transactions";
+    }
+    .summary-card { grid-area: summary; }
+    .jar-grid-container { grid-area: jars; }
+    .chart-card { grid-area: chart; }
+    .transactions-card { grid-area: transactions; }
+    
+    .jar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-areas:
+            "summary chart transactions"
+            "jars chart transactions";
+    }
+    .jar-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

@@ -1,0 +1,71 @@
+/* File: Front-End/src/style/main/mobile.css */
+/* Chứa các style dành riêng cho điều hướng trên mobile */
+
+/* =================================
+   Mobile Navigation
+   ================================= */
+.mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 30;
+    display: none;
+}
+
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    padding: 1.5rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+    z-index: 40;
+}
+.mobile-nav.open {
+    transform: translateX(0);
+}
+.mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.mobile-nav-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+}
+.mobile-tab-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    padding: 1rem;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s;
+}
+.mobile-tab-btn:hover {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+}
+.mobile-tab-btn.active {
+    background-color: var(--color-primary);
+    color: var(--color-btn-text);
+}

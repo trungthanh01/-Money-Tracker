@@ -1,0 +1,77 @@
+/* File: Front-End/src/style/main/setting.css */
+/* Chứa các style dành riêng cho trang Cài đặt */
+
+.settings-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.settings-card-header {
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 1rem;
+}
+
+.settings-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-description {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+}
+
+.data-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+.data-actions .btn {
+    flex-grow: 1;
+}
+
+.support-contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.support-title {
+    font-weight: 600;
+}
+
+.support-description {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.support-details, .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    background-color: var(--color-background);
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+}
+
+.info-list p, .support-details p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-list strong, .support-details strong {
+    color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+    .settings-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
