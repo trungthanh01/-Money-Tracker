@@ -4,6 +4,66 @@
 /* =================================
    Mobile Navigation
    ================================= */
+
+/* Icon hamburger 3 gạch cho nút menu */
+.hamburger-btn {
+  position: relative;
+  width: 40px;         /* kích thước nút (tuỳ chỉnh) */
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+}
+
+/* Dùng 2 pseudo + box-shadow để tạo đủ 3 gạch */
+.hamburger-btn::before,
+.hamburger-btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 22px;         /* độ dài gạch */
+  height: 2px;         /* độ dày gạch */
+  background: var(--color-text-secondary);
+  transform: translateX(-50%);
+  transition: top .2s ease, transform .2s ease, background-color .2s ease;
+}
+
+.hamburger-btn::before {
+  top: 13px;           /* gạch trên */
+  box-shadow: 0 6px 0 0 var(--color-text-secondary); /* gạch giữa */
+}
+
+.hamburger-btn::after {
+  top: 25px;           /* gạch dưới */
+}
+
+/* Hover đổi màu nhẹ */
+.hamburger-btn:hover::before,
+.hamburger-btn:hover::after {
+  background: var(--color-primary);
+}
+.hamburger-btn:hover::before {
+  box-shadow: 0 6px 0 0 var(--color-primary);
+}
+
+/* (Tuỳ chọn) Trạng thái mở: biến 3 gạch thành dấu X */
+
+
+.close-btn {
+    background: var(--color-surface);
+    color: white;
+    border: none;
+    color: var(--color-text-secondary);
+    padding: 0.5rem;
+    cursor: pointer;
+    
+}
+.close-btn:hover {
+    color: red;
+    font-weight: 600;
+}
+
 .mobile-menu-overlay {
     position: fixed;
     inset: 0;
@@ -38,13 +98,7 @@
     font-size: 1.25rem;
     font-weight: 600;
 }
-.close-btn {
-    background: none;
-    border: none;
-    color: var(--color-text-secondary);
-    padding: 0.5rem;
-    cursor: pointer;
-}
+
 .mobile-nav-links {
     display: flex;
     flex-direction: column;
