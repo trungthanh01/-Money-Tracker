@@ -393,9 +393,15 @@ body {
     width: 100%;
 }
 
-.action-buttons #btn-edit-salary {
-    grid-column: 1 / -1;
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
+
 
 /* =================================
    JAR GRID SYSTEM - THIẾT KẾ CHO 6 HỦ
@@ -514,6 +520,7 @@ body {
 
 .chart-card h3 {
     margin-bottom: 1rem;
+    margin-top: 1rem;
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--color-text-primary);
