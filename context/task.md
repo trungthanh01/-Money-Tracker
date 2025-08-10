@@ -46,6 +46,8 @@ Tài liệu này dùng để theo dõi tiến độ hoàn thành các tính năn
 - `3.4 [ ]` Giao diện responsive (Mobile-first) với Hamburger Menu.
 - `3.5 [ ]` Dữ liệu trên dashboard được cập nhật real-time sau mỗi hành động.
 - `3.6 [ ]` Chú thích (Legend) cho biểu đồ hiển thị cạnh canvas.
+- `3.7 [ ]` Thêm tooltip cho biểu đồ.
+
 
 ### **TASK GROUP 4: Cài đặt & Tùy chỉnh (Settings & Customization)**
 *Mục tiêu: Cho phép người dùng cá nhân hóa trải nghiệm ứng dụng.*
