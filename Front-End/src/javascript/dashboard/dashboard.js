@@ -97,19 +97,75 @@ function bindEventListeners() {
 
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const hamburgerBtn = document.getElementById('mobile-menu-btn');
     
-    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
-        mobileMenu?.classList.add('open');
-        mobileMenuOverlay.style.display = 'block';
-    });
-
-    const closeMenu = () => {
-        mobileMenu?.classList.remove('open');
-        if(mobileMenuOverlay) mobileMenuOverlay.style.display = 'none';
+    // Hàm mở menu
+    const openMenu = () => {
+        if (mobileMenu && mobileMenuOverlay && hamburgerBtn) {
+            mobileMenu.classList.add('open');
+            mobileMenuOverlay.classList.add('open');
+            hamburgerBtn.classList.add('active');
+            
+            // Ngăn scroll trên body khi menu mở
+            document.body.style.overflow = 'hidden';
+            
+            // Focus vào menu cho accessibility
+            mobileMenu.focus();
+        }
     };
 
+    // Hàm đóng menu với animation
+    const closeMenu = () => {
+        if (mobileMenu && mobileMenuOverlay && hamburgerBtn) {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            
+            // Khôi phục scroll trên body
+            document.body.style.overflow = '';
+            
+            // Focus trở lại hamburger button
+            hamburgerBtn.focus();
+        }
+    };
+
+    // Xử lý click hamburger button
+    hamburgerBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (mobileMenu?.classList.contains('open')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
+    // Xử lý click overlay với ripple effect
+    mobileMenuOverlay?.addEventListener('click', (e) => {
+        // Thêm class ripple cho hiệu ứng
+        mobileMenuOverlay.classList.add('ripple');
+        
+        // Xóa ripple effect sau animation
+        setTimeout(() => {
+            mobileMenuOverlay.classList.remove('ripple');
+        }, 300);
+        
+        closeMenu();
+    });
+
+    // Xử lý click nút đóng trong menu
     document.getElementById('mobile-menu-close')?.addEventListener('click', closeMenu);
-    mobileMenuOverlay?.addEventListener('click', closeMenu);
+
+    // Xử lý phím ESC để đóng menu
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
+            closeMenu();
+        }
+    });
+
+    // Ngăn menu panel bị đóng khi click vào chính nó
+    mobileMenu?.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
 }
 
 /**
@@ -127,9 +183,16 @@ function switchTab(activeTabId) {
     
     // Đóng menu mobile sau khi chọn tab
     const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const hamburgerBtn = document.getElementById('mobile-menu-btn');
+    
     if (mobileMenu?.classList.contains('open')) {
         mobileMenu.classList.remove('open');
-        document.getElementById('mobile-menu-overlay').style.display = 'none';
+        mobileMenuOverlay?.classList.remove('open');
+        hamburgerBtn?.classList.remove('active');
+        
+        // Khôi phục scroll trên body
+        document.body.style.overflow = '';
     }
 }
 
