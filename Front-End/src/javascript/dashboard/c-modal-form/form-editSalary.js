@@ -51,8 +51,11 @@ export function updateTotalRatioDisplay() {
     if (!totalRatioEl) return;
     
     const ratioInputs = document.querySelectorAll('.ratio-input');
-    const total = Array.from(ratioInputs).reduce((sum, input) => sum + (Number(input.value) || 0), 0);
+    const total = Array.from(ratioInputs).reduce((sum, input) => 
+        sum + (Number(input.value) || 0), 0);
     
     totalRatioEl.textContent = total;
-    totalRatioEl.parentElement.classList.toggle('error', total !== 100);
+    const wrapper = totalRatioEl.parentElement;
+    wrapper.classList.toggle('ok', total === 100);
+    wrapper.classList.toggle('error', total !== 100);
 }

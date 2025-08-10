@@ -361,6 +361,9 @@
     font-weight: 600;
     font-size: 1.125rem;
 }
+.total-ratio.ok {
+    color: var(--color-success);
+}
 .total-ratio.error {
     color: var(--color-danger);
 }
