@@ -19,9 +19,9 @@ function initializeChart() {
             datasets: [{
                 data: [],
                 backgroundColor: [],
-                borderColor: 'var(--color-surface)',
+                borderColor: SURFACE_COLOR,
                 borderWidth: 2,
-                hoverBorderColor: 'var(--color-primary)'
+                hoverBorderColor: PRIMARY_COLOR
             }]
         },
         options: {
@@ -63,6 +63,24 @@ function initializeChart() {
         }
     });
 }
+// chart color
+const getCssVar = (name) => 
+    getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+const SURFACE_COLOR = getCssVar('--color-surface');
+const PRIMARY_COLOR = getCssVar('--color-primary');
+
+const JAR_COLORS = {
+    debt: getCssVar('--color-jar-debt'),
+    expenses: getCssVar('--color-jar-expenses'),
+    emergency: getCssVar('--color-jar-emergency'),
+    savings: getCssVar('--color-jar-savings'),
+    investment: getCssVar('--color-jar-investment'),
+    learning: getCssVar('--color-jar-learning'),
+};
+
+
+
 
 /**
  * Cập nhật dữ liệu và hiển thị lại biểu đồ và chú thích.
@@ -85,7 +103,7 @@ export function updateChart(jars) {
         const jarInfo = JAR_INFO[key];
         labels.push(window.t ? window.t(jarInfo.nameKey) : jars[key].name);
         data.push(jars[key].balance);
-        colors.push(jarInfo.color);
+        colors.push(JAR_COLORS[key]);
     });
     
     // Cập nhật dữ liệu cho biểu đồ
@@ -116,7 +134,7 @@ function updateChartLegend(activeJars) {
         const jarName = window.t ? window.t(jarInfo.nameKey) : JAR_INFO[key].name;
         return `
             <div class="legend-item">
-                <div class="legend-color-box" style="background-color: ${jarInfo.color};"></div>
+                <div class="legend-color-box" style="background-color: ${JAR_COLORS[key]};"></div>
                 <span>${jarName}</span>
             </div>
         `;
