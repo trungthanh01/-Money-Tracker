@@ -42,13 +42,7 @@
     font-size: 0.875rem;
     color: var(--color-text-muted);
 }
-.hamburger-btn {
-    background: white;
-    border: none;
-    color: var(--color-text-secondary);
-    padding: 0.5rem;
-    cursor: pointer;
-}
+
 
 /* =================================
    Desktop Navigation
