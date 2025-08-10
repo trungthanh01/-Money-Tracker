@@ -4,74 +4,66 @@
 /* =================================
    Mobile Navigation
    ================================= */
-
-/* Icon hamburger 3 gạch cho nút menu */
 .hamburger-btn {
-  position: relative;
-  width: 40px;         /* kích thước nút (tuỳ chỉnh) */
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-surface);
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 45; /* Ensure it's above other content but below the nav */
 }
 
 /* Dùng 2 pseudo + box-shadow để tạo đủ 3 gạch */
 .hamburger-btn::before,
 .hamburger-btn::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  width: 22px;         /* độ dài gạch */
-  height: 2px;         /* độ dày gạch */
-  background: var(--color-text-secondary);
-  transform: translateX(-50%);
-  transition: top .2s ease, transform .2s ease, background-color .2s ease;
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text-secondary);
+    transform: translateX(-50%);
+    transition: all 0.2s ease;
 }
 
 .hamburger-btn::before {
-  top: 13px;           /* gạch trên */
-  box-shadow: 0 6px 0 0 var(--color-text-secondary); /* gạch giữa */
+    top: 13px;
+    box-shadow: 0 7px 0 0 var(--color-text-secondary);
 }
 
 .hamburger-btn::after {
-  top: 25px;           /* gạch dưới */
+    bottom: 13px;
 }
 
-/* Hover đổi màu nhẹ */
 .hamburger-btn:hover::before,
-.hamburger-btn:hover::after {
-  background: var(--color-primary);
-}
+.hamburger-btn:hover::after,
 .hamburger-btn:hover::before {
-  box-shadow: 0 6px 0 0 var(--color-primary);
+    background: var(--color-primary);
+    box-shadow: 0 7px 0 0 var(--color-primary);
 }
 
-/* (Tuỳ chọn) Trạng thái mở: biến 3 gạch thành dấu X */
 
-
-.close-btn {
-    background: var(--color-surface);
-    color: white;
-    border: none;
-    color: var(--color-text-secondary);
-    padding: 0.5rem;
-    cursor: pointer;
-    
-}
-.close-btn:hover {
-    color: red;
-    font-weight: 600;
-}
-
+/* Mobile Menu Overlay */
 .mobile-menu-overlay {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 30;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
 }
 
+.mobile-menu-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Mobile Navigation Panel */
 .mobile-nav {
     position: fixed;
     top: 0;
@@ -85,25 +77,47 @@
     transition: transform 0.3s ease-out;
     z-index: 40;
 }
+
 .mobile-nav.open {
     transform: translateX(0);
 }
+
 .mobile-nav-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
 }
+
 .mobile-nav-title {
     font-size: 1.25rem;
     font-weight: 600;
 }
 
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: var(--color-text-primary);
+}
+
 .mobile-nav-links {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
+
 .mobile-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     background: none;
     border: none;
     color: var(--color-text-secondary);
@@ -115,11 +129,19 @@
     cursor: pointer;
     transition: color 0.2s, background-color 0.2s;
 }
+.mobile-tab-btn i {
+    width: 20px;
+    font-size: 1.1rem;
+}
+
 .mobile-tab-btn:hover {
     background-color: var(--color-background);
     color: var(--color-text-primary);
 }
+
 .mobile-tab-btn.active {
     background-color: var(--color-primary);
     color: var(--color-btn-text);
+    font-weight: 600;
 }
+

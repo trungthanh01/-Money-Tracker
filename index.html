@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trình Quản Lý Tài Chính</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- CSS Files -->
@@ -18,13 +19,13 @@
     <header class="main-header">
         <div class="container">
             <div class="header-content">
-                <button id="mobile-menu-btn" class="hamburger-btn">
-                </button>
                 <div class="app-logo">
                     <div class="logo-icon"><span>💰</span></div>
-                    <h1 data-i18n="header.title">Trình Quản Lý Tài Chính</h1>
+                    <h1 data-i18n="header.title">Personal Finance Manager</h1>
                 </div>
                 <div class="header-subtitle" data-i18n="header.subtitle">Dữ liệu được lưu trên trình duyệt này</div>
+                <button id="mobile-menu-btn" class="hamburger-btn">
+                </button>
             </div>
         </div>
     </header>
@@ -34,13 +35,13 @@
     <nav id="mobile-menu" class="mobile-nav">
         <div class="mobile-nav-header">
             <h2 class="mobile-nav-title">Menu</h2>
-            <button id="mobile-menu-close" class="close-btn" cursor="pointer">X</button>
+            <button id="mobile-menu-close" class="close-btn" cursor="pointer"><i class="fas fa-times"></i></button>
         </div>
         <div class="mobile-nav-links">
-            <button class="mobile-tab-btn active" data-tab="dashboard" data-i18n="navigation.dashboard">Bảng Tin</button>
-            <button class="mobile-tab-btn" data-tab="investment" data-i18n="navigation.investment">Đầu Tư</button>
-            <button class="mobile-tab-btn" data-tab="learning" data-i18n="navigation.learning">Học Tập</button>
-            <button class="mobile-tab-btn" data-tab="settings" data-i18n="navigation.settings">Cài Đặt</button>
+            <button class="mobile-tab-btn active" data-tab="dashboard" data-i18n="navigation.dashboard"><i class="fas fa-chart-pie"></i><span>Bảng Tin</span></button>
+            <button class="mobile-tab-btn" data-tab="investment" data-i18n="navigation.investment"><i class="fas fa-chart-line"></i><span>Đầu Tư</span></button>
+            <button class="mobile-tab-btn" data-tab="learning" data-i18n="navigation.learning"><i class="fas fa-book-open"></i><span>Học Tập</span></button>
+            <button class="mobile-tab-btn" data-tab="settings" data-i18n="navigation.settings"><i class="fas fa-cog"></i><span>Cài Đặt</span></button>
         </div>
     </nav>
 
@@ -48,10 +49,10 @@
     <nav class="desktop-nav">
         <div class="container">
             <div class="desktop-nav-links">
-                <button class="tab-btn active" data-tab="dashboard" data-i18n="navigation.dashboard">Bảng Tin</button>
-                <button class="tab-btn" data-tab="investment" data-i18n="navigation.investment">Đầu Tư</button>
-                <button class="tab-btn" data-tab="learning" data-i18n="navigation.learning">Học Tập</button>
-                <button class="tab-btn" data-tab="settings" data-i18n="navigation.settings">Cài Đặt</button>
+                <button class="tab-btn active" data-tab="dashboard" data-i18n="navigation.dashboard"><i class="fas fa-chart-pie"></i><span>Bảng Tin</span></button>
+                <button class="tab-btn" data-tab="investment" data-i18n="navigation.investment"><i class="fas fa-chart-line"></i><span>Đầu Tư</span></button>
+                <button class="tab-btn" data-tab="learning" data-i18n="navigation.learning"><i class="fas fa-book-open"></i><span>Học Tập</span></button>
+                <button class="tab-btn" data-tab="settings" data-i18n="navigation.settings"><i class="fas fa-cog"></i><span>Cài Đặt</span></button>
             </div>
         </div>
     </nav>
@@ -70,9 +71,9 @@
                         </div>
                     </div>
                     <div class="action-buttons">
-                        <button id="btn-add-income" class="btn btn-success" data-i18n="dashboard.addIncome">Thêm Thu Nhập</button>
-                        <button id="btn-add-expense" class="btn btn-danger" data-i18n="dashboard.addExpense">Thêm Chi Tiêu</button>
-                        <button id="btn-edit-salary" class="btn btn-primary" data-i18n="dashboard.editSalary">Nhập Lương</button>
+                        <button id="btn-add-income" class="btn btn-success" data-i18n="dashboard.addIncome">Thêm Thu</button>
+                        <button id="btn-add-expense" class="btn btn-danger" data-i18n="dashboard.addExpense">Thêm Chi</button>
+                        <button id="btn-edit-salary" class="btn btn-primary" data-i18n="dashboard.editSalary">Sửa Lương</button>
                     </div>
                 </div>
 
