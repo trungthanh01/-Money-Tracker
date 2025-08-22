@@ -3,7 +3,7 @@
 
 import { getData, setData } from '../../store/local-storage.js';
 
-const DEFAULT_LANGUAGE = 'vi';
+const DEFAULT_LANGUAGE = 'en';
 let translations = {};
 
 /**

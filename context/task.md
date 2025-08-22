@@ -14,51 +14,51 @@ Tài liệu này dùng để theo dõi tiến độ hoàn thành các tính năn
 ### **TASK GROUP 1: Thiết lập ban đầu & Phân chia Lương (Initial Setup & Salary Split)**
 *Mục tiêu: Người dùng có thể nhập lương và xem tiền được tự động phân bổ vào 6 hủ ngay lần đầu sử dụng.*
 
-- `1.1 [ ]` Giao diện nhập lương lần đầu (Salary Modal).
-- `1.2 [ ]` Tự động gợi ý tỉ lệ 6 hủ theo PRD (20-40-10-10-10-10).
-- `1.3 [ ]` Cho phép người dùng chỉnh sửa tỉ lệ các hủ.
-- `1.4 [ ]` Validate tổng tỉ lệ phải bằng 100% và hiển thị cho người dùng.
-- `1.5 [ ]` Lưu dữ liệu lương và tỉ lệ vào LocalStorage.
-- `1.6 [ ]` Tự động phân bổ số tiền vào 6 hủ dựa trên lương và tỉ lệ.
-- `1.7 [ ]` Cập nhật lại số tiền trong các hủ khi người dùng chỉnh sửa lương.
-- `1.8 [ ]` Fix lỗi input trên mobile để nhập số dễ dàng.
+- `1.1 [✓]` Giao diện nhập lương lần đầu (Salary Modal).
+- `1.2 [✓]` Tự động gợi ý tỉ lệ 6 hủ theo PRD (20-40-10-10-10-10).
+- `1.3 [✓]` Cho phép người dùng chỉnh sửa tỉ lệ các hủ.
+- `1.4 [✓]` Validate tổng tỉ lệ phải bằng 100% và hiển thị cho người dùng.
+- `1.5 [✓]` Lưu dữ liệu lương và tỉ lệ vào LocalStorage.
+- `1.6 [✓]` Tự động phân bổ số tiền vào 6 hủ dựa trên lương và tỉ lệ.
+- `1.7 [✓]` Cập nhật lại số tiền trong các hủ khi người dùng chỉnh sửa lương.
+- `1.8 [✓]` Fix lỗi input trên mobile để nhập số dễ dàng.
 
 ### **TASK GROUP 2: Theo dõi Chi tiêu & Thu nhập Hàng ngày (Daily Expense/Income Tracking)**
 *Mục tiêu: Người dùng có thể ghi lại các giao dịch hàng ngày một cách nhanh chóng để theo dõi dòng tiền.*
 
-- `2.1 [ ]` Giao diện nhập giao dịch (Transaction Modal).
-- `2.2 [ ]` Các nút thao tác nhanh "Thêm Thu Nhập" và "Thêm Chi Tiêu".
-- `2.3 [ ]` Form nhập liệu: số tiền, mô tả, chọn hủ.
-- `2.4 [ ]` Cập nhật số dư của hủ tương ứng sau khi thêm giao dịch.
-- `2.5 [ ]` Cập nhật tổng số dư toàn bộ.
-- `2.6 [ ]` Lưu mọi giao dịch vào LocalStorage.
-- `2.7 [ ]` Hiển thị danh sách 5 giao dịch gần đây trên Dashboard.
-- `2.8 [ ]` Hoàn thiện logic cho nút "Thêm Thu Nhập" để thêm tiền vào một hủ cụ thể (không chỉ từ lương).
-- `2.9 [ ]` Validate số tiền nhập vào phải là số dương và hiển thị lỗi.
-- `2.10 [ ]` Cảnh báo khi chi tiêu vượt quá số dư trong hủ (không cho âm số dư).
+- `2.1 [✓]` Giao diện nhập giao dịch (Transaction Modal).
+- `2.2 [✓]` Các nút thao tác nhanh "Thêm Thu Nhập" và "Thêm Chi Tiêu".
+- `2.3 [✓]` Form nhập liệu: số tiền, mô tả, chọn hủ.
+- `2.4 [✓]` Cập nhật số dư của hủ tương ứng sau khi thêm giao dịch.
+- `2.5 [✓]` Cập nhật tổng số dư toàn bộ.
+- `2.6 [✓]` Lưu mọi giao dịch vào LocalStorage.
+- `2.7 [✓]` Hiển thị danh sách 5 giao dịch gần đây trên Dashboard.
+- `2.8 [✓]` Hoàn thiện logic cho nút "Thêm Thu Nhập" để thêm tiền vào một hủ cụ thể (không chỉ từ lương).
+- `2.9 [✓]` Validate số tiền nhập vào phải là số dương và hiển thị lỗi.
+- `2.10 [✓]` Cảnh báo khi chi tiêu vượt quá số dư trong hủ (không cho âm số dư).
 
 ### **TASK GROUP 3: Dashboard Trực quan (Visual Financial Dashboard)**
 *Mục tiêu: Cung cấp một cái nhìn tổng quan, dễ hiểu về tình hình tài chính của người dùng.*
 
-- `3.1 [ ]` Hiển thị tổng số dư.
-- `3.2 [ ]` Hiển thị 6 hủ tiền (Jar Cards) với tên, số dư, và màu sắc riêng.
-- `3.3 [ ]` Biểu đồ tròn (Doughnut Chart) thể hiện phân bổ tài sản.
-- `3.4 [ ]` Giao diện responsive (Mobile-first) với Hamburger Menu.
-- `3.5 [ ]` Dữ liệu trên dashboard được cập nhật real-time sau mỗi hành động.
-- `3.6 [ ]` Chú thích (Legend) cho biểu đồ hiển thị cạnh canvas.
-- `3.7 [ ]` Thêm tooltip cho biểu đồ.
+- `3.1 [✓]` Hiển thị tổng số dư.
+- `3.2 [✓]` Hiển thị 6 hủ tiền (Jar Cards) với tên, số dư, và màu sắc riêng.
+- `3.3 [✓]` Biểu đồ tròn (Doughnut Chart) thể hiện phân bổ tài sản.
+- `3.4 [✓]` Giao diện responsive (Mobile-first) với Hamburger Menu.
+- `3.5 [✓]` Dữ liệu trên dashboard được cập nhật real-time sau mỗi hành động.
+- `3.6 [✓]` Chú thích (Legend) cho biểu đồ hiển thị cạnh canvas.
+- `3.7 [✓]` Thêm tooltip cho biểu đồ.
 
 
 ### **TASK GROUP 4: Cài đặt & Tùy chỉnh (Settings & Customization)**
 *Mục tiêu: Cho phép người dùng cá nhân hóa trải nghiệm ứng dụng.*
 
-- `4.1 [ ]` Tab Cài đặt responsive.
-- `4.2 [ ]` Đa ngôn ngữ Anh/Việt.
-- `4.3 [ ]` Giao diện Dark mode mặc định (không cho đổi sáng/tối).
-- `4.4 [ ]` Chọn đơn vị tiền tệ (10 loại tiền tệ phổ biến).
-- `4.5 [ ]` Thông tin liên hệ hỗ trợ (`mailto:`).
-- `4.6 [ ]` Export/Import dữ liệu ra file JSON.
-- `4.7 [ ]` Reset toàn bộ dữ liệu ứng dụng.
+- `4.1 [✓]` Tab Cài đặt responsive.
+- `4.2 [✓]` Đa ngôn ngữ Anh/Việt.
+- `4.3 [✓]` Giao diện Dark mode mặc định (không cho đổi sáng/tối).
+- `4.4 [✓]` Chọn đơn vị tiền tệ (10 loại tiền tệ phổ biến).
+- `4.5 [✓]` Thông tin liên hệ hỗ trợ (`mailto:`).
+- `4.6 [✓]` Export/Import dữ liệu ra file JSON.
+- `4.7 [✓]` Reset toàn bộ dữ liệu ứng dụng.
 
 ---
 
@@ -93,7 +93,7 @@ Tài liệu này dùng để theo dõi tiến độ hoàn thành các tính năn
 - `8.8 [ ]` Kiểm thử: Cases xóa ở vị trí đầu/cuối/danh sách 1 phần tử; đồng bộ biểu đồ, số dư; reload trang.
 
 ### **TASK GROUP 9: Mục Tiêu Cho Từng Hủ (Per-Jar Goals)**
-- `9.1 [ ]` Data model: Thêm cấu trúc `goals` trong LocalStorage tại `frontend/src/core/data.js` (mỗi hủ có `goalAmount`, `goalType`, `period` nếu cần); viết migration an toàn với dữ liệu cũ.
+- `9.1 [ ]` Data model: Thêm cấu trúc `goals` trong LocalStorage tại `Front-End/src/javascript/store/local-storage.js` (mỗi hủ có `goalAmount`, `goalType`, `period` nếu cần); viết migration an toàn với dữ liệu cũ.
 - `9.2 [ ]` Settings UI: Màn hình/section đặt mục tiêu cho từng hủ (nhập số tiền, chọn loại mục tiêu); validate số dương, đơn vị tiền tệ; lưu/persist.
 - `9.3 [ ]` Dashboard UI: Thể hiện progress bar + % ngay trên mỗi Jar Card; hiển thị `đã đạt X / mục tiêu Y` (định dạng tiền tệ).
 - `9.4 [ ]` Jar Detail: Khi click vào Jar Card, mở modal chi tiết mục tiêu (xem/sửa/xóa mục tiêu của hủ đó).
@@ -105,3 +105,39 @@ Tài liệu này dùng để theo dõi tiến độ hoàn thành các tính năn
 - `9.7 [ ]` UX/Visual: Màu theo ngưỡng (<=33% đỏ, <=66% vàng, >66% xanh), animation nhẹ; a11y (contrast, SR text).
 - `9.8 [ ]` Notifications: Thông báo khi đạt 100% mục tiêu; i18n; tuỳ chọn bật/tắt trong Cài đặt.
 - `9.9 [ ]` Kiểm thử & Tài liệu: Test công thức, edge-cases (mục tiêu = 0, chưa đặt mục tiêu, số dư > mục tiêu); cập nhật tài liệu trong `docs/`.
+
+---
+
+## PHẦN 3: CÁC TASK NÂNG CAO & TÍNH NĂNG MỚI (Advanced Features)
+
+### **TASK GROUP 10: History & Analytics (Lịch sử & Phân tích)**
+- `10.1 [ ]` Trang History: Hiển thị tất cả giao dịch với filter theo ngày/tháng/hủ/loại.
+- `10.2 [ ]` Search transactions: Tìm kiếm giao dịch theo description.
+- `10.3 [ ]` Export transactions: Xuất dữ liệu ra CSV/Excel.
+- `10.4 [ ]` Monthly/Weekly reports: Báo cáo chi tiêu theo chu kỳ.
+- `10.5 [ ]` Spending trends chart: Biểu đồ xu hướng chi tiêu qua thời gian.
+
+### **TASK GROUP 11: Recurring Transactions (Giao dịch định kỳ)**
+- `11.1 [ ]` Data model: Thêm cấu trúc recurring transactions.
+- `11.2 [ ]` UI: Form thêm giao dịch định kỳ (hàng tuần/tháng).
+- `11.3 [ ]` Auto-execution: Tự động thực hiện giao dịch định kỳ.
+- `11.4 [ ]` Management: Xem/sửa/xóa các giao dịch định kỳ.
+
+### **TASK GROUP 12: Budgeting & Alerts (Ngân sách & Cảnh báo)**
+- `12.1 [ ]` Monthly budgets: Đặt ngân sách tháng cho từng hủ.
+- `12.2 [ ]` Budget tracking: Theo dõi % đã sử dụng trong tháng.
+- `12.3 [ ]` Smart alerts: Cảnh báo khi sắp vượt ngân sách (80%, 90%, 100%).
+- `12.4 [ ]` Budget rollover: Chuyển tiền dư sang tháng sau.
+
+### **TASK GROUP 13: Data Backup & Sync (Sao lưu & Đồng bộ)**
+- `13.1 [ ]` Auto backup: Tự động backup hàng ngày/tuần.
+- `13.2 [ ]` Cloud sync: Đồng bộ với Google Drive/Dropbox.
+- `13.3 [ ]` Multiple devices: Hỗ trợ sử dụng trên nhiều thiết bị.
+- `13.4 [ ]` Version control: Quản lý phiên bản dữ liệu.
+
+### **TASK GROUP 14: PWA & Performance (Progressive Web App)**
+- `14.1 [ ]` PWA setup: Service worker, manifest.json.
+- `14.2 [ ]` Offline support: Hoạt động offline hoàn toàn.
+- `14.3 [ ]` App install: Cài đặt như native app.
+- `14.4 [ ]` Push notifications: Thông báo nhắc nhở.
+- `14.5 [ ]` Performance optimization: Lazy loading, code splitting.
